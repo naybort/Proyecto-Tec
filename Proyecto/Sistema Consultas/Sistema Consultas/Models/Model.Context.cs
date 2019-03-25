@@ -13,10 +13,10 @@ namespace Sistema_Consultas.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class sistema_consultasEntities : DbContext
+    public partial class SC_Entities : DbContext
     {
-        public sistema_consultasEntities()
-            : base("name=sistema_consultasEntities")
+        public SC_Entities()
+            : base("name=SC_Entities")
         {
         }
     

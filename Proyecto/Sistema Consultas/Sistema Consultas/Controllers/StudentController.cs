@@ -3,26 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Sistema_Consultas.Models;
 
 namespace Sistema_Consultas.Controllers
 {
     public class StudentController : Controller
     {
-        public ActionResult Thematics()
+        SC_Entities db = new SC_Entities();
+        public ActionResult Thematics(string thematic_name)
         {
-            return View();
+            var thematics = db.Thematics.Where(t => t.name.Contains(thematic_name) || thematic_name == null);
+            return View(thematics.ToList());
         }
 
-        public ActionResult About()
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

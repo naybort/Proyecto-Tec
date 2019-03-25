@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sistema_consultas_Modelo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="sistema_consultasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="id_appointment" />
@@ -235,7 +235,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="sistema_consultas_ModeloStoreContainer">
+        <EntityContainer Name="sistema_consultasModelStoreContainer">
           <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Places" EntityType="Self.Places" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Professor" EntityType="Self.Professor" Schema="dbo" store:Type="Tables" />
@@ -317,7 +317,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="sistema_consultas_Modelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="sistema_consultasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Appointment">
           <Key>
             <PropertyRef Name="id_appointment" />
@@ -472,7 +472,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="sistema_consultasEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SC_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Appointments" EntityType="Self.Appointment" />
           <EntitySet Name="Places" EntityType="Self.Place" />
           <EntitySet Name="Professors" EntityType="Self.Professor" />
@@ -519,9 +519,9 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="sistema_consultas_ModeloStoreContainer" CdmEntityContainer="sistema_consultasEntities">
+        <EntityContainerMapping StorageEntityContainer="sistema_consultasModelStoreContainer" CdmEntityContainer="SC_Entities">
           <EntitySetMapping Name="Appointments">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Appointment">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Appointment">
               <MappingFragment StoreEntitySet="Appointment">
                 <ScalarProperty Name="id_appointment" ColumnName="id_appointment" />
                 <ScalarProperty Name="id_schedule" ColumnName="id_schedule" />
@@ -530,7 +530,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Places">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Place">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Place">
               <MappingFragment StoreEntitySet="Places">
                 <ScalarProperty Name="id_place" ColumnName="id_place" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -538,7 +538,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Professors">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Professor">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Professor">
               <MappingFragment StoreEntitySet="Professor">
                 <ScalarProperty Name="id_professor" ColumnName="id_professor" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -547,7 +547,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Schedules">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Schedule">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Schedule">
               <MappingFragment StoreEntitySet="Schedule">
                 <ScalarProperty Name="id_schedule" ColumnName="id_schedule" />
                 <ScalarProperty Name="hour_start" ColumnName="hour_start" />
@@ -558,7 +558,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Students">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Student">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="id_student" ColumnName="id_student" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -567,7 +567,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Subthematics">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Subthematic">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Subthematic">
               <MappingFragment StoreEntitySet="Subthematics">
                 <ScalarProperty Name="id_subthematic" ColumnName="id_subthematic" />
                 <ScalarProperty Name="id_thematic" ColumnName="id_thematic" />
@@ -576,7 +576,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Thematics">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Thematic">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Thematic">
               <MappingFragment StoreEntitySet="Thematics">
                 <ScalarProperty Name="id_thematic" ColumnName="id_thematic" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -584,7 +584,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Professor_schedule">
-            <EntityTypeMapping TypeName="sistema_consultas_Modelo.Professor_schedule">
+            <EntityTypeMapping TypeName="sistema_consultasModel.Professor_schedule">
               <MappingFragment StoreEntitySet="Professor_schedule">
                 <ScalarProperty Name="id_professor" ColumnName="id_professor" />
                 <ScalarProperty Name="id_schedule" ColumnName="id_schedule" />
@@ -592,7 +592,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="professor_appointment" TypeName="sistema_consultas_Modelo.professor_appointment" StoreEntitySet="professor_appointment">
+          <AssociationSetMapping Name="professor_appointment" TypeName="sistema_consultasModel.professor_appointment" StoreEntitySet="professor_appointment">
             <EndProperty Name="Appointment">
               <ScalarProperty Name="id_appointment" ColumnName="id_appointment" />
             </EndProperty>
@@ -600,7 +600,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
               <ScalarProperty Name="id_professor" ColumnName="id_professor" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Professor_thematic" TypeName="sistema_consultas_Modelo.Professor_thematic" StoreEntitySet="Professor_thematic">
+          <AssociationSetMapping Name="Professor_thematic" TypeName="sistema_consultasModel.Professor_thematic" StoreEntitySet="Professor_thematic">
             <EndProperty Name="Professor">
               <ScalarProperty Name="id_professor" ColumnName="id_professor" />
             </EndProperty>
@@ -608,7 +608,7 @@ warning 6002: The table/view 'sistema_consultas.dbo.students_appointment' does n
               <ScalarProperty Name="id_thematic" ColumnName="id_thematic" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="students_appointment" TypeName="sistema_consultas_Modelo.students_appointment" StoreEntitySet="students_appointment">
+          <AssociationSetMapping Name="students_appointment" TypeName="sistema_consultasModel.students_appointment" StoreEntitySet="students_appointment">
             <EndProperty Name="Appointment">
               <ScalarProperty Name="id_appointment" ColumnName="id_appointment" />
             </EndProperty>

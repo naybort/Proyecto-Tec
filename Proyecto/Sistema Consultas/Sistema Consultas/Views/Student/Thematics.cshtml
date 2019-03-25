@@ -1,227 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Sistema_Consultas.Models.Thematic> 
 
 <div class="main main-raised">
     <div class="container">
         <div class="section text-center">
             <div class="container2">
-
+                @foreach (var thematic in Model)
+                {
                 <div class="element-card">
                     <div class="front-facing">
-                        <h6> COMPOSICIÓN Y PRINCIPIOS DE DISEÑO</h6>
+                        <h6> @thematic.name</h6>
                         <p class="title"></p>
 
                     </div>
                     <div class="back-facing">
                         <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Copper" target="_blank">More info</a></p>
+                        <p><a class="btn" href="#" target="_blank">Seleccionar</a></p>
                     </div>
                 </div>
+                }
 
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> DISEÑO ARQUITECTÓNICO</h6>
-                        <p class="title"></p>
 
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Silver" target="_blank">More info</a></p>
-                    </div>
-                </div>
 
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> DISEÑO URBANO</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Gold" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> URBANISMO Y ORDENAMIENTO TERRITORIAL</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6>SOSTENIBILIDAD (ambiental, económica, social)</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> TEORIA DE LA ARQUITECTURA</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> GESTIÓN DE PROYECTOS(administrar procesos, gestionar recursos, dirigir personas)</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> HISTORIA DE LA ARQUITECTURA</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> PATRIMONIO</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> SISTEMA ESTRUCTURAL Y DE CONSTRUCCIÓN</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> INSTALACIONESL</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> ESTRATEGIAS PASIVAS</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6>  MATERIALES Y PAUTAS GEOMÉTRICAS</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> EXPRESIÓN Y COMUNICACIÓN (Oral, escrita, manual, digital)</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> INVESTIGACIÓN Y EXTENSIÓN</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> ARTE</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> ETICA PROFESIONAL Y EJERCICIO PROFESIONAL</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
-
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> MANTENIMIENTO DE INFRAESTRUCTURA</h6>
-                        <p class="title"></p>
-
-                    </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="https://en.wikipedia.org/wiki/Roentgenium" target="_blank">More info</a></p>
-                    </div>
-                </div>
 
             </div>
 
