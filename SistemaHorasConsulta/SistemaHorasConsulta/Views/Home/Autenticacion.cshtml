@@ -1,0 +1,377 @@
+﻿
+@{
+    ViewBag.Title = "Autenticacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation -->
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">
+                <img style="margin-top: -10px" src="~/Content/Imagenes/logoTEC.png" alt="Tecnológico de Costa Rica" />
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#sesion">Ingresar</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#servicios">Nuestros Servicios</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contacto">Contáctenos</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Intro Header -->
+<header class="intro">
+    <section id="sesion" class="content-section text-center" style="height:70em">
+        <div class="intro-body" data-scroll-reveal="wait 0.25s, then enter top and move 140px over 2s" style="display: -ms-inline-flexbox !important;display: -webkit-box !important">
+            <div class="container">
+                <div class="row" style="height: 120px">
+                    <div class="col-md-6 col-md-offset-6" style="width: 100% !important; margin-left: auto !important; margin-right: auto !important">
+                        <h4 style="margin-top: 20px; font-size: 40px" class="brand-heading">Sistema Horas Consulta</h4>
+                    </div>
+                </div>
+                <!-- inicio de sesión -->
+                <div class="row" style="height: 30em">
+                    <div class="col-sm-offset-6 col-md-6" style="margin-top: 0; min-width: 40em; max-width: 40em; margin-right: auto !important; margin-left: auto !important;float:none!important">
+                        @*<h3 style="margin-left: 40px; font-family: -webkit-pictograph">Inicio de Sesión</h3>*@
+
+                        <img src="~/Content/Imagenes/datic.png" style="width: 70px; height: 34px; float: right; margin-top: 8px; margin-right: 26px;" data-scroll-reveal="wait 1.25s, then enter left and move 100px over 2s" />
+
+                        <div id="loginbox" style="margin-left: 35px" class="mainbox" data-scroll-reveal="wait 0.25s, then enter right and move 100px over 2s">
+                            <div class="panel panel-info" style="border-color: lavender; border-top-left-radius: 50px; border-bottom-left-radius: 20px; border-bottom-right-radius: 100px">
+                                <div class="panel-heading" style="padding: 12px 66px; height: 50px; border-top-left-radius: 62px; color: white; background: -webkit-gradient(linear, left top, left bottom, from(#0A619F), to(#B1ACA7));">
+                                    <div class="panel-title" style="font-size: 20px; color: black; margin-left: 20px;">
+                                        Ingrese sus credenciales
+                                    </div>
+                                </div>
+                                <div style="padding-top: 45px; border-bottom-left-radius: 20px; border-bottom-right-radius: 100px; padding-left: 70px; padding-right: 50px;
+                                    background-image: url('@Url.Content("~/Content/Imagenes/linea.jpg")'); background-repeat: repeat-y; background-repeat: repeat-x;" class="panel-body">
+                                    <div style="display: none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                                    <form id="loginform" class="form-horizontal" role="form">
+
+                                        <div style="margin-bottom: 15px" class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <input id="user" type="text" class="form-control" name="username" value="" placeholder="Nombre de Usuario" autofocus="autofocus">
+                                        </div>
+
+                                        <div style="margin-bottom: 15px; margin-top: 10px" class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                            <input id="pass" type="password" class="form-control" name="password" placeholder="Contraseña">
+                                        </div>
+                                        <div style="margin-bottom: 15px; margin-top: 10px; width: 100%">
+                                            <div class="funkyradio">
+                                                <table style="width: 100%">
+                                                    <tr>
+                                                        <td disabled="disabled">
+                                                            <div class="funkyradio-primary disabled" disabled="disabled" title="Inactivo">
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario2" value="2" disabled="disabled" />
+                                                                <label for="tipoUsuario2">Estudiante</label>
+                                                            </div>
+                                                        </td>
+                                                        <td disabled="disabled" title="Inactivo">
+                                                            <div class="funkyradio-primary disabled" disabled="disabled">
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario3" value="3" disabled="disabled" />
+                                                                <label for="tipoUsuario3">Operador</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="funkyradio-primary">
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario1" value="1" checked />
+                                                                <label for="tipoUsuario1">Funcionario</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div style="display: none; font-family: Lora, Helvetica Neue, Helvetica, Arial, sans-serif;" id="idpasserror" class="error">Usuario ó Contraseña Incorrectos! </div>
+                                        <div class="input-group">
+                                        </div>
+
+
+                                        <div style="margin-top: 10px" class="form-group">
+                                            <!-- Buton de ingreso -->
+                                            <div class="col-sm-6 controls">
+                                                <input type="button" value="Ingresar" class="btn btn-primary" id="ingresar" style="float: left; background: rgba(16, 14, 48, 0.91);" />
+                                                <div hidden id="cargando" class="spinner icon-spinner-2" style="color: white; float: right;" aria-hidden="true"></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Fin de inicio de sesión -->
+            </div>
+        </div>
+    </section>
+</header>
+
+<!--Inicia la lista de imágenes -->
+<section id="servicios" class='picture-information' style="background-color: #0B1727; margin-top: 50px">
+    <div class='container' style="background-color: #0B1727;">
+        <div class='row' style="height: 500px;">
+            <div class='col-md-12 shym-text-center'>
+                <h3 style="color: white" class='shym-text-uppercase'>Nuestros servicios</h3>
+            </div>
+
+
+            <div class='gap'>
+            </div>
+            <div class='col-md-12 col-sm-12 col-xs-12'>
+                <div class='col-sm-3 '>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter right and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del servicio
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#">Servicio 1</a> </h3>
+                                <p style="color: white; margin-top: -15px">
+                                    Detalles
+                                </p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del servicio 2
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#sesion">Servicio 2</a> </h3>
+                                <p>Detalles...</p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3 '>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter left and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del Servicio 3
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#sesion">Servicio 3</a> </h3>
+                                <p>Detalles</p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter bottom and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del servicio 4
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#sesion">Servicio 4</a> </h3>
+                                <p>Detalles</p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del servicio 5
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#sesion">Servicio 5</a> </h3>
+                                <p>Detalles</p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-3'>
+                    <div class='picture-info' data-scroll-reveal="wait 0.25s, then enter top and move 40px over 1s">
+                        <img src="~/Content/Imagenes/Auditorio.jpg" style="border-radius: 10px;" />
+                        <p style="color: white">
+                            Descripción del servicio 6
+                        </p>
+                        <div class="shym-overlay" style="border-radius: 4px;">
+                            <div class="shym-picture-detail-inner">
+                                <h3><a href="#sesion">Servicio 6</a> </h3>
+                                <p>Detalles</p>
+                                <a href="#sesion" class="btn btn-default"> Ingresar </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Fin de la lista de servicios -->
+<!-- Sección de ayuda y contacto -->
+<section id="contacto" class="container content-section text-center" data-scroll-reveal="wait 0.25s, then enter right and move 40px over 2s">
+    <div class="row" style="height: 500px;">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contáctenos</h2>
+            <p>
+                Para cualquier consulta o duda acerca de nuestros servicios, puede hacerlo a <a href="">Sistema Horas Consulta</a> y con gusto
+                le responderemos lo antes posible.
+            </p>
+            <p>
+                También le atenderemos con gusto en nuestro teléfono de oficina: <a href="">ext. Sistema Horas Consulta</a> | Sede Central
+            </p>
+
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer>
+
+    <div class="container text-center" data-scroll-reveal="wait 0.25s, then enter left and move 60px over 2s">
+        <p>&copy; @DateTime.Now.Year - Inpresiones LAIMI - Tecnológico de Costa Rica</p>
+    </div>
+</footer>
+
+@* Necesario *@
+<script src="~/scripts/Autenticacion/scrollReveal.js"></script>
+@* Animación entrada *@
+<script src="~/scripts/Autenticacion/animacion.js"></script>
+<!-- Plugin JavaScript  Animación para navegar entre páginas de inicio-->
+<script src="~/scripts/Autenticacion/jquery.easing.min.js"></script>
+<!-- Custom Theme JavaScript  Animación para navegar entre páginas de inicio-->-->
+<script src="~/scripts/Autenticacion/grayscale.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#idusererror').hide();
+        $('#idpasserror').hide();
+        $('#circularG').hide();
+
+        $('#pass').keypress(function (e) {
+            if (e.which == 13) {
+                $('#cargando').show();
+                $('#idusererror').hide();
+                $('#idpasserror').hide();
+                $('#circularG').show();
+                var user = $('#user').val();
+                var pass = $('#pass').val();
+                var tipoUsuario = $("input[name='tipoUsuario']:checked").val();
+                //var URL =window.location.pathname;
+                var URL = window.location.href;
+                var lastChar = URL.charAt(URL.length - 1);
+                if (lastChar === "/") {
+                    URL = URL + 'Home/Ingresar/';
+                } else { URL = URL + '/Home/Ingresar/'; }
+                var datos = [user, pass, tipoUsuario];
+                $.ajax({
+                    type: "POST",
+                    url: URL,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(datos),
+                    dataType: "json",
+                    success: function (msg) {
+                        resultado = msg.Success;
+                        if (resultado == "True") {
+                            successFunc();
+                        } else {
+                            errorFunc();
+                        }
+                    },
+                    error: errorFunc
+                });
+                function successFunc() {
+                    $('#ingresar').val("Iniciando Sesion ...");
+                    $('#cargando').hide();
+                    $('#idusererror').hide();
+                    $('#idpasserror').hide();
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }
+                function errorFunc() {
+                    $('#cargando').hide();
+                    $('#idusererror').show(700);
+                    $('#idpasserror').show(700);
+                }
+            }
+        });
+        $('#ingresar').on("click", function () {
+            $('#idusererror').hide();
+            $('#cargando').show();
+            $('#idpasserror').hide();
+            var user = $('#user').val();
+            var pass = $('#pass').val();
+            var tipoUsuario = $("input[name='tipoUsuario']:checked").val();
+             //var URL =window.location.pathname;
+             var URL = window.location.href;
+                var lastChar = URL.charAt(URL.length - 1);
+                if (lastChar === "/") {
+                    URL = URL + 'Home/Ingresar/';
+                } else { URL = URL + '/Home/Ingresar/'; }
+                var datos = [user, pass, tipoUsuario];
+            //debugger;
+            var datos = [user, pass, tipoUsuario];
+            $.ajax({
+                type: "POST",
+                url: URL,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(datos),
+                dataType: "json",
+                success: function (msg) {
+                    //debugger;
+                    resultado = msg.Success;
+                    if (resultado == "True") {
+                        successFunc();
+                    } else {
+                        errorFunc();
+                    }
+                },
+                error: errorFunc
+            });
+            function successFunc() {
+                $('#ingresar').val("Iniciando Sesion ...");
+                $('#cargando').hide();
+                $('#idusererror').hide();
+                $('#idpasserror').hide();
+                window.location.href = '@Url.Action("Index", "Home")';
+            }
+            function errorFunc() {
+                $('#cargando').hide();
+                $('#idusererror').show(300);
+                $('#idpasserror').show(300);
+            }
+
+        });
+
+    });
+
+</script>

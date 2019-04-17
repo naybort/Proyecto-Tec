@@ -12,8 +12,8 @@ namespace SistemaHorasConsulta.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        [AllowAnonymous]
+        public ActionResult Autenticacion()
         {
             ViewBag.Message = "Your application description page.";
 
@@ -26,5 +26,13 @@ namespace SistemaHorasConsulta.Controllers
 
             return View();
         }
+
+        public ActionResult LogOff()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Autenticacion", "Home");
+        }
+
     }
 }

@@ -11801,11 +11801,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\germa\\source\\repos\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
+      "projectUniqueName": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
       "projectName": "ITCR.DATIC.SistemaHorasConsulta.Negocio",
-      "projectPath": "C:\\Users\\germa\\source\\repos\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
+      "projectPath": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
       "packagesPath": "C:\\Users\\germa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\germa\\source\\repos\\SistemaHorasConsulta\\Negocio\\obj\\",
+      "outputPath": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
