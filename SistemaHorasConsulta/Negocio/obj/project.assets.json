@@ -11795,23 +11795,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\germa\\.nuget\\packages\\": {},
+    "C:\\Users\\andre\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
+      "projectUniqueName": "C:\\Users\\andre\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
       "projectName": "ITCR.DATIC.SistemaHorasConsulta.Negocio",
-      "projectPath": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
-      "packagesPath": "C:\\Users\\germa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\germa\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\obj\\",
+      "projectPath": "C:\\Users\\andre\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj",
+      "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\andre\\Documents\\GitHub\\Proyecto-Tec\\SistemaHorasConsulta\\Negocio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\germa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

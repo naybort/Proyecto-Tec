@@ -226,6 +226,7 @@
     <Content Include="Views\Shared\_Principal.cshtml" />
     <Content Include="Views\Estudiante\SeleccionarTematica.cshtml" />
     <Content Include="Views\Estudiante\SeleccionarProfesor.cshtml" />
+    <Content Include="Views\Estudiante\Calendario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
