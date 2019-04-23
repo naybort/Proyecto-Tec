@@ -29,6 +29,20 @@ AS
 	WHERE t.IdTematica = @IdTematica;
 GO
 
+--Procedimiento para mostrar los horarios de cada profesor
+USE SistemaConsultas
+GO
+CREATE PROCEDURE Pr_HorarioProfesor_Consultar
+	@IdProfesor int
+AS
+	SELECT *
+	FROM ProfesorXHorario ph
+	INNER JOIN Horario h
+	on h.idHorario = ph.IdHorario
+	WHERE ph.IdProfesor = @IdProfesor;
+GO
+
+
 -- Procedimiento para insertar citas
 USE SistemaConsultas
 GO
@@ -38,6 +52,7 @@ CREATE PROCEDURE Pr_Cita_Insertar
 AS
 	INSERT INTO Citas (IdLugar,IdHorario)
 	VALUES (@IdLugar, @IdHorario)
+	
 GO
 
 --Procedimiento para insertar en CitasxProfesor
@@ -64,5 +79,29 @@ GO
 
 
 -- Eliminar procedimiento en caso de necesitar cambiarlo. 
-DROP PROCEDURE Pr_'nombre_del_procedimiento'
+DROP PROCEDURE Pr_Cita_Insertar_Prueba
+GO
+
+
+-- Procedimiento para insertar citas prueba
+USE SistemaConsultas
+GO
+ALTER PROCEDURE Pr_Cita_Insertar_Prueba
+	@IdLugar int,
+	@IdHorario int,
+	@IdProfesor int,
+	@IdEstudiante int
+AS
+	DECLARE @IdCita int
+	
+	INSERT INTO Citas (IdLugar,IdHorario)
+	VALUES (@IdLugar, @IdHorario);
+	SET @IdCita = (SELECT IdCita FROM Citas WHERE IdCita= (SELECT MAX(IdCita) FROM Citas))
+	PRINT @IdCita
+
+	INSERT INTO CitaXProfesor(IdCita, IdProfesor)
+	VALUES (@IdCita, @IdProfesor)
+	
+	INSERT INTO CitaXEstudiante(IdCita, IdEstudiante)
+	VALUES (@IdCita, @IdEstudiante)
 GO
