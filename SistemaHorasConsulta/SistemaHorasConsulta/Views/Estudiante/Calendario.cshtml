@@ -25,9 +25,9 @@ Layout = "~/Views/Shared/_Principal.cshtml";
             selectable: true,
             selectMirror: true,
             select: function (arg) {
-                $("#exampleModalLabel").text("usted está a punto de reservar una cita para la fecha: " + arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear() + ", con el profesor: " + profesor);
-                $("#exampleModal").modal();
-                $("#exampleModal").on('hidden.bs.modal', function () {
+                $("#examplemodallabel").text("usted está a punto de reservar una cita para la fecha: " + arg.start.getdate() + "-" + arg.start.getmonth() + "-" + arg.start.getfullyear() + ", con el profesor: " + profesor);
+                $("#examplemodal").modal();
+                $("#examplemodal").on('hidden.bs.modal', function () {
                     calendar.addevent({
                         title: "reservado",
                         start: arg.start,
