@@ -18,6 +18,12 @@ namespace SistemaHorasConsulta.Controllers
         {
             return View();
         }
+        // GET: Estudiante
+        public ActionResult Calendario()
+        {
+            return View();
+        }
+
     }
         
     
