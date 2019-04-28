@@ -22,6 +22,9 @@
 
     <link href="~/Content/paginaInicio/loadings.css" rel="stylesheet" />
     <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href='~/Content/packages/core/main.css' rel='stylesheet' />
+    <link href='~/Content/packages/daygrid/main.css' rel='stylesheet' />
+    <link href='~/Content/packages/timegrid/main.css' rel='stylesheet' />
     @RenderSection("header", required: false)
 
     <!-- Theme style -->
@@ -45,12 +48,12 @@
 
 
 
-    @*@Scripts.Render("~/bundles/jquery")*@
-    <script src="~/Scripts/jquery-2.2.4.js"></script>
+   *@Scripts.Render("~/bundles/jquery")*
+  \ <script src="~/Scripts/jquery-2.2.4.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     @Scripts.Render("~/bundles/jquery-ui")
-    <script src="~/Scripts/bootstrap-toggle.min.js"></script>
+   @* <script src="~/Scripts/bootstrap-toggle.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/toastr.js"></script>
 
@@ -63,16 +66,11 @@
     <script src="~/Scripts/jquery.mask.js"></script>
     <script src="~/Scripts/paginaInicio/fileinput.js"></script>
     <script src="~/Scripts/locales/es.js"></script>
-    <script src="~/Scripts/locales/LANG.js"></script>
+    <script src="~/Scripts/locales/LANG.js"></script>*@
 
 
-    <link href='~/Content/packages/core/main.css' rel='stylesheet' />
-    <link href='~/Content/packages/daygrid/main.css' rel='stylesheet' />
-    <link href='~/Content/packages/timegrid/main.css' rel='stylesheet' />
+
     <script src='~/Content/packages/core/main.js'></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    
     <script src='~/Content/packages/daygrid/main.js'></script>
     <script src='~/Content/packages/timegrid/main.js'></script>
 </head>
@@ -186,7 +184,6 @@
 
 
 
-    @RenderSection("Scripts", required: false)
     <script>
 
     //Enable sidebar toggle
@@ -211,10 +208,7 @@
 
 
 
-    $(window).unload(function () {
-        //debugger;
-        waitingDialog.show('Cargando Información');
-    });
+
 
     $(function () {
         $(":checkbox").css('display', 'none');
@@ -291,68 +285,10 @@
         countdownBar: true
     });
     //alert('despues del timeout');
-    $("document").ready(function () {
-       // debugger;
-        waitingDialog.hide();
-    });
+    
 
     </script>
-    <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var profesor = "Jose Pablo Castillo Halabí";
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: ['interaction', 'dayGrid', 'timeGrid'],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                defaultDate: '2019-04-12',
-                navLinks: true, // can click day/week names to navigate views
-                selectable: true,
-                hiddenDays:[1,3,5,6,7],
-                selectMirror: true,
-                select: function (arg) {
-                    $("#exampleModalLabel").text("Usted está a punto de reservar una cita para la fecha: " + arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear() + ", con el profesor: " + profesor);
-                    $('#exampleModal').modal();
-                    $("#exampleModal").on('hidden.bs.modal', function () {
-                        calendar.addEvent({
-                            title: "Reservado",
-                            start: arg.start,
-                            end: arg.end,
-                            allday: arg.allDay
-                        })
-                        calendar.unselect();
-                    });
-                },
-
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-            });
-
-            calendar.render();
-        });
-
-        function reserva() {
-            $('#exampleModal').modal("hide");
-        }
-    </script>
-    <style>
-
-        body {
-            margin: 40px 10px;
-            padding: 0;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
-        }
-
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style>
+  
 </body>
 </html>
