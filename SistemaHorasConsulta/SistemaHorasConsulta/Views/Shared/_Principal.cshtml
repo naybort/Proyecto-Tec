@@ -68,7 +68,7 @@
 </head>
 @{
    //revisa al inicio vía razor si la sesión del usuario aún es válida
-    if (Session["ID_USUARIO"] != null)
+    @*if (Session["ID_USUARIO"] != null)
     {
         var iduser = Session["ID_USUARIO"];
     }
@@ -76,7 +76,7 @@
     {
         Session.Abandon();
         Response.Redirect("~/Home/LogOff");
-    }
+    }*@
 }
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
@@ -98,7 +98,18 @@
             <a href="@Url.Action("Index", "Home")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
                 <span class="glyphicon glyphicon-home breadcrumb"></span>
             </a>
-         
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#">Salir</a>
+                    </li>
+
+                </ul>
+            </div>
         </nav>
     </header>
 

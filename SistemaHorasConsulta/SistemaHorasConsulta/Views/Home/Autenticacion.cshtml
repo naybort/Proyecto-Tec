@@ -24,14 +24,9 @@
                     <a href="#page-top"></a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#sesion">Ingresar</a>
+                    <a class="page-scroll" href="#sesion">Sistema Horas Consulta</a>
                 </li>
-                <li>
-                    <a class="page-scroll" href="#servicios">Nuestros Servicios</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#contacto">Contáctenos</a>
-                </li>
+             
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -41,7 +36,7 @@
 
 <!-- Intro Header -->
 <header class="intro">
-    <section id="sesion" class="content-section text-center" style="height:70em">
+    <section id="sesion" class="content-section text-center" style="height:100%">
         <div class="intro-body" data-scroll-reveal="wait 0.25s, then enter top and move 140px over 2s" style="display: -ms-inline-flexbox !important;display: -webkit-box !important">
             <div class="container">
                 <div class="row" style="height: 120px">
@@ -54,7 +49,7 @@
                     <div class="col-sm-offset-6 col-md-6" style="margin-top: 0; min-width: 40em; max-width: 40em; margin-right: auto !important; margin-left: auto !important;float:none!important">
                         @*<h3 style="margin-left: 40px; font-family: -webkit-pictograph">Inicio de Sesión</h3>*@
 
-                        <img src="~/Content/Imagenes/datic.png" style="width: 70px; height: 34px; float: right; margin-top: 8px; margin-right: 26px;" data-scroll-reveal="wait 1.25s, then enter left and move 100px over 2s" />
+                       
 
                         <div id="loginbox" style="margin-left: 35px" class="mainbox" data-scroll-reveal="wait 0.25s, then enter right and move 100px over 2s">
                             <div class="panel panel-info" style="border-color: lavender; border-top-left-radius: 50px; border-bottom-left-radius: 20px; border-bottom-right-radius: 100px">
@@ -82,21 +77,21 @@
                                             <div class="funkyradio">
                                                 <table style="width: 100%">
                                                     <tr>
-                                                        <td disabled="disabled">
+                                                        <td >
                                                             <div class="funkyradio-primary disabled" disabled="disabled" title="Inactivo">
-                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario2" value="2" disabled="disabled" />
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario2" value="2"   checked/>
                                                                 <label for="tipoUsuario2">Estudiante</label>
                                                             </div>
                                                         </td>
-                                                        <td disabled="disabled" title="Inactivo">
-                                                            <div class="funkyradio-primary disabled" disabled="disabled">
-                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario3" value="3" disabled="disabled" />
+                                                        <td>
+                                                            <div class="funkyradio-primary " disabled="disabled">
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario3" value="3" " />
                                                                 <label for="tipoUsuario3">Operador</label>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div class="funkyradio-primary">
-                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario1" value="2" checked />
+                                                            <div class="funkyradio-primary disabled">
+                                                                <input type="radio" name="tipoUsuario" id="tipoUsuario1" value="1" />
                                                                 <label for="tipoUsuario1">Funcionario</label>
                                                             </div>
                                                         </td>
