@@ -13,12 +13,15 @@ namespace SistemaHorasConsulta.Controllers
         {
             return View();
         }
-        // GET: Estudiante
         public ActionResult SeleccionarProfesor()
         {
             return View();
         }
+        public ActionResult Calendario()
+        {
+            return View();
+        }
     }
+}
         
     
-}
