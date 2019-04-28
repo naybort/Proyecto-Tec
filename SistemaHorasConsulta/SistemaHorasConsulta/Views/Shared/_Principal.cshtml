@@ -67,7 +67,7 @@
 
 </head>
 @{
-    /*revisa al inicio vía razor si la sesión del usuario aún es válida
+   //revisa al inicio vía razor si la sesión del usuario aún es válida
     if (Session["ID_USUARIO"] != null)
     {
         var iduser = Session["ID_USUARIO"];
@@ -76,7 +76,7 @@
     {
         Session.Abandon();
         Response.Redirect("~/Home/LogOff");
-    }*/
+    }
 }
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
@@ -131,7 +131,7 @@
                     </div>
                     <div class="pull-left info">
                         <p>Bienvenido(a)</p>
-                        <p> @Session["NOM_USUARIO"]</p>
+                        <p> @Session["NOM_USUARIO"] </p>
                     </div>
                 </div>
 

@@ -10,6 +10,7 @@ namespace Modelos
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static int CodAplicación = 235;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SistemaHorasConsulta.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SistemaHorasConsulta_wsSeguridad_Seguridad" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://vtec-desarrollo/wsseguridad/seguridad.asmx</Value>
+    </Setting>
+    <Setting Name="SistemaHorasConsulta_wsDar_AdmisionyRegistro" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://tec-apps/wsDAR/admisionyregistro.asmx</Value>
+    </Setting>
+    <Setting Name="SistemaHorasConsulta_wsFotosEstudiantes_wsUtilitarios" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://tec-apps/utilitarios/wsutilitarios.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

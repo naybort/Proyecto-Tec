@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0daf1aea-1db5-42b8-be75-e12384564830" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://vtec-appspruebas/wcfSeguridadTEC/ServiciosWeb/TEC_WCF_Seguridad.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WCF_Seguridad.wsdl" MetadataType="Wsdl" ID="2b876be7-390b-4268-bbdd-6aff148ff61c" SourceId="1" SourceUrl="http://vtec-appspruebas/wcfSeguridadTEC/ServiciosWeb/TEC_WCF_Seguridad.svc?wsdl" />
+    <MetadataFile FileName="TEC_WCF_Seguridad.disco" MetadataType="Disco" ID="4099bc0c-4e61-4148-9af0-0fadb008a94f" SourceId="1" SourceUrl="http://vtec-appspruebas/wcfSeguridadTEC/ServiciosWeb/TEC_WCF_Seguridad.svc?disco" />
+    <MetadataFile FileName="TEC_WCF_Seguridad.xsd" MetadataType="Schema" ID="2dca51d3-21df-4a6b-ad40-773f457a7c7c" SourceId="1" SourceUrl="http://vtec-appspruebas/wcfSeguridadTEC/ServiciosWeb/TEC_WCF_Seguridad.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
