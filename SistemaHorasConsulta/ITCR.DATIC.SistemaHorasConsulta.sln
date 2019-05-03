@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITCR.DATIC.SistemaHorasCons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "..\..\..\..\Desktop\API\API.csproj", "{FE987DD2-C9AB-4C5E-98FF-8F8B698E3A25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API2", "API2\API2.csproj", "{751CFB32-4BF4-4584-B6EE-897F445987AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FE987DD2-C9AB-4C5E-98FF-8F8B698E3A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE987DD2-C9AB-4C5E-98FF-8F8B698E3A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE987DD2-C9AB-4C5E-98FF-8F8B698E3A25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{751CFB32-4BF4-4584-B6EE-897F445987AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{751CFB32-4BF4-4584-B6EE-897F445987AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{751CFB32-4BF4-4584-B6EE-897F445987AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{751CFB32-4BF4-4584-B6EE-897F445987AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

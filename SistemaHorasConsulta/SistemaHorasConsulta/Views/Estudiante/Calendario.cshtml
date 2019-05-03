@@ -6,6 +6,8 @@
 <html>
 <head>
     <meta charset='utf-8' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src='~/Scripts/bootstrap.js'></script>
     <link href='/Content/packages/core/main.css' rel='stylesheet' />
     <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
     <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
@@ -13,6 +15,8 @@
     <script src='/Content/packages/interaction/main.js'></script>
     <script src='/Content/packages/daygrid/main.js'></script>
     <script src='/Content/packages/timegrid/main.js'></script>
+
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -31,76 +35,22 @@
                 selectMirror: true,
                 hiddenDays: [0, 1, 2, 4, 5],
                 select: function (arg) {
-                    var title = prompt('Event Title:');
-                    if (title) {
+                    $("#exampleModalLabel").text("Usted está a punto de reservar una cita para la fecha: " + arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear() + ", con el profesor: ");
+                    $('#exampleModal').modal('show');
+                    $("#exampleModal").on('hidden.bs.modal', function () {
                         calendar.addEvent({
-                            title: title,
+                            title: "Reservado",
                             start: arg.start,
                             end: arg.end,
-                            allDay: arg.allDay
+                            allday: arg.allDay
                         })
-                    }
-                    calendar.unselect()
+
+                        calendar.unselect()
+                    });
                 },
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: '2019-03-01',
 
-                    },
-                    {
-                        title: 'Long Event',
-                        start: '2019-03-07',
-                        end: '2019-03-10'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2019-03-09T16:00:00'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2019-03-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2019-03-11',
-                        end: '2019-03-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2019-03-12T10:30:00',
-                        end: '2019-03-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2019-03-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2019-03-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2019-03-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2019-03-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2019-03-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2019-03-28'
-                    }
-                ]
             });
 
             calendar.render();
@@ -121,7 +71,7 @@
             margin: 0 auto;
         }
     </style>
-   
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <title>Sistema Horas Consulta</title>
@@ -158,13 +108,13 @@
 
 
 
-    
-    
-  
 
 
 
- 
+
+
+
+
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -242,7 +192,9 @@
             <aside class="right-side">
                 <div class="container body-content">
                     <div class="main main-raised">
-                        <div id='calendar'></div>
+                        <div id='calendar' style="
+    margin-top: 75px;
+    margin-bottom: 75px;"></div>
                     </div>
                 </div>
             </aside>
@@ -252,7 +204,33 @@
             </footer>
         </div>
 
-
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="browser-default custom-select">
+                            <option selected>Seleccione una hora</option>
+                            <option value="1">1:00 pm</option>
+                            <option value="2">1:20 pm</option>
+                            <option value="3">1:40 pm</option>
+                            <option value="3">2:00 pm</option>
+                            <option value="3">2:20 pm</option>
+                            <option value="3">2:40 pm</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="reserva()">Reservar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
 
     //Enable sidebar toggle

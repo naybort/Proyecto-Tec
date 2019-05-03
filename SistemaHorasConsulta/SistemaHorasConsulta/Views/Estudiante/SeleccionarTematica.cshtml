@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Modelos.Tematica>
 @{
     ViewBag.Title = "SeleccionarTematica";
     Layout = "~/Views/Shared/_Principal.cshtml";
@@ -8,38 +8,25 @@
     <div class="container">
         <div class="section text-center">
             <div class="container3">
-                <!-- 
-     {
-         <div class="element-card">
-             <div class="front-facing">
-                 <h6> </h6>
-                 <p class="title"></p>
+                @foreach (var tematica in Model)
+                {
 
-             </div>
-             <div class="back-facing">
-                 <p>Breve descripción</p>
-                 <p><a class="btn" href="Student/professorList">Seleccionar</a></p>
-             </div>
-         </div>
-     -->
+                    <div class="element-card">
+                        <div class="front-facing">
+                            <h6> @tematica.NombreTematica</h6>
+                            <p class="title"></p>
 
-                <div class="element-card">
-                    <div class="front-facing">
-                        <h6> Prueba</h6>
-                        <p class="title"></p>
-
+                        </div>
+                        <div class="back-facing">
+                            <p>Breve descripción</p>
+                            <p><a class="btn" href="Estudiante/SeleccionarProfesor">Seleccionar</a></p>
+                        </div>
                     </div>
-                    <div class="back-facing">
-                        <p>Breve descripción</p>
-                        <p><a class="btn" href="Estudiante/SeleccionarProfesor">Seleccionar</a></p>
-                    </div>
+                }
+
+
                 </div>
-
-
-
-            </div>
 
         </div>
     </div>
 </div>
-  
