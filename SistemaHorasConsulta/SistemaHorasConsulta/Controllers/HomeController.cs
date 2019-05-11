@@ -14,10 +14,7 @@ namespace SistemaHorasConsulta.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+    
         [AllowAnonymous]
         public ActionResult Autenticacion()
         {
@@ -26,12 +23,7 @@ namespace SistemaHorasConsulta.Controllers
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+    
         private bool EsEstudianteActivo(string IdUsuario)
         {
             wsDar.AdmisionyRegistro wsdar = new wsDar.AdmisionyRegistro();
