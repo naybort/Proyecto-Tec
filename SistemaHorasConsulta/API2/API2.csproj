@@ -176,7 +176,7 @@
     <Compile Include="ConexionBD.cs" />
     <Compile Include="Controllers\CitaController.cs" />
     <Compile Include="Controllers\EstudianteController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HorarioController.cs" />
     <Compile Include="Controllers\LugarController.cs" />
     <Compile Include="Controllers\ProfesorController.cs" />
     <Compile Include="Controllers\TematicaController.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="Models\ICita.cs" />
     <Compile Include="Models\ICitaXEstudiante.cs" />
     <Compile Include="Models\IEstudiante.cs" />
+    <Compile Include="Models\IHorario.cs" />
     <Compile Include="Models\ILugar.cs" />
     <Compile Include="Models\IProfesor.cs" />
     <Compile Include="Models\ISubTematica.cs" />

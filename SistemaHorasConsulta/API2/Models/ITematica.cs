@@ -41,5 +41,23 @@ namespace API.Models
             return arrayTematicas;
         }
 
+        public List<IProfesor> getProfesoresPorTematica(int idTematica)
+        {
+            ITematica temp = new ITematica();
+            temp = temp.getTematica(idTematica);
+
+            List<IProfesor> listaProfesores = new List<IProfesor>();
+
+            var tematicaXprofesor = bd.ProfesorXTematicas.Where(x => x.IdTematica == temp.IdTematica).ToList();
+            foreach (var profesor in tematicaXprofesor)
+            {
+                IProfesor temProfesor = new IProfesor();
+                listaProfesores.Add(temProfesor.getProfesor(profesor.IdProfesor));
+
+            }
+
+            return listaProfesores;
+        }
+
     }
 }

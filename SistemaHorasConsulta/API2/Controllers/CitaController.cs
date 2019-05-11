@@ -25,8 +25,23 @@ namespace API.Controllers
         }
 
         // POST: api/Cita
-        public void Post([FromBody]string value)
+        // POST: api/Cita
+        public HttpResponseMessage Post([FromBody]ICita cita)
         {
+
+            try
+            {
+                ICita temp = new ICita();
+                temp.guardarCita(cita);
+                var message = Request.CreateResponse(HttpStatusCode.Created, cita);
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+
         }
 
         // PUT: api/Cita/5

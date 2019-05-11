@@ -23,7 +23,8 @@ namespace API.Models
                 estudiante.PrimerApellido = temo.PrimerApellido;
                 estudiante.SegundoApellido = temo.SegundoApellido;
                 estudiante.CorreoElectronico = temo.CorreoElectronico;
-                estudiante.citas.Add(new ICita());
+           
+        
 
                 List < CitaXEstudiante> tempCitas = bd.CitaXEstudiantes.Where(x => x.IdCita == temo.IdEstudiante).ToList();
 

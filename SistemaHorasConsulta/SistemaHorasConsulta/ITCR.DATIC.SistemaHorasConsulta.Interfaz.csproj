@@ -633,6 +633,7 @@
     <Content Include="Connected Services\WSSeguridadTec\SistemaHorasConsulta.WSSeguridadTec.Usu_ValidarRelacionADResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Views\Estudiante\Agenda.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -940,6 +941,10 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\API2\API2.csproj">
+      <Project>{751cfb32-4bf4-4584-b6ee-897f445987aa}</Project>
+      <Name>API2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modelos\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
       <Project>{f5aaeaff-5114-41ae-b121-c4cf3b83f4a3}</Project>
       <Name>ITCR.DATIC.SistemaHorasConsulta.Modelo</Name>

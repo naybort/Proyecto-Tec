@@ -4,12 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using API.Models;
 
 namespace API.Controllers
 {
     public class TematicaController : ApiController
     {
+
+
+        [Route("api/Tematica/{tematicaId:int}/profesores")]
+        [ResponseType(typeof(IEnumerable<IProfesor>))]
+        public IEnumerable<IProfesor> GetHorarioProfesor(int tematicaId)
+        {
+            ITematica tematica = new ITematica();
+            
+            return tematica.getProfesoresPorTematica(tematicaId);
+        }
+
         // GET: api/Tematica
         public IEnumerable<ITematica> Get()
         {

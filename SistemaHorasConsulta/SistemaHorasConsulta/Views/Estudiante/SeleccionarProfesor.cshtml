@@ -1,241 +1,72 @@
-﻿
+﻿@model IEnumerable<API.Models.IProfesor>
 @{
     ViewBag.Title = "SeleccionarProfesor";
     Layout = "~/Views/Shared/_Principal.cshtml";
 }
 
 <div class="container body-content">
+
     <div class="main main-raised">
         <div class="container">
             <div class="section text-center">
                 <ul class="collapsible popout" data-collapsible="accordion">
-                    <li class="">
-                        <div class="collapsible-header">Bulgarelli Bolaños José Pablo</div>
-                        <div class="collapsible-body" style="">
-                            <p></p>
-                            <div class="content">
-                                <div class="container-fluid">
-                                    <div class="row">
+                    @foreach (var profesor in Model)
+                    {
+                        <li class="">
+                            <div class="collapsible-header"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.Nombre</div>
+                            <div class="collapsible-body" style="">
+                                <p></p>
+                                <div class="content">
+                                    <div class="container-fluid">
+                                        <div class="row">
 
-                                        <div class="card2 card2-profile">
-                                            <div class="card2-avatar">
-                                                <a href="#pablo">
-                                                    <img class="img" src="~/assets/Images/Profesores/Jose_Pablo_Bolaños.PNG" />
-                                                </a>
-                                            </div>
-                                            <div class="card2-body">
-                                                <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                <h4 class="card2-title">Bulgarelli Bolaños José Pablo</h4>
-                                                <table>
-                                                    <tr>
-                                                        <th>Especialidades</th>
-                                                        <th>Dias de atencion</th>
-                                                        <th>Horario</th>
-                                                        <th>Ubicación</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Composición y principios de diseño,
-                                                            Diseño arquitectónico,
-                                                            Sostenibilidad,
-                                                            Gestión de proyectos,
-                                                            Patrimonio,
-                                                            Investigación y extensión
-                                                        </td>
-                                                        <td>Martes</td>
-                                                        <td>7:00 am a 11:00 am</td>
-                                                        <td>
-                                                            Edificio -SJ2 - Oficina 2
-                                                        </td>
-                                                    </tr>
+                                            <div class="card2 card2-profile">
+                                                <div class="card2-avatar">
+                                                    <a href="#pablo">
+                                                        <img class="img" src="~/assets/Images/Profesores/Jose_Pablo_Bolaños.PNG" />
+                                                    </a>
+                                                </div>
+                                                <div class="card2-body">
+                                                    <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
+                                                    <h4 class="card2-title">Bulgarelli Bolaños José Pablo</h4>
+                                                    <table>
+                                                        <tr>
+                                                            <th>Campos de atención al estudiante</th>
+                                                            <th>Dias de atencion</th>
+                                                            <th>Horario</th>
+                                                            <th>Ubicación</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Composición y principios de diseño,
+                                                                Diseño arquitectónico,
+                                                                Sostenibilidad,
+                                                                Gestión de proyectos,
+                                                                Patrimonio,
+                                                                Investigación y extensión
+                                                            </td>
+                                                            <td>@profesor.listaHorarios[0].Dia</td>
+                                                            <td>@profesor.listaHorarios[0].HoraInicio.Date a @profesor.listaHorarios[0].HoraFinal.Date</td>
+                                                            <td>
+                                                                Edificio -SJ2 - Oficina 2
+                                                            </td>
+                                                        </tr>
 
-                                                </table>
-                                                <div class="collapsible-body" style="">
-                                                    <p></p>
-                                                    <a href="#pablo" class="btn btn-primary btn-round">Ver disponibilidad de citas</a>
+                                                    </table>
+                                                    <div class="collapsible-body" style="">
+                                                        <p></p>
+                                                        @Html.ActionLink("Ver disponibilidad de citas", "Calendario", new { idProfesor = profesor.IdProfesor }, new { @class = "btn btn-primary" })
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
-
                                     </div>
-                                </div>
 
 
-                    </li>
-                    <li class="">
-                        <div class="collapsible-header">
-                            Azofeifa Ortiz Carlos
-                        </div>
-                        <div class="collapsible-body" style="">
-                            <p></p>
-                            <div class="content">
-                                <div class="container-fluid">
-                                    <div class="row">
-
-                                        <div class="card2 card2-profile">
-                                            <div class="card2-avatar">
-                                                <a href="#pablo">
-                                                    <img class="img" src="~/assets/Images/Profesores/Carlos_Ortiz.PNG" />
-                                                </a>
-                                            </div>
-                                            <div class="card2-body">
-                                                <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                <h4 class="card2-title">
-                                                    Azofeifa Ortiz Carlos
-                                                </h4>
-                                                <table>
-                                                    <tr>
-                                                        <th>Especialidades</th>
-                                                        <th>Dias de atencion</th>
-                                                        <th>Horario</th>
-                                                        <th>Ubicación</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Composición y principios de diseño,
-                                                            Diseño arquitectónico,
-                                                            Sostenibilidad,
-                                                            Gestión de proyectos,
-                                                            Patrimonio,
-                                                            Investigación y extensión
-                                                        </td>
-                                                        <td>Martes</td>
-                                                        <td>7:00 am a 11:00 am</td>
-                                                        <td>
-                                                            Edificio -SJ2 - Oficina 2
-                                                        </td>
-                                                    </tr>
-
-                                                </table>
-                                                <div class="collapsible-body" style="">
-                                                    <p></p>
-                                                    <a href="#pablo" class="btn btn-success btn-round">Ver disponibilidad de citas</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                    </li>
-                    <li class="">
-                        <div class="collapsible-header">
-                            Ávila Zamora Andrea
-                        </div>
-                        <div class="collapsible-body" style="">
-                            <p></p>
-                            <div class="content">
-                                <div class="container-fluid">
-                                    <div class="row">
-
-                                        <div class="card2 card2-profile">
-                                            <div class="card2-avatar">
-                                                <a href="#pablo">
-                                                    <img class="img" src="~/assets/Images/Profesores/Andres_Avila.PNG" />
-                                                </a>
-                                            </div>
-                                            <div class="card2-body">
-                                                <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                <h4 class="card2-title">
-                                                    Ávila Zamora Andrea
-                                                </h4>
-                                                <table>
-                                                    <tr>
-                                                        <th>Especialidades</th>
-                                                        <th>Dias de atencion</th>
-                                                        <th>Horario</th>
-                                                        <th>Ubicación</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Composición y principios de diseño,
-                                                            Diseño arquitectónico,
-                                                            Sostenibilidad,
-                                                            Gestión de proyectos,
-                                                            Patrimonio,
-                                                            Investigación y extensión
-                                                        </td>
-                                                        <td>Martes</td>
-                                                        <td>7:00 am a 11:00 am</td>
-                                                        <td>
-                                                            Edificio -SJ2 - Oficina 2
-                                                        </td>
-                                                    </tr>
-
-                                                </table>
-                                                <div class="collapsible-body" style="">
-                                                    <p></p>
-                                                    <a href="#pablo" class="btn btn-success btn-round">Ver disponibilidad de citas</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                    </li>
-                    <li class="">
-                        <div class="collapsible-header">
-                            Castillo Camacho Francisco
-                        </div>
-                        <div class="collapsible-body" style="">
-                            <p></p>
-                            <div class="content">
-                                <div class="container-fluid">
-                                    <div class="row">
-
-                                        <div class="card2 card2-profile">
-                                            <div class="card2-avatar">
-                                                <a href="#pablo">
-                                                    <img class="img" src="~/assets/Images/Profesores/eh.PNG" />
-                                                </a>
-                                            </div>
-                                            <div class="card2-body">
-                                                <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                <h4 class="card2-title">
-                                                    Castillo Camacho Francisco
-                                                </h4>
-                                                <table>
-                                                    <tr>
-                                                        <th>Especialidades</th>
-                                                        <th>Dias de atencion</th>
-                                                        <th>Horario</th>
-                                                        <th>Ubicación</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Composición y principios de diseño,
-                                                            Diseño arquitectónico,
-                                                            Diseño urbano
-                                                            ,
-                                                            Sistemas estructurales y de construcción
-                                                            ,
-                                                            Instalaciones,
-
-                                                        </td>
-                                                        <td>Martes</td>
-                                                        <td>7:00 am a 11:00 am</td>
-                                                        <td>
-                                                            Edificio -SJ2
-
-                                                        </td>
-                                                    </tr>
-
-                                                </table>
-                                                <div class="collapsible-body" style="">
-                                                    <p></p>
-                                                    <a href="#pablo" class="btn btn-success btn-round">Ver disponibilidad de citas</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                    </li>
+                        </li>
+                    }
+       
 
                 </ul>
 

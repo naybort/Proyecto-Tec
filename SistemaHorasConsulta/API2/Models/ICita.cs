@@ -50,6 +50,16 @@ namespace API.Models
 
             return arrayCitas;
         }
+        public void guardarCita(ICita cita)
+        {
+            Cita tempCita = new Cita();
+
+            tempCita.IdHorario = cita.IdHorario;
+            tempCita.IdLugar = cita.IdLugar;
+
+            bd.Citas.Add(tempCita);
+            bd.SaveChanges();
+        }
 
 
     }

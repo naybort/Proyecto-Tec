@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Modelos;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using API.Models;
+
 namespace SistemaHorasConsulta.Controllers
 {
     public class EstudianteController : Controller
@@ -14,13 +16,13 @@ namespace SistemaHorasConsulta.Controllers
         // GET: Estudiante
         public ActionResult SeleccionarTematica()
         {
-            
-                IEnumerable<Tematica> tematicas = null;
-
+            @Session["Encabezado"] = "Seleccionar Temática";
+            IEnumerable<Tematica> tematicas = null;
+            Session["ID_USUARIO"] = 2016136466;
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:50013/api/Tematica");
-                    //HTTP GET
+        
                     var responseTask = client.GetAsync("tematica");
                     responseTask.Wait();
 
@@ -32,9 +34,8 @@ namespace SistemaHorasConsulta.Controllers
 
                         tematicas = readTask.Result;
                     }
-                    else //web api sent error response 
+                    else 
                     {
-                        //log response status here..
 
                         tematicas = Enumerable.Empty<Tematica>();
 
@@ -46,14 +47,147 @@ namespace SistemaHorasConsulta.Controllers
 
             return View(tematicas);
         }
-        public ActionResult SeleccionarProfesor()
+        public ActionResult SeleccionarProfesor(int? idTematica)
         {
-            return View();
+            @Session["Encabezado"] = "Profesores";
+            IEnumerable<IProfesor> profesores = null;
+
+            using (var client = new HttpClient())
+            {
+                string strUrl = "http://localhost:50013/api/Tematica/" + Convert.ToString(idTematica) + "/profesores";
+                client.BaseAddress = new Uri(strUrl);
+
+                var responseTask = client.GetAsync(strUrl);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<IProfesor>>();
+                    readTask.Wait();
+
+                    profesores = readTask.Result;
+                }
+                else
+                {
+
+                    profesores = Enumerable.Empty<IProfesor>();
+
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+
+
+            return View(profesores);
+   
+
         }
-        public ActionResult Calendario()
+        public ActionResult Calendario(int? idProfesor)
         {
-            return View();
+            @Session["IdProfesor"]= idProfesor;
+            IEnumerable<IHorario> profesores = null;
+
+            using (var client = new HttpClient())
+            {
+                string strUrl = "http://localhost:50013/api/Horario/profesor/" + Convert.ToString(idProfesor);
+                client.BaseAddress = new Uri(strUrl);
+
+                var responseTask = client.GetAsync(strUrl);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<IHorario>>();
+                    readTask.Wait();
+
+                    profesores = readTask.Result;
+                }
+                else
+                {
+
+                    profesores = Enumerable.Empty<IHorario>();
+
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+
+
+            return View(profesores);
         }
+        public ActionResult Agenda() {
+            @Session["Encabezado"] = "Agenda";
+            IEnumerable<IEstudiante> citas= null;
+
+            using (var client = new HttpClient())
+            {
+                string strUrl = "http://localhost:50013/api/Estudiante/" + Session["ID_USUARIO"];
+                client.BaseAddress = new Uri(strUrl);
+
+                var responseTask = client.GetAsync(strUrl);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<IEstudiante>>();
+                    readTask.Wait();
+
+                    citas = readTask.Result;
+                }
+                else
+                {
+
+                    citas = Enumerable.Empty<IEstudiante>();
+
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+
+
+            return View(citas);
+            
+        }
+
+        public JsonResult GetHorarios()
+        {
+            IEnumerable<IHorario> profesores = null;
+            using (var client = new HttpClient())
+            {
+                string strUrl = "http://localhost:50013/api/Horario/profesor/" + Convert.ToString(Session["IdProfesor"]);
+                client.BaseAddress = new Uri(strUrl);
+
+                var responseTask = client.GetAsync(strUrl);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<IHorario>>();
+                    readTask.Wait();
+
+                    profesores = readTask.Result;
+                }
+                else
+                {
+
+                    profesores = Enumerable.Empty<IHorario>();
+
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
+            }
+
+
+
+            return new JsonResult { Data = profesores, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+
+        }
+
     }
 }
         

@@ -48,7 +48,7 @@
 
 
 
-   *@Scripts.Render("~/bundles/jquery")*
+   @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/jquery-2.2.4.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
@@ -76,7 +76,7 @@
 </head>
 @{
    //revisa al inicio vía razor si la sesión del usuario aún es válida
-    @*if (Session["ID_USUARIO"] != null)
+    if (Session["ID_USUARIO"] != null)
     {
         var iduser = Session["ID_USUARIO"];
     }
@@ -84,7 +84,7 @@
     {
         Session.Abandon();
         Response.Redirect("~/Home/LogOff");
-    }*@
+    }
 }
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
@@ -161,6 +161,10 @@
         <!-- /.left-side -->
         <!-- Main content -->
         <aside class="right-side">
+            <section class="content-header" style="
+    margin-top: 25px;">
+                <h2>@Session["Encabezado"]</h2>
+            </section>
             <div class="container body-content">
                 @RenderBody()
             </div>

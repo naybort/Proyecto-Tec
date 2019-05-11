@@ -1,237 +1,322 @@
-﻿@{
-    ViewBag.Title = "Calendario";
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src='~/Scripts/bootstrap.js'></script>
-    <link href='/Content/packages/core/main.css' rel='stylesheet' />
-    <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
-    <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
-    <script src='/Content/packages/core/main.js'></script>
-    <script src='/Content/packages/interaction/main.js'></script>
-    <script src='/Content/packages/daygrid/main.js'></script>
-    <script src='/Content/packages/timegrid/main.js'></script>
+﻿@model IEnumerable<API.Models.IHorario>
+
+    @{
+        ViewBag.Title = "Calendario";
+        Layout = null;
+    }
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset='utf-8' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src='~/Scripts/bootstrap.js'></script>
+        <link href='/Content/packages/core/main.css' rel='stylesheet' />
+        <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
+        <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
+        <script src='/Content/packages/core/main.js'></script>
+        <script src='/Content/packages/interaction/main.js'></script>
+        <script src='/Content/packages/daygrid/main.js'></script>
+        <script src='/Content/packages/timegrid/main.js'></script>
 
 
-    <script>
+        <script>
+           
+                document.addEventListener('DOMContentLoaded', function () {
+                    var calendarEl = document.getElementById('calendar');
+         
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: ['interaction', 'dayGrid', 'timeGrid'],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                defaultDate: '2019-03-12',
-                navLinks: true, // can click day/week names to navigate views
-                selectable: true,
-                selectMirror: true,
-                hiddenDays: [0, 1, 2, 4, 5],
-                select: function (arg) {
-                    $("#exampleModalLabel").text("Usted está a punto de reservar una cita para la fecha: " + arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear() + ", con el profesor: ");
-                    $('#exampleModal').modal('show');
-                    $("#exampleModal").on('hidden.bs.modal', function () {
-                        calendar.addEvent({
-                            title: "Reservado",
-                            start: arg.start,
-                            end: arg.end,
-                            allday: arg.allDay
+                    var events = [];
+                    var myArray = [0, 1, 2, 3, 4, 5, 6];
+                    FetchEventAndRenderCalendar();
+                    function FetchEventAndRenderCalendar() {
+                        events = [];
+                        $.ajax({
+                            type: "GET",
+                            url: "/Estudiante/GetHorarios",
+                            success: function (data) {
+                                $.each(data, function (i, v) {
+                                    events.push(
+                                         v.Dia,
+                                        
+                                    );
+                                    
+                                })
+                                crearArray(events)
+                                
+                            },
+                            error: function (error) {
+                                alert('failed');
+                            }
                         })
+                    }
+                    function crearArray(events) {
+                        var mapDias = new Map();
+                        mapDias.set("Lunes", 1);
+                        mapDias.set("Martes", 2);
+                        mapDias.set("Miercoles", 3);
+                        mapDias.set("Jueves", 4);
+                        mapDias.set("viernes", 5);
+                        mapDias.set("Sabado", 6);
+                        mapDias.set("Domingo", 7);
 
-                        calendar.unselect()
-                    });
-                },
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                        var toRemove = []
+                        events.forEach(function (element) { toRemove.push(mapDias.get(element)
+                            ); });
 
-            });
+                   
+                        console.log(toRemove);
 
-            calendar.render();
-        });
-
-    </script>
-    <style>
-
-        body {
-            margin: 40px 10px;
-            padding: 0;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
-        }
-
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <title>Sistema Horas Consulta</title>
-
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="icon" type="image/x-icon" href="~/Content/Imagenes/favicon.ico" />
-    <meta name="description" content="Sistema Horas Consulta">
-
-    @*Al poner en producción poner esto como bundles para optimizar el rendimiento y AB*@
-    <link href="/Content/bootstrap.css" rel="stylesheet" />
+                        // ES5 syntax
+                        myArray = myArray.filter(val => !toRemove.includes(val));
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                            },
+                            defaultDate: '2019-03-12',
+                            navLinks: true, // can click day/week names to navigate views
+                            selectable: true,
+                            selectMirror: true,
+                            hiddenDays: myArray,
+                            select: function (arg) {
+                                $("#texto1").val(arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear());
+                                $('#exampleModal').modal('show');
+                                $("#exampleModal").on('hidden.bs.modal', function () {
 
 
-    <!-- Theme style NECESARIO-->
-    <link href="/Content/paginaInicio/AdminLTE.css" rel="stylesheet" />
-    <!-- Estilos de checkbox NECESARIO-->
-    <link href="/Content/paginaInicio/bootstrap-toggle.min.css" rel="stylesheet" />
+                                    calendar.unselect()
+                                });
+                            },
+                            editable: true,
+                            eventLimit: true, // allow "more" link when too many events
 
-    <!-- Right side column. Contains the navbar and content of the page -->
+                        });
 
-    <link href="/Content/paginaInicio/loadings.css" rel="stylesheet" />
-    <link href="/Content/toastr.css" rel="stylesheet" />
-    <link href='/Content/packages/core/main.css' rel='stylesheet' />
-    <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
-    <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
+                        calendar.render();
+                    }
+                    
+                
+                });
+            
+        </script>
+        <style>
+
+            body {
+                margin: 40px 10px;
+                padding: 0;
+                font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                font-size: 14px;
+            }
+
+            #calendar {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+        </style>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8">
+        <title>Sistema Horas Consulta</title>
+
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link rel="icon" type="image/x-icon" href="~/Content/Imagenes/favicon.ico" />
+        <meta name="description" content="Sistema Horas Consulta">
+
+        @*Al poner en producción poner esto como bundles para optimizar el rendimiento y AB*@
+        <link href="/Content/bootstrap.css" rel="stylesheet" />
+
+
+        <!-- Theme style NECESARIO-->
+        <link href="/Content/paginaInicio/AdminLTE.css" rel="stylesheet" />
+        <!-- Estilos de checkbox NECESARIO-->
+        <link href="/Content/paginaInicio/bootstrap-toggle.min.css" rel="stylesheet" />
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+
+        <link href="/Content/paginaInicio/loadings.css" rel="stylesheet" />
+        <link href="/Content/toastr.css" rel="stylesheet" />
+        <link href='/Content/packages/core/main.css' rel='stylesheet' />
+        <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
+        <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
 
 
 
-    <link href="/Content/icons.css" rel="stylesheet" />
+        <link href="/Content/icons.css" rel="stylesheet" />
 
-    <link href="/Content/bootstrap-select.css" rel="stylesheet" />
-    <link href="/Content/bootstrap-datepicker.css" rel="stylesheet" />
-    <link href="/Content/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link href="/Content/paginaInicio/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
-
-
-
+        <link href="/Content/bootstrap-select.css" rel="stylesheet" />
+        <link href="/Content/bootstrap-datepicker.css" rel="stylesheet" />
+        <link href="/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+        <link href="/Content/paginaInicio/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
+        <link href="~/Content/paginaInicio/AdminLTE.css" rel="stylesheet" />
 
 
 
 
 
+        <body class="skin-blue">
+            <!-- header logo: style can be found in header.less -->
 
 
-    <body class="skin-blue">
-        <!-- header logo: style can be found in header.less -->
-        <header class="header">
-            <a href='@Url.Action("Index", "Home")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
-                <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Sistema Horas Consulta
-            </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" data-spy="scroll" role="navigation">
-                <!-- Sidebar toggle button-->
 
-                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+
+
+            <header class="header">
+                <a href='@Url.Action("Index", "Home")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
+                    <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                    Sistema Horas Consulta
                 </a>
-                <a href="@Url.Action("Index", "Home")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
-                    <span class="glyphicon glyphicon-home breadcrumb"></span>
-                </a>
-                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                    <ul class="nav navbar-nav">
-                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#">Salir</a>
-                        </li>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" data-spy="scroll" role="navigation">
+                    <!-- Sidebar toggle button-->
 
-                    </ul>
+                    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a href="@Url.Action("Index", "Home")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
+                        <span class="glyphicon glyphicon-home breadcrumb"></span>
+                    </a>
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        <ul class="nav navbar-nav">
+                            <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                            <li class="hidden">
+                                <a href="#page-top"></a>
+                            </li>
+                            <li>
+                                <a class="page-scroll" href="#">Salir</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="row wrapper row-offcanvas row-offcanvas-left">
+                <!--Cuadro de dialogo-->
+                <div id="modal-container" class="modal hade fade in" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 560px;margin: 30px auto">
+
+                        </div>
+                    </div>
                 </div>
-            </nav>
-        </header>
+                <!--Fin cuadro de dialogo-->
+                <!-- Left side column. contains the logo and sidebar -->
+                <aside class="left-side sidebar-offcanvas" style="background-color: rgba(249, 249, 249, 0.71);">
+                    <!-- sidebar: style can be found in sidebar.less -->
+                    <section class="sidebar">
+                        <!-- Sidebar user panel -->
+                        <div class="user-panel text-center">
+                            <div class="image">
+                                @if (Session["Foto"] != null)
+                                {
+                                    <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                                }
+                                else
+                                {
+                                    <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
+                                }
 
-        <div class="row wrapper row-offcanvas row-offcanvas-left">
-            <!--Cuadro de dialogo-->
-            <div id="modal-container" class="modal hade fade in" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="width: 560px;margin: 30px auto">
+                            </div>
+                            <div class="pull-left info">
+                                <p>Bienvenido(a)</p>
+                                <p> @Session["NOM_USUARIO"] </p>
+                            </div>
+                        </div>
 
+
+                    </section>
+                    <!-- /.sidebar -->
+                </aside>
+                <!-- /.left-side -->
+                <!-- Main content -->
+                <aside class="right-side">
+                    <section class="content-header" style="
+    margin-top: 25px;">
+                        <h2>Solicitar Cita</h2>
+                    </section>
+                    <div class="container body-content">
+
+                        <div class="main main-raised">
+                            <div id='calendar' style="margin-top: 25px;margin-bottom: 75px;border-top-width: 10px;padding-top: 20px;"></div>
+                        </div>
+                    </div>
+                </aside>
+                <!-- /.right-side -->
+                <footer>
+                    <div class="nav navbar navbar-fixed-bottom text-center" style="color: #FFF; min-height: 40px">&copy; @DateTime.Now.Year - Sistema Horas Consulta - Tecnológico de Costa Rica</div>
+                </footer>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
+                                <input type="text" id="texto" value="azul" />
+                                <input type="button" name="enviar" value="Enviar" onclick="recibir();" /><br>
+                            </form>
+                            <select class="browser-default custom-select">
+                                <option selected>Seleccione una hora</option>
+                                <option value="1">1:00 pm</option>
+                                <option value="2">1:20 pm</option>
+                                <option value="3">1:40 pm</option>
+                                <option value="3">2:00 pm</option>
+                                <option value="3">2:20 pm</option>
+                                <option value="3">2:40 pm</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" onclick="reserva()">Reservar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!--Fin cuadro de dialogo-->
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas" style="background-color: rgba(249, 249, 249, 0.71);">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel text-center">
-                        <div class="image">
-                            @if (Session["Foto"] != null)
-                            {
-                                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
-                            }
-                            else
-                            {
-                                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
-                            }
 
+            <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Horarios Disponibles</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="pull-left info">
-                            <p>Bienvenido(a)</p>
-                            <p> @Session["NOM_USUARIO"] </p>
+                        <div class="modal-body">
+                            <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
+                                <input type="text" class="form-control col-4" id="texto1" disabled />
+
+                            </form>
+                            <select class="browser-default custom-select form-control">
+                                <option selected>Seleccione una hora</option>
+                                <option value="1">1:00 pm</option>
+                                <option value="2">1:20 pm</option>
+                                <option value="3">1:40 pm</option>
+                                <option value="3">2:00 pm</option>
+                                <option value="3">2:20 pm</option>
+                                <option value="3">2:40 pm</option>
+                            </select>
                         </div>
-                    </div>
-
-
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-            <!-- /.left-side -->
-            <!-- Main content -->
-            <aside class="right-side">
-                <div class="container body-content">
-                    <div class="main main-raised">
-                        <div id='calendar' style="
-    margin-top: 75px;
-    margin-bottom: 75px;"></div>
-                    </div>
-                </div>
-            </aside>
-            <!-- /.right-side -->
-            <footer>
-                <div class="nav navbar navbar-fixed-bottom text-center" style="color: #FFF; min-height: 40px">&copy; @DateTime.Now.Year - Sistema Horas Consulta - Tecnológico de Costa Rica</div>
-            </footer>
-        </div>
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <select class="browser-default custom-select">
-                            <option selected>Seleccione una hora</option>
-                            <option value="1">1:00 pm</option>
-                            <option value="2">1:20 pm</option>
-                            <option value="3">1:40 pm</option>
-                            <option value="3">2:00 pm</option>
-                            <option value="3">2:20 pm</option>
-                            <option value="3">2:40 pm</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="reserva()">Reservar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Reservar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script>
+            <script>
 
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function (e) {
@@ -315,8 +400,8 @@
     //alert('despues del timeout');
 
 
-        </script>
-        <script>
+            </script>
+            <script>
 
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function (e) {
@@ -399,7 +484,7 @@
     //alert('despues del timeout');
 
 
-        </script>
+            </script>
 
-    </body>
+        </body>
 </html>

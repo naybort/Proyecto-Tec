@@ -18,8 +18,7 @@
 
                         </div>
                         <div class="back-facing">
-                            <p>Breve descripción</p>
-                            <p><a class="btn" href="Estudiante/SeleccionarProfesor">Seleccionar</a></p>
+                            @Html.ActionLink("Seleccionar", "SeleccionarProfesor", new { idTematica = tematica.IdTematica }, new { @class = "btn btn-primary" })
                         </div>
                     </div>
                 }
