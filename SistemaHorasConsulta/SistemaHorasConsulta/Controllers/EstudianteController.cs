@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-using Modelos;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using API.Models;
+using System.Net.Mail;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
+
 
 namespace SistemaHorasConsulta.Controllers
 {
@@ -17,175 +18,88 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult SeleccionarTematica()
         {
             @Session["Encabezado"] = "Seleccionar Temática";
-            IEnumerable<Tematica> tematicas = null;
+   
             Session["ID_USUARIO"] = 2016136466;
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("http://localhost:50013/api/Tematica");
-        
-                    var responseTask = client.GetAsync("tematica");
-                    responseTask.Wait();
+            Session["NOM_USUARIO"] = "German Marcelo Rodriguez Corea";
+            NTematica tematica = new NTematica();
+            var listaTematicas = tematica.getTematicas();
 
-                    var result = responseTask.Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<IList<Tematica>>();
-                        readTask.Wait();
-
-                        tematicas = readTask.Result;
-                    }
-                    else 
-                    {
-
-                        tematicas = Enumerable.Empty<Tematica>();
-
-                        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                    }
-                }
-           
-            
-
-            return View(tematicas);
+            return View(listaTematicas);
         }
-        public ActionResult SeleccionarProfesor(int? idTematica)
+        public ActionResult SeleccionarProfesor(int idTematica)
         {
             @Session["Encabezado"] = "Profesores";
-            IEnumerable<IProfesor> profesores = null;
-
-            using (var client = new HttpClient())
-            {
-                string strUrl = "http://localhost:50013/api/Tematica/" + Convert.ToString(idTematica) + "/profesores";
-                client.BaseAddress = new Uri(strUrl);
-
-                var responseTask = client.GetAsync(strUrl);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<IProfesor>>();
-                    readTask.Wait();
-
-                    profesores = readTask.Result;
-                }
-                else
-                {
-
-                    profesores = Enumerable.Empty<IProfesor>();
-
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-
-
-
-            return View(profesores);
+            NTematica profesor = new NTematica();
+            var listaProfesores = profesor.getProfesorPorTematica(idTematica);
+            return View(listaProfesores);
    
 
         }
-        public ActionResult Calendario(int? idProfesor)
+        public ActionResult Calendario(int idProfesor)
         {
             @Session["IdProfesor"]= idProfesor;
-            IEnumerable<IHorario> profesores = null;
+            NHorario horario = new NHorario();
+            var listaHorarios = horario.getHorarioProfesor(idProfesor);
 
-            using (var client = new HttpClient())
-            {
-                string strUrl = "http://localhost:50013/api/Horario/profesor/" + Convert.ToString(idProfesor);
-                client.BaseAddress = new Uri(strUrl);
-
-                var responseTask = client.GetAsync(strUrl);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<IHorario>>();
-                    readTask.Wait();
-
-                    profesores = readTask.Result;
-                }
-                else
-                {
-
-                    profesores = Enumerable.Empty<IHorario>();
-
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-
-
-
-            return View(profesores);
+            return View(listaHorarios);
         }
         public ActionResult Agenda() {
             @Session["Encabezado"] = "Agenda";
-            IEnumerable<IEstudiante> citas= null;
 
-            using (var client = new HttpClient())
-            {
-                string strUrl = "http://localhost:50013/api/Estudiante/" + Session["ID_USUARIO"];
-                client.BaseAddress = new Uri(strUrl);
-
-                var responseTask = client.GetAsync(strUrl);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<IEstudiante>>();
-                    readTask.Wait();
-
-                    citas = readTask.Result;
-                }
-                else
-                {
-
-                    citas = Enumerable.Empty<IEstudiante>();
-
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-
-
-
-            return View(citas);
+            return View();
             
         }
 
         public JsonResult GetHorarios()
         {
-            IEnumerable<IHorario> profesores = null;
-            using (var client = new HttpClient())
+            NHorario horario = new NHorario();
+            var listaHorarios = horario.getHorarioProfesor((int)@Session["IdProfesor"]);
+
+
+
+            return new JsonResult { Data = listaHorarios, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+
+        }
+        public JsonResult GetHoras(List<String> Datos)
+        {
+
+            DateTime date = new DateTime(int.Parse(Datos[2]), int.Parse(Datos[0]), int.Parse(Datos[1]));
+     
+            NHorario horario = new NHorario();
+            var listaHorarios = horario.getHorarioProfesor((int)@Session["IdProfesor"]);
+            
+            return new JsonResult { Data = listaHorarios, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+
+
+        }
+
+        public ActionResult ReservarCita(List<String> Datos) {
+            try
             {
-                string strUrl = "http://localhost:50013/api/Horario/profesor/" + Convert.ToString(Session["IdProfesor"]);
-                client.BaseAddress = new Uri(strUrl);
+                MailMessage correo = new MailMessage();
+                correo.From = new MailAddress("sistemahc@itcr.ac.cr");
+                correo.To.Add("mcorear97@gmail.com");
+                correo.Subject = "Cita reservada";
+                correo.Body = "Se reservó una cita con el estudiante " + Session["NOM_USUARIO"] + "para la fecha " + Datos[0] + "a las " + Datos[1];
 
-                var responseTask = client.GetAsync(strUrl);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<IHorario>>();
-                    readTask.Wait();
-
-                    profesores = readTask.Result;
-                }
-                else
-                {
-
-                    profesores = Enumerable.Empty<IHorario>();
-
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.live.com";
+                smtp.Port = 25;
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = true;
+                string cuentaCorreo = "sistemahc@itcr.ac.cr";
+                string contrasenaCorreo = "2016@ITcr";
+                smtp.Credentials = new System.Net.NetworkCredential(cuentaCorreo, contrasenaCorreo);
+                smtp.Send(correo);
+            }
+            catch(Exception ex) {
+                ViewBag.Error =  ex.Message;
             }
 
-
-
-            return new JsonResult { Data = profesores, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
-
-
+            return View();
         }
 
     }

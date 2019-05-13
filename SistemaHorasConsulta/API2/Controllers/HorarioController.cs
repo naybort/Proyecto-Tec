@@ -16,16 +16,17 @@ namespace API.Controllers
         [ResponseType(typeof(IEnumerable<IHorario>))]
         public IEnumerable<IHorario> GetHorarioProfesor(int profesorId)
         {
-            IProfesor profesor = new IProfesor();
-            profesor = profesor.getProfesor(profesorId);
-            return profesor.listaHorarios;
+            IHorario horario = new IHorario();
+
+            return horario.getHorarioProfesor(profesorId);
         }
 
         // GET: api/Horario
         public IEnumerable<IHorario> Get()
         {
-            IHorario horarios = new IHorario();
-            return horarios.getHorarios();
+            //IHorario horarios = new IHorario();
+            //return horarios.getHorarios();
+            return null;
         }
 
         // GET: api/Horario/5

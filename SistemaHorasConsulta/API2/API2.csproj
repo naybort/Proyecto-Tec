@@ -296,8 +296,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Modelos\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
-      <Project>{f5aaeaff-5114-41ae-b121-c4cf3b83f4a3}</Project>
+    <ProjectReference Include="..\ITCR.DATIC.SistemaHorasConsulta.Modelo\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
+      <Project>{0c3279f1-5cd6-489c-ae5f-8049a8afe4fc}</Project>
       <Name>ITCR.DATIC.SistemaHorasConsulta.Modelo</Name>
     </ProjectReference>
   </ItemGroup>

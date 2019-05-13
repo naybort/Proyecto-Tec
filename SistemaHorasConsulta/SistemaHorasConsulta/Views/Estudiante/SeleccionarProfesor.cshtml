@@ -1,4 +1,4 @@
-﻿@model IEnumerable<API.Models.IProfesor>
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.PorfesorPorTematica>
 @{
     ViewBag.Title = "SeleccionarProfesor";
     Layout = "~/Views/Shared/_Principal.cshtml";
@@ -45,8 +45,8 @@
                                                                 Patrimonio,
                                                                 Investigación y extensión
                                                             </td>
-                                                            <td>@profesor.listaHorarios[0].Dia</td>
-                                                            <td>@profesor.listaHorarios[0].HoraInicio.Date a @profesor.listaHorarios[0].HoraFinal.Date</td>
+                                                            <td>@profesor.Dia</td>
+                                                            <td>@profesor.HoraInicio a @profesor.HoraFinal @profesor.IdProfesor </td>
                                                             <td>
                                                                 Edificio -SJ2 - Oficina 2
                                                             </td>

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-using API.Models;
-using Modelos;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio;
 
 namespace SistemaHorasConsulta.Controllers
 {
@@ -15,35 +14,11 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult Profesores()
         {
             @Session["Encabezado"] = "Seleccionar Temática";
-            IEnumerable<Profesor> profesores = null;
+
+            //IEnumerable<Profesor> profesores = null;
             Session["ID_USUARIO"] = 2016136466;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:50013/api/Profesor");
 
-                var responseTask = client.GetAsync("profesor");
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Profesor>>();
-                    readTask.Wait();
-
-                    profesores = readTask.Result;
-                }
-                else
-                {
-
-                    profesores = Enumerable.Empty<Profesor>();
-
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
-            }
-
-
-
-            return View(profesores);
+            return View();
         }
     }
 }

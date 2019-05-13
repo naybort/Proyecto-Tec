@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using Modelos;
+
 
 
 namespace API.Models
@@ -13,11 +15,18 @@ namespace API.Models
         public List<IHorario> listaHorarios = new List<IHorario>();
         public List<ITematica> listaTematicas = new List<ITematica>();
 
+        public List<int> getCitasProfesor(int id)
+        {
+            var idProfesor = new SqlParameter("@IdProfesor", id);
+            var citas = bd.Database.SqlQuery<int>("Pr_CitasXProfesor_Obtener @IdProfesor", idProfesor).ToList();
+            return citas;
+        }
+
         public IProfesor getProfesor(int id)
         {
-            Profesor temo = bd.Profesors.Include("Horarios").FirstOrDefault(x => x.IdProfesor == id);
+           // Profesor temo = bd.Profesors.Include("Horarios").FirstOrDefault(x => x.IdProfesor == id);
             IProfesor profesor = new IProfesor();
-            
+           /* 
 
             if(temo != null)
             {
@@ -50,15 +59,15 @@ namespace API.Models
 
 
             }
-
+            */
             return profesor;
         }
 
         public List<IProfesor> getProfesores()
         {
-            var temo = bd.Profesors.Include("Horarios").Select(x => x).ToList();
+           // var temo = bd.Profesors.Include("Horarios").Select(x => x).ToList();
             List<IProfesor> arrayProfesores = new List<IProfesor>();
-
+            /*
             for (int i = 0; i < temo.Count; i++)
             {
                 IProfesor profesor = new IProfesor();
@@ -91,7 +100,7 @@ namespace API.Models
 
                 arrayProfesores.Add(profesor);
 
-            }
+            }*/
             return arrayProfesores;
         }
 

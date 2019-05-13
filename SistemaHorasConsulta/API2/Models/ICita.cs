@@ -1,64 +1,46 @@
-﻿using System;
+﻿using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using Modelos;
+
 
 namespace API.Models
 {
-    public class ICita:Cita
+    public class ICita
     {
         ConexionBD bd = new ConexionBD();
-        public ILugar lugarCita = new ILugar();
+        public int IdLugar { get; set; }
+        public int IdHorario { get; set; }
+        public int IdProfesor { get; set; }
+        public int IdEstudiante { get; set; }
+
+        public System.TimeSpan HoraInicio { get; set; }
 
         public ICita GetCita(int id)
         {
-            Cita cita = bd.Citas.FirstOrDefault(x => x.IdCita == id);
-            ICita temoCita = new ICita();
-
-            if(cita != null)
-            {
-                ILugar lugar = new ILugar();
-                temoCita.IdCita = cita.IdCita;
-                temoCita.IdHorario = cita.IdHorario;
-                temoCita.IdLugar = cita.IdLugar;
-                Lugar TempLugar = lugar.getLugar(temoCita.IdLugar);
-                temoCita.lugarCita.IdLugar = TempLugar.IdLugar;
-                temoCita.lugarCita.Nombre = TempLugar.Nombre;
-            }
-
-            return temoCita;
+           var cita = bd.Pr_CitaEspecifica_Consultar(id); 
+            ICita temp = new ICita();
+            return temp; 
         }
 
         public List<ICita> getCitas()
         {
-            var temo = bd.Citas.Select(x => x).ToList();
-            List<ICita> arrayCitas = new List<ICita>();
-            for (int i = 0; i < temo.Count; i++)
-            {
-                ICita cita = new ICita();
-                cita.IdCita = temo[i].IdCita;
-                cita.IdHorario = temo[i].IdHorario;
-                cita.IdLugar = temo[i].IdLugar;
-                ILugar lugar = new ILugar();
-                Lugar TempLugar = lugar.getLugar(temo[i].IdLugar);
-                cita.lugarCita.IdLugar = TempLugar.IdLugar;
-                cita.lugarCita.Nombre = TempLugar.Nombre;
-
-                arrayCitas.Add(cita);
-            }
-
-            return arrayCitas;
+            return null;
         }
+
         public void guardarCita(ICita cita)
         {
-            Cita tempCita = new Cita();
-
-            tempCita.IdHorario = cita.IdHorario;
-            tempCita.IdLugar = cita.IdLugar;
-
-            bd.Citas.Add(tempCita);
-            bd.SaveChanges();
+            var parametroLugar = new SqlParameter("@IdLugar", cita.IdLugar);
+            var parematroIdHorario = new SqlParameter("@IdHorario", cita.IdHorario);
+            var parametroIdProfesor = new SqlParameter("@IdProfesor", cita.IdProfesor);
+            var parametroIdEstudiante = new SqlParameter("@IdEstudiante", cita.IdEstudiante);
+            var parametroHoraInicio = new SqlParameter("@HoraInicio", cita.HoraInicio);
+          
+            var result =  bd.Database.SqlQuery<int>("Pr_Cita_Insertar @IdLugar, @IdHorario, @IdProfesor, @IdEstudiante, @HoraInicio",
+                parametroLugar, parematroIdHorario, parametroIdProfesor, parametroIdEstudiante, parametroHoraInicio).ToList();
+           
         }
 
 

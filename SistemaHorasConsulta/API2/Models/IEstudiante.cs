@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Modelos;
 using API;
+using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace API.Models
 {
@@ -13,10 +13,9 @@ namespace API.Models
         ConexionBD bd = new ConexionBD();
         public IEstudiante getEstudiante(int id)
         {
-            // Estudiante temo =bd.Estudiantes.Select(x => x).ToList()[0];
-            Estudiante temo = bd.Estudiantes.FirstOrDefault(x => x.IdEstudiante == id);
+            //Estudiante temo = bd.Estudiantes.FirstOrDefault(x => x.IdEstudiante == id);
             IEstudiante estudiante = new IEstudiante();
-            
+           /* 
             if (temo != null) {
                 estudiante.Nombre = temo.Nombre;
                 estudiante.IdEstudiante = temo.IdEstudiante;
@@ -37,7 +36,7 @@ namespace API.Models
                 }
                 
                 return estudiante;
-            }
+            }*/
 
             return estudiante;
         }
@@ -45,9 +44,9 @@ namespace API.Models
         public List<IEstudiante> getEstudiantes()
         {
 
-            var temo = bd.Estudiantes.Select(x => x).ToList();
+            //var temo = bd.Estudiantes.Select(x => x).ToList();
             List<IEstudiante> arrayEstudiantes = new List<IEstudiante>();
-
+            /*
             for (int i = 0; i < temo.Count; i++)
             {
                 IEstudiante estudiante = new IEstudiante();
@@ -59,7 +58,7 @@ namespace API.Models
 
                 arrayEstudiantes.Add(estudiante);
 
-            }
+            }*/
 
             return arrayEstudiantes;
 

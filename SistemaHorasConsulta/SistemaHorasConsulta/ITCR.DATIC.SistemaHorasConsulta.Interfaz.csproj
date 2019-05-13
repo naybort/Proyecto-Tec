@@ -637,6 +637,7 @@
     <Content Include="Views\Estudiante\Agenda.cshtml" />
     <Content Include="Views\Administrador\Profesores.cshtml" />
     <Content Include="Views\Shared\_Administrador.cshtml" />
+    <Content Include="Views\Administrador\Tematicas.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -942,13 +943,13 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\API2\API2.csproj">
-      <Project>{751cfb32-4bf4-4584-b6ee-897f445987aa}</Project>
-      <Name>API2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modelos\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
-      <Project>{f5aaeaff-5114-41ae-b121-c4cf3b83f4a3}</Project>
+    <ProjectReference Include="..\ITCR.DATIC.SistemaHorasConsulta.Modelo\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
+      <Project>{0C3279F1-5CD6-489C-AE5F-8049A8AFE4FC}</Project>
       <Name>ITCR.DATIC.SistemaHorasConsulta.Modelo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITCR.DATIC.SistemaHorasConsulta.Negocio\ITCR.DATIC.SistemaHorasConsulta.Negocio.csproj">
+      <Project>{ddcf5827-a5c0-43eb-82ae-499b0a18dd90}</Project>
+      <Name>ITCR.DATIC.SistemaHorasConsulta.Negocio</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

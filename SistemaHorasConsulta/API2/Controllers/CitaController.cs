@@ -13,6 +13,7 @@ namespace API.Controllers
         // GET: api/Cita
         public IEnumerable<ICita> Get()
         {
+            
             ICita cita = new ICita();
             return cita.getCitas();
         }
@@ -25,10 +26,9 @@ namespace API.Controllers
         }
 
         // POST: api/Cita
-        // POST: api/Cita
         public HttpResponseMessage Post([FromBody]ICita cita)
         {
-
+           
             try
             {
                 ICita temp = new ICita();
@@ -41,7 +41,7 @@ namespace API.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
 
-
+            
         }
 
         // PUT: api/Cita/5

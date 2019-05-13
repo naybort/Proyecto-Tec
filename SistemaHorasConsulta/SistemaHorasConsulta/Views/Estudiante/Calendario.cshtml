@@ -1,4 +1,4 @@
-﻿@model IEnumerable<API.Models.IHorario>
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.HorarioProfesor>
 
     @{
         ViewBag.Title = "Calendario";
@@ -56,6 +56,7 @@
                         mapDias.set("Martes", 2);
                         mapDias.set("Miercoles", 3);
                         mapDias.set("Jueves", 4);
+                        mapDias.set("Viernes", 5);
                         mapDias.set("viernes", 5);
                         mapDias.set("Sabado", 6);
                         mapDias.set("Domingo", 7);
@@ -65,7 +66,9 @@
                             ); });
 
                    
-                        console.log(toRemove);
+                        
+                   
+                       
 
                         // ES5 syntax
                         myArray = myArray.filter(val => !toRemove.includes(val));
@@ -82,7 +85,84 @@
                             selectMirror: true,
                             hiddenDays: myArray,
                             select: function (arg) {
-                                $("#texto1").val(arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear());
+                                var mapDias = new Map();
+                                mapDias.set(1, "Lunes");
+                                mapDias.set(2, "Martes");
+                                mapDias.set(3, "Miercoles");
+                                mapDias.set(4, "Jueves");
+                                mapDias.set(5, "Viernes");
+
+                                mapDias.set(6, "Sabado");
+                                mapDias.set(7, "Domingo");
+
+                                var horas = []
+                                var dia = mapDias.get(arg.start.getDay())
+                                var datos = [arg.start.getDate(), arg.start.getMonth(), arg.start.getFullYear(), dia];
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/Estudiante/GetHorarios",
+                                    success: function (data) {
+                                        $.each(data, function (i, v) {
+                                            console.log(dia)
+                                            console.log(v.Dia)
+                                            if (v.Dia == dia) {
+                                                horas.push(
+
+                                                    v.HoraInicio,
+                                                    v.HoraFinal
+
+                                                );
+                                            }
+
+
+                                        })
+                                        successFunc(horas)
+
+                                    },
+                                    error: function (error) {
+                                        alert('failed');
+                                    }
+                                })
+                                function successFunc(horas) {
+                                    var citasDisponibles = []
+                                    var minutosInicio = horas[0].Hours * 60
+                                    var minutosFinal = horas[1].Hours * 60
+                                   
+                                    while (minutosInicio != minutosFinal) {
+                                        citasDisponibles.push(timeConvert(minutosInicio))
+                                        minutosInicio = minutosInicio + 20
+                                        
+                                    }
+
+                                    crearSelect(citasDisponibles)
+                                 
+                                }
+                                function timeConvert(n) {
+                                    var num = n;
+                                    var hours = (num / 60);
+                                    var rhours = Math.floor(hours);
+                                    var minutes = (hours - rhours) * 60;
+                                    var rminutes = Math.round(minutes);
+                                    if (rminutes == 0) {
+                                        rminutes = '00'
+                                    }
+                                    return rhours + ":" + rminutes;
+                                }
+                                function crearSelect(citasDisponibles) {
+                                    var opt = document.getElementById('idSelect');
+                                    opt.options.length = 0;
+                                
+
+                                    for (var i in citasDisponibles) {
+                                        var option = document.createElement('option');
+                                        option.text = citasDisponibles[i];
+
+                                        opt.add(option)
+                                    }
+
+                                }
+                                
+                                $("#fecha").val(arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear());
                                 $('#exampleModal').modal('show');
                                 $("#exampleModal").on('hidden.bs.modal', function () {
 
@@ -155,7 +235,7 @@
 
 
 
-
+</head>
         <body class="skin-blue">
             <!-- header logo: style can be found in header.less -->
 
@@ -253,37 +333,7 @@
                 </footer>
             </div>
 
-            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
-                                <input type="text" id="texto" value="azul" />
-                                <input type="button" name="enviar" value="Enviar" onclick="recibir();" /><br>
-                            </form>
-                            <select class="browser-default custom-select">
-                                <option selected>Seleccione una hora</option>
-                                <option value="1">1:00 pm</option>
-                                <option value="2">1:20 pm</option>
-                                <option value="3">1:40 pm</option>
-                                <option value="3">2:00 pm</option>
-                                <option value="3">2:20 pm</option>
-                                <option value="3">2:40 pm</option>
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary" onclick="reserva()">Reservar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+   
 
             <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -296,21 +346,15 @@
                         </div>
                         <div class="modal-body">
                             <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
-                                <input type="text" class="form-control col-4" id="texto1" disabled />
+                                <input type="text" class="form-control col-4" id="fecha" disabled />
 
                             </form>
-                            <select class="browser-default custom-select form-control">
-                                <option selected>Seleccione una hora</option>
-                                <option value="1">1:00 pm</option>
-                                <option value="2">1:20 pm</option>
-                                <option value="3">1:40 pm</option>
-                                <option value="3">2:00 pm</option>
-                                <option value="3">2:20 pm</option>
-                                <option value="3">2:40 pm</option>
+                            <select id="idSelect" class="browser-default custom-select form-control">
+                               
                             </select>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Reservar</button>
+                            <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -485,6 +529,31 @@
 
 
             </script>
+    <script>
+         $(document).ready(function () {
+       
+        $('#reservar').on("click", function () {
+            var fecha = $('#fecha').val();
+            var horaInicio = $('#idSelect').val();
+            var datos = [fecha, horaInicio];
+            $.ajax({
+                type: "POST",
+                url: "/Estudiante/ReservarCita",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(datos),
+                dataType: "json",
+                success: function (msg) {
+                   alert("Su cita fue reservada con exito.")
+                },
+                error: alert("Su cita fue reservada con exito.")
+            });
+          
 
+        });
+
+    });
+
+
+    </script>
         </body>
 </html>

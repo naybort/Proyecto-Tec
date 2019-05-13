@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using Modelos;
+
 
 namespace API.Models
 {
@@ -11,43 +13,34 @@ namespace API.Models
         ConexionBD bd = new ConexionBD();
         public ITematica getTematica(int id)
         {
-            Tematica temo = bd.Tematicas.FirstOrDefault(x => x.IdTematica == id);
+            //Tematica temo = bd.Tematicas.FirstOrDefault(x => x.IdTematica == id);
             ITematica tematica = new ITematica();
-
+            /*
             if(temo != null)
             {
                 tematica.IdTematica = temo.IdTematica;
                 tematica.NombreTematica = temo.NombreTematica;
             }
             
-
+            */
             return tematica;
         }
 
-        public List<ITematica> getTematicas()
+        public List<Pr_Tematicas_Consultar_Result> getTematicas()
         {
-            var temo = bd.Tematicas.Select(x => x).ToList();
-            List<ITematica> arrayTematicas = new List<ITematica>();
-
-            for (int i = 0; i < temo.Count; i++)
-            {
-                ITematica tematica = new ITematica();
-                tematica.IdTematica = temo[i].IdTematica;
-                tematica.NombreTematica = temo[i].NombreTematica;
-                arrayTematicas.Add(tematica);
-
-            }
-
-            return arrayTematicas;
+            var tematicas = bd.Database.SqlQuery<Pr_Tematicas_Consultar_Result>("Pr_Tematicas_Consultar").ToList();
+            return tematicas;
         }
 
-        public List<IProfesor> getProfesoresPorTematica(int idTematica)
+        public List<Pr_TematicasProfesor_Consultar_Result> getProfesoresPorTematica(int id)
         {
-            ITematica temp = new ITematica();
-            temp = temp.getTematica(idTematica);
+            var idTematica = new SqlParameter("@IdTematica", id);
+            var profesores = bd.Database.SqlQuery<Pr_TematicasProfesor_Consultar_Result>("Pr_TematicasProfesor_Consultar @IdTematica", idTematica).ToList();
+            //ITematica temp = new ITematica();
+            //temp = temp.getTematica(idTematica);
 
             List<IProfesor> listaProfesores = new List<IProfesor>();
-
+            /*
             var tematicaXprofesor = bd.ProfesorXTematicas.Where(x => x.IdTematica == temp.IdTematica).ToList();
             foreach (var profesor in tematicaXprofesor)
             {
@@ -55,8 +48,8 @@ namespace API.Models
                 listaProfesores.Add(temProfesor.getProfesor(profesor.IdProfesor));
 
             }
-
-            return listaProfesores;
+            */
+            return profesores;
         }
 
     }
