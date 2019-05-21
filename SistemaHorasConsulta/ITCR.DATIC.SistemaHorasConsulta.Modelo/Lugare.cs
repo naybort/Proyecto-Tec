@@ -17,13 +17,13 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lugare()
         {
-            this.Citas = new HashSet<Cita>();
+            this.Profesores = new HashSet<Profesore>();
         }
     
         public int IdLugar { get; set; }
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Citas { get; set; }
+        public virtual ICollection<Profesore> Profesores { get; set; }
     }
 }

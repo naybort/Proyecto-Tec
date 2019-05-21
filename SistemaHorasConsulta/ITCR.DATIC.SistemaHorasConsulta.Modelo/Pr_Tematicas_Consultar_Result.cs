@@ -13,7 +13,8 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     
     public partial class Pr_Tematicas_Consultar_Result
     {
-        public string NombreTematica { get; set; }
         public int IdTematica { get; set; }
+        public string NombreTematica { get; set; }
+        public string Descripcion { get; set; }
     }
 }

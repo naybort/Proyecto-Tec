@@ -943,6 +943,10 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\API2\API2.csproj">
+      <Project>{751CFB32-4BF4-4584-B6EE-897F445987AA}</Project>
+      <Name>API2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ITCR.DATIC.SistemaHorasConsulta.Modelo\ITCR.DATIC.SistemaHorasConsulta.Modelo.csproj">
       <Project>{0C3279F1-5CD6-489C-AE5F-8049A8AFE4FC}</Project>
       <Name>ITCR.DATIC.SistemaHorasConsulta.Modelo</Name>

@@ -9,7 +9,7 @@ using System.Web;
 
 namespace API.Models
 {
-    public class IProfesor:Profesor
+    public class IProfesor: Profesore
     {
         ConexionBD bd = new ConexionBD();
         public List<IHorario> listaHorarios = new List<IHorario>();

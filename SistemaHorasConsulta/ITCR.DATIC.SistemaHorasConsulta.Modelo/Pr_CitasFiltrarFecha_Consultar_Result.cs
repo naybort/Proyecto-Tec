@@ -10,14 +10,15 @@
 namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Pr_CitasFiltrarFecha_Consultar_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public string Nombre { get; set; }
+        public string PrimerApellido { get; set; }
+        public string SegundoApellido { get; set; }
+        public int IdEstudiante { get; set; }
+        public System.TimeSpan HoraInicio { get; set; }
+        public string Lugar_de_la_cita { get; set; }
     }
 }

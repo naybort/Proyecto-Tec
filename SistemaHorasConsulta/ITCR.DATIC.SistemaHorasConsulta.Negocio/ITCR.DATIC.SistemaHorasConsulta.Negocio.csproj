@@ -130,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Citas.cs" />
     <Compile Include="Models\CitaXProfesor.cs" />
     <Compile Include="Models\getTematicas.cs" />
     <Compile Include="Models\HorarioProfesor.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Models\NProfesor.cs" />
     <Compile Include="Models\NTematica.cs" />
     <Compile Include="Models\PorfesorPorTematica.cs" />
+    <Compile Include="Models\ProfesoresPorTematica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

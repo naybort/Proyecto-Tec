@@ -11,36 +11,44 @@ namespace API.Models
     public class ICita
     {
         ConexionBD bd = new ConexionBD();
-        public int IdLugar { get; set; }
-        public int IdHorario { get; set; }
+     
         public int IdProfesor { get; set; }
         public int IdEstudiante { get; set; }
+        public string Fecha { get; set; }
 
-        public System.TimeSpan HoraInicio { get; set; }
+        public DateTime HoraInicio { get; set; }
 
         public ICita GetCita(int id)
         {
-           var cita = bd.Pr_CitaEspecifica_Consultar(id); 
+            //var cita = bd.Pr_CitaEspecifica_Consultar(id); 
             ICita temp = new ICita();
             return temp; 
         }
 
-        public List<ICita> getCitas()
-        {
-            return null;
-        }
-
         public void guardarCita(ICita cita)
         {
-            var parametroLugar = new SqlParameter("@IdLugar", cita.IdLugar);
-            var parematroIdHorario = new SqlParameter("@IdHorario", cita.IdHorario);
             var parametroIdProfesor = new SqlParameter("@IdProfesor", cita.IdProfesor);
             var parametroIdEstudiante = new SqlParameter("@IdEstudiante", cita.IdEstudiante);
-            var parametroHoraInicio = new SqlParameter("@HoraInicio", cita.HoraInicio);
-          
-            var result =  bd.Database.SqlQuery<int>("Pr_Cita_Insertar @IdLugar, @IdHorario, @IdProfesor, @IdEstudiante, @HoraInicio",
-                parametroLugar, parematroIdHorario, parametroIdProfesor, parametroIdEstudiante, parametroHoraInicio).ToList();
+            var parametroHoraInicio = new SqlParameter("@HoraInicio", "7:00");
+            var parametroFecha = new SqlParameter("@Fecha", "12-12-2018");
+
+            var str = "exec Pr_Cita_Insertar @IdProfesor = "+ cita.IdProfesor.ToString() + ", @IdEstudiante = "+
+                
+                cita.IdEstudiante.ToString() +", @Fecha = '"+cita.Fecha+"', @Horainicio = '"+cita.HoraInicio.ToString("HH:mm") +"'";
+            var result =  bd.Database.ExecuteSqlCommand(str);
            
+        }
+
+        public List<Pr_Citas_Consultar_Result> getCitas()
+        {
+            var citas = bd.Database.SqlQuery<Pr_Citas_Consultar_Result>("Pr_Citas_Consultar").ToList();
+            return citas;
+        }
+
+        public bool eliminarCita(int IdCita) {
+            var IdCita1 = new SqlParameter("@IdCita", IdCita);
+            bd.Database.ExecuteSqlCommand("Pr_Cita_Eliminar @IdCita", IdCita1);
+            return true;
         }
 
 

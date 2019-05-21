@@ -10,10 +10,13 @@
 namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class CitaXEstudiante
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int IdCita { get; set; }
+        public int IdEstudiante { get; set; }
+    
+        public virtual Cita Cita { get; set; }
     }
 }

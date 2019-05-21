@@ -15,13 +15,7 @@ namespace API.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            IEstudiante temp = new IEstudiante();
-            
-            return "value";
-        }
+
 
         // POST api/values
         public void Post([FromBody]string value)

@@ -17,9 +17,12 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public string Nombre { get; set; }
         public string PrimerApellido { get; set; }
         public string SegundoApellido { get; set; }
+        public byte[] Foto { get; set; }
         public string Dia { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
         public System.TimeSpan HoraFinal { get; set; }
-        public string SubtematicaNombre { get; set; }
+        public string NombreLugar { get; set; }
+        public string Especialidades { get; set; }
+        public string CorreoElectronico { get; set; }
     }
 }

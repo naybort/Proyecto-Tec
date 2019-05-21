@@ -18,9 +18,6 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult SeleccionarTematica()
         {
             @Session["Encabezado"] = "Seleccionar Temática";
-   
-            Session["ID_USUARIO"] = 2016136466;
-            Session["NOM_USUARIO"] = "German Marcelo Rodriguez Corea";
             NTematica tematica = new NTematica();
             var listaTematicas = tematica.getTematicas();
 
@@ -38,6 +35,7 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult Calendario(int idProfesor)
         {
             @Session["IdProfesor"]= idProfesor;
+            @Session["IdEstudiante"] = 2016136466;
             NHorario horario = new NHorario();
             var listaHorarios = horario.getHorarioProfesor(idProfesor);
 
@@ -45,8 +43,10 @@ namespace SistemaHorasConsulta.Controllers
         }
         public ActionResult Agenda() {
             @Session["Encabezado"] = "Agenda";
-
-            return View();
+            NCita cita = new NCita();
+            var citas = cita.getCitas();
+            var listaCitas = citas.Where(x => x.IdEstudiante == (int)@Session["IdEstudiante"]);
+            return View(listaCitas);
             
         }
 
@@ -77,29 +77,57 @@ namespace SistemaHorasConsulta.Controllers
         }
 
         public ActionResult ReservarCita(List<String> Datos) {
-            try
-            {
-                MailMessage correo = new MailMessage();
-                correo.From = new MailAddress("sistemahc@itcr.ac.cr");
-                correo.To.Add("mcorear97@gmail.com");
-                correo.Subject = "Cita reservada";
-                correo.Body = "Se reservó una cita con el estudiante " + Session["NOM_USUARIO"] + "para la fecha " + Datos[0] + "a las " + Datos[1];
+            
+                NCita cita = new NCita();
+                cita.IdEstudiante = (int)@Session["IdEstudiante"];
+                cita.IdProfesor = (int)@Session["IdProfesor"];
+                string fecha = Datos[0];
+                cita.Fecha = fecha;
+                DateTime horaInicio = DateTime.Parse(Datos[1]);
+                cita.HoraInicio = horaInicio;
 
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.live.com";
-                smtp.Port = 25;
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = true;
-                string cuentaCorreo = "sistemahc@itcr.ac.cr";
-                string contrasenaCorreo = "2016@ITcr";
-                smtp.Credentials = new System.Net.NetworkCredential(cuentaCorreo, contrasenaCorreo);
-                smtp.Send(correo);
-            }
-            catch(Exception ex) {
-                ViewBag.Error =  ex.Message;
-            }
+
+     
+   
+
+                var resultado = cita.crearCita(cita);
+
+                if (resultado)
+                {
+                    MailMessage correo = new MailMessage();
+                    correo.From = new MailAddress("sistemahc@itcr.ac.cr");
+                    correo.To.Add("mcorear97@gmail.com");
+                    correo.Subject = "Cita reservada";
+                    correo.Body = "Se reservó una cita con el estudiante " + Session["NOM_USUARIO"] + " para la fecha " + Datos[0] + " a las " + Datos[1];
+
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.live.com";
+                    smtp.Port = 25;
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = true;
+                    string cuentaCorreo = "sistemahc@itcr.ac.cr";
+                    string contrasenaCorreo = "2016@ITcr";
+                    smtp.Credentials = new System.Net.NetworkCredential(cuentaCorreo, contrasenaCorreo);
+                    smtp.Send(correo);
+                }
+                else {
+                    ViewBag.Error = "Error al registrar cita.";
+                }
+               
+     
 
             return View();
+        }
+        public ActionResult EliminarCita(int IdCita) {
+            NCita cita = new NCita();
+            var respuesta = cita.eliminarCita(IdCita);
+            return RedirectToAction("Agenda");
+        }
+        public ActionResult LogOff()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Autenticacion", "Home");
         }
 
     }

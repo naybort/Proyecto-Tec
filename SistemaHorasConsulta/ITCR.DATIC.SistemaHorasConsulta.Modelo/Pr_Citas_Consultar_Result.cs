@@ -13,12 +13,13 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     
     public partial class Pr_Citas_Consultar_Result
     {
+        public int IdCita { get; set; }
         public System.DateTime Fecha { get; set; }
         public string Nombre { get; set; }
-        public string NombreEstudiante { get; set; }
-        public string Dia { get; set; }
+        public string PrimerApellido { get; set; }
+        public string SegundoApellido { get; set; }
+        public int IdEstudiante { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
-        public System.TimeSpan HoraFinal { get; set; }
-        public string NombreProfesor { get; set; }
+        public string Lugar_de_la_cita { get; set; }
     }
 }

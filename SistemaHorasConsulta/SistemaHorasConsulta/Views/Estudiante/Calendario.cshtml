@@ -73,11 +73,12 @@
                         // ES5 syntax
                         myArray = myArray.filter(val => !toRemove.includes(val));
                         var calendar = new FullCalendar.Calendar(calendarEl, {
+                            locale: 'es',
                             plugins: ['interaction', 'dayGrid', 'timeGrid'],
                             header: {
                                 left: 'prev,next today',
                                 center: 'title',
-                                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                right: 'dayGridMonth'
                             },
                             defaultDate: '2019-03-12',
                             navLinks: true, // can click day/week names to navigate views
@@ -125,14 +126,20 @@
                                 })
                                 function successFunc(horas) {
                                     var citasDisponibles = []
-                                    var minutosInicio = horas[0].Hours * 60
-                                    var minutosFinal = horas[1].Hours * 60
-                                   
-                                    while (minutosInicio != minutosFinal) {
-                                        citasDisponibles.push(timeConvert(minutosInicio))
-                                        minutosInicio = minutosInicio + 20
-                                        
+                                    var largo = horas.length
+                                    i = 0
+                                    while (i < (largo - i/2)) {
+                                        var minutosInicio = horas[i].Hours * 60
+                                        var minutosFinal = horas[i+1].Hours * 60
+
+                                        while (minutosInicio != minutosFinal) {
+                                            citasDisponibles.push(timeConvert(minutosInicio))
+                                            minutosInicio = minutosInicio + 20
+
+                                        }
+                                        i = 1 + i
                                     }
+                                 
 
                                     crearSelect(citasDisponibles)
                                  
@@ -244,7 +251,7 @@
 
 
             <header class="header">
-                <a href='@Url.Action("Index", "Home")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
+                <a href='@Url.Action("SeleccionarTematica", "Estudiante")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
                     <!-- Add the class icon to your logo image or logo icon to add the margining -->
                     Sistema Horas Consulta
                 </a>
@@ -258,7 +265,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a href="@Url.Action("Index", "Home")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
+                    <a href="@Url.Action("SeleccionarTematica", "Estudiante")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
                         <span class="glyphicon glyphicon-home breadcrumb"></span>
                     </a>
                     <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
@@ -268,7 +275,7 @@
                                 <a href="#page-top"></a>
                             </li>
                             <li>
-                                <a class="page-scroll" href="#">Salir</a>
+                                <a class="page-scroll" href="LogOff">Salir</a>
                             </li>
 
                         </ul>
@@ -308,7 +315,34 @@
                                 <p> @Session["NOM_USUARIO"] </p>
                             </div>
                         </div>
+                        <div class="text-center">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="SeleccionarTematica">
+                                                <span class="glyphicon glyphicon-th">
+                                                    Temáticas
+                                                </span>
 
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="Agenda">
+                                                <span class="glyphicon glyphicon-list-alt">
+                                                    Agenda
+                                                </span>
+
+                                            </a>
+                                        </h4>
+                                    </div>
+
+
+                                </div> @*panel-group*@
+                            </div>
+                        </div>
 
                     </section>
                     <!-- /.sidebar -->
@@ -546,8 +580,9 @@
                    alert("Su cita fue reservada con exito.")
                 },
                 error: alert("Su cita fue reservada con exito.")
+                
             });
-          
+            $('#exampleModal').modal('hide')
 
         });
 

@@ -14,13 +14,13 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
         public bool crearCita(NCita cita)
         {
+            
             var values = new Dictionary<string, string>
             {
                 {"IdEstudiante",cita.IdEstudiante.ToString() },
-                {"IdHorario" ,cita.IdHorario.ToString()},
-                {"IdLugar", cita.IdLugar.ToString() },
                 {"IdProfesor",cita.IdProfesor.ToString() },
-                {"HoraInicio",cita.HoraInicio.ToString() }
+                {"HoraInicio",cita.HoraInicio.ToString() },
+                {"Fecha",cita.Fecha.ToString() }
             };
 
             var content = new FormUrlEncodedContent(values);
@@ -33,12 +33,44 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
             
             var result = responseTask.Result;
+            var a = result.RequestMessage;
             if (result.IsSuccessStatusCode)
             {
+
                 return true;
             }
 
             return false;
         }
+        public List<Citas> getCitas()
+        {
+            var responseTask = conexion.client.GetAsync("Cita");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsStringAsync();
+                readTask.Wait();
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                var citas = serializer.Deserialize<List<Citas>>(readTask.Result);
+                return citas;
+            }
+
+            return new List<Citas>();
+        }
+        public bool eliminarCita(int IdCita) {
+            var responseTask = conexion.client.DeleteAsync("Cita/" + IdCita.ToString());
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+           
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

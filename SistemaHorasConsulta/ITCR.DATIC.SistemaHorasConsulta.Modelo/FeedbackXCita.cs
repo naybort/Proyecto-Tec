@@ -10,12 +10,17 @@
 namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class Pr_TematicasProfesor_Consultar_Prueba_Result
+    public partial class FeedbackXCita
     {
-        public string Nombre { get; set; }
-        public string PrimerApellido { get; set; }
-        public string SegundoApellido { get; set; }
-        public int IdHorario { get; set; }
+        public int IdCita { get; set; }
+        public bool Estado { get; set; }
+        public string RespuestaPregunta1 { get; set; }
+        public string RespuestaPregunta2 { get; set; }
+        public string RespuestaPregunta3 { get; set; }
+        public string ComentarioAdicional { get; set; }
+    
+        public virtual Cita Cita { get; set; }
     }
 }

@@ -11,14 +11,10 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
 {
     using System;
     
-    public partial class Pr_CitaEspecifica_Consultar_Result
+    public partial class Pr_DiasCita_Consultar_Result
     {
-        public System.DateTime Fecha { get; set; }
         public string Nombre { get; set; }
-        public string Nombre1 { get; set; }
-        public string Dia { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
         public System.TimeSpan HoraFinal { get; set; }
-        public string Nombre2 { get; set; }
     }
 }

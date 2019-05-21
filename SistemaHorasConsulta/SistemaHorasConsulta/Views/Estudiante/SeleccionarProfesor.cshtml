@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.PorfesorPorTematica>
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.ProfesoresPorTematica>
 @{
     ViewBag.Title = "SeleccionarProfesor";
     Layout = "~/Views/Shared/_Principal.cshtml";
@@ -13,7 +13,7 @@
                     @foreach (var profesor in Model)
                     {
                         <li class="">
-                            <div class="collapsible-header"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.Nombre</div>
+                            <div class="collapsible-header"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.NombreProfesor</div>
                             <div class="collapsible-body" style="">
                                 <p></p>
                                 <div class="content">
@@ -28,35 +28,60 @@
                                                 </div>
                                                 <div class="card2-body">
                                                     <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                    <h4 class="card2-title">Bulgarelli Bolaños José Pablo</h4>
-                                                    <table>
-                                                        <tr>
-                                                            <th>Campos de atención al estudiante</th>
-                                                            <th>Dias de atencion</th>
-                                                            <th>Horario</th>
-                                                            <th>Ubicación</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                Composición y principios de diseño,
-                                                                Diseño arquitectónico,
-                                                                Sostenibilidad,
-                                                                Gestión de proyectos,
-                                                                Patrimonio,
-                                                                Investigación y extensión
-                                                            </td>
-                                                            <td>@profesor.Dia</td>
-                                                            <td>@profesor.HoraInicio a @profesor.HoraFinal @profesor.IdProfesor </td>
-                                                            <td>
-                                                                Edificio -SJ2 - Oficina 2
-                                                            </td>
-                                                        </tr>
+                                                
+                                                    
+                                                            <h4 class="card2-title"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.NombreProfesor</h4>
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th>Campos de atención al estudiante:</th>
 
-                                                    </table>
-                                                    <div class="collapsible-body" style="">
-                                                        <p></p>
-                                                        @Html.ActionLink("Ver disponibilidad de citas", "Calendario", new { idProfesor = profesor.IdProfesor }, new { @class = "btn btn-primary" })
-                                                    </div>
+
+                                                                    <th>Ubicación:</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        @profesor.Especialidades
+                                                                    </td>
+
+                                                                    <td>
+                                                                        @profesor.NombreLugar
+                                                                    </td>
+                                                                </tr>
+
+                                                            </table>
+                                                      
+                                                            <h4 class="pull-left">Días de atención:</h4>
+                                                            <table class="table">
+                                                                <tr>
+                                                                    @foreach (var i in profesor.horarios)
+                                                                    {
+
+
+                                                                        <th>@i.Dia:</th>
+
+
+                                                                    }
+                                                                </tr>
+                                                                <tr>
+                                                                    @foreach (var i in profesor.horarios)
+                                                                    {
+
+                                                                        <td>
+                                                                            @i.HoraInicio a @i.HoraFinal
+                                                                        </td>
+
+
+                                                                    }
+                                                                </tr>
+                                                                </table>
+                                                            
+                                                     
+
+                                                            <div class="collapsible-body" style="">
+                                                                <p></p>
+                                                                @Html.ActionLink("Ver disponibilidad de citas", "Calendario", new { idProfesor = profesor.IdProfesor }, new { @class = "btn btn-primary" })
+                                                            </div>
+
                                                 </div>
                                             </div>
 

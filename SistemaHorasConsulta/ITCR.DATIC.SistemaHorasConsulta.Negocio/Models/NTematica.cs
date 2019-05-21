@@ -31,7 +31,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
         }
 
-        public List<PorfesorPorTematica> getProfesorPorTematica(int id)
+        public List<ProfesoresPorTematica> getProfesorPorTematica(int id)
         {
 
             var responseTask = conexion.client.GetAsync("Tematica/"+id+"/profesores");
@@ -44,10 +44,12 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
                 var profesorPorTematica = serializer.Deserialize<List<PorfesorPorTematica>>(readTask.Result);
-                return profesorPorTematica;
+                var profesoresPorTematica2 = new ProfesoresPorTematica();
+                var profesorPorTematicaSinConcurrencia = profesoresPorTematica2.getProfesoresPorTematicas(profesorPorTematica);
+                return profesorPorTematicaSinConcurrencia;
             }
 
-            return new List<PorfesorPorTematica>();
+            return new List<ProfesoresPorTematica>();
 
         }
 

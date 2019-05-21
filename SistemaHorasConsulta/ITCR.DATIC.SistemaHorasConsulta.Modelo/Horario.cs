@@ -17,8 +17,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Horario()
         {
-            this.Citas = new HashSet<Cita>();
-            this.Profesors = new HashSet<Profesor>();
+            this.Profesores = new HashSet<Profesore>();
         }
     
         public int IdHorario { get; set; }
@@ -27,8 +26,6 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public string Dia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Citas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profesor> Profesors { get; set; }
+        public virtual ICollection<Profesore> Profesores { get; set; }
     }
 }

@@ -17,24 +17,20 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cita()
         {
-            this.FeedbackCitas = new HashSet<FeedbackCita>();
-            this.Estudiantes = new HashSet<Estudiante>();
-            this.Profesors = new HashSet<Profesor>();
+            this.CitaXEstudiantes = new HashSet<CitaXEstudiante>();
+            this.FeedbackXCitas = new HashSet<FeedbackXCita>();
+            this.Profesores = new HashSet<Profesore>();
         }
     
         public int IdCita { get; set; }
-        public int IdHorario { get; set; }
-        public int IdLugar { get; set; }
         public System.DateTime Fecha { get; set; }
-        public Nullable<System.TimeSpan> HoraInicio { get; set; }
+        public System.TimeSpan HoraInicio { get; set; }
     
-        public virtual Horario Horario { get; set; }
-        public virtual Lugare Lugare { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FeedbackCita> FeedbackCitas { get; set; }
+        public virtual ICollection<CitaXEstudiante> CitaXEstudiantes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Estudiante> Estudiantes { get; set; }
+        public virtual ICollection<FeedbackXCita> FeedbackXCitas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profesor> Profesors { get; set; }
+        public virtual ICollection<Profesore> Profesores { get; set; }
     }
 }

@@ -76,20 +76,20 @@
 </head>
 @{
    //revisa al inicio vía razor si la sesión del usuario aún es válida
-    if (Session["ID_USUARIO"] != null)
+   /* if (Session["ID_USUARIO"] != null)
     {
         var iduser = Session["ID_USUARIO"];
     }
     else
     {
         Session.Abandon();
-        Response.Redirect("~/Home/LogOff");
+        Response.Redirect("~/Home/LogOff");*/
     }
-}
+
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
-        <a href='@Url.Action("Index", "Home")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
+        <a href='@Url.Action("SeleccionarTematica", "Estudiante")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
             Sistema Horas Consulta
         </a>
@@ -103,7 +103,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a href="@Url.Action("Index", "Home")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
+            <a href="@Url.Action("SeleccionarTematica", "Estudiante")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
                 <span class="glyphicon glyphicon-home breadcrumb"></span>
             </a>
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
@@ -113,7 +113,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#">Salir</a>
+                        <a class="page-scroll" href="LogOff">Salir</a>
                     </li>
 
                 </ul>
@@ -151,18 +151,45 @@
                     <div class="pull-left info">
                         <p>Bienvenido(a)</p>
                         <p> @Session["NOM_USUARIO"] </p>
+                       
+
                     </div>
                 </div>
+                <div class="text-center">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="SeleccionarTematica">
+                                        <span class="glyphicon glyphicon-th">
+                                            Temáticas
+                                        </span>
+
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="Agenda">
+                                        <span class="glyphicon glyphicon-list-alt">
+                                            Agenda
+                                        </span>
+
+                                    </a>
+                                </h4>
+                            </div>
 
 
+                        </div> @*panel-group*@
+                    </div>
+                </div>
             </section>
             <!-- /.sidebar -->
         </aside>
         <!-- /.left-side -->
         <!-- Main content -->
         <aside class="right-side">
-            <section class="content-header" style="
-    margin-top: 25px;">
+            <section class="content-header">
                 <h2>@Session["Encabezado"]</h2>
             </section>
             <div class="container body-content">
