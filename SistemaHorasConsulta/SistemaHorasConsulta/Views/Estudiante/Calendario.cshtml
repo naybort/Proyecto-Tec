@@ -13,6 +13,7 @@
         <link href='/Content/packages/core/main.css' rel='stylesheet' />
         <link href='/Content/packages/daygrid/main.css' rel='stylesheet' />
         <link href='/Content/packages/timegrid/main.css' rel='stylesheet' />
+        <link href='~/Content/paginaInicio/loadings.css' rel='stylesheet' />
         <script src='/Content/packages/core/main.js'></script>
         <script src='/Content/packages/interaction/main.js'></script>
         <script src='/Content/packages/daygrid/main.js'></script>
@@ -20,72 +21,81 @@
 
 
         <script>
-           
-                document.addEventListener('DOMContentLoaded', function () {
-                    var calendarEl = document.getElementById('calendar');
-         
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarEl = document.getElementById('calendar');
 
 
-                    var events = [];
-                    var myArray = [0, 1, 2, 3, 4, 5, 6];
-                    FetchEventAndRenderCalendar();
-                    function FetchEventAndRenderCalendar() {
-                        events = [];
-                        $.ajax({
-                            type: "GET",
-                            url: "/Estudiante/GetHorarios",
-                            success: function (data) {
-                                $.each(data, function (i, v) {
-                                    events.push(
-                                         v.Dia,
-                                        
-                                    );
-                                    
-                                })
-                                crearArray(events)
-                                
-                            },
-                            error: function (error) {
-                                alert('failed');
+
+                var events = [];
+                var myArray = [0, 1, 2, 3, 4, 5, 6];
+                FetchEventAndRenderCalendar();
+                function FetchEventAndRenderCalendar() {
+                    events = [];
+                    $.ajax({
+                        type: "GET",
+                        url: "/Estudiante/GetHorarios",
+                        success: function (data) {
+                            $.each(data, function (i, v) {
+                                events.push(
+                                    v.Dia,
+
+                                );
+
+                            })
+                            crearArray(events)
+
+                        },
+                        error: function (error) {
+                            alert('failed');
+                        }
+                    })
+                }
+                function crearArray(events) {
+                    var mapDias = new Map();
+                    mapDias.set("Lunes", 1);
+                    mapDias.set("Martes", 2);
+                    mapDias.set("Miercoles", 3);
+                    mapDias.set("Jueves", 4);
+                    mapDias.set("Viernes", 5);
+                    mapDias.set("viernes", 5);
+                    mapDias.set("Sabado", 6);
+                    mapDias.set("Domingo", 7);
+
+                    var toRemove = []
+                    events.forEach(function (element) {
+                        toRemove.push(mapDias.get(element)
+                        );
+                    });
+
+
+
+
+
+
+                    // ES5 syntax
+                    myArray = myArray.filter(val => !toRemove.includes(val));
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: 'es',
+                        plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth'
+                        },
+                        defaultDate: new Date(),
+                        navLinks: true, // can click day/week names to navigate views
+                        selectable: true,
+                        selectMirror: true,
+                        hiddenDays: myArray,
+                        select: function (arg) {
+                            var check = arg.start;
+                            var today = new Date();
+                            if (check < today) {
+                                // Previous Day. show message if you want otherwise do nothing.
+                                // So it will be unselectable
                             }
-                        })
-                    }
-                    function crearArray(events) {
-                        var mapDias = new Map();
-                        mapDias.set("Lunes", 1);
-                        mapDias.set("Martes", 2);
-                        mapDias.set("Miercoles", 3);
-                        mapDias.set("Jueves", 4);
-                        mapDias.set("Viernes", 5);
-                        mapDias.set("viernes", 5);
-                        mapDias.set("Sabado", 6);
-                        mapDias.set("Domingo", 7);
-
-                        var toRemove = []
-                        events.forEach(function (element) { toRemove.push(mapDias.get(element)
-                            ); });
-
-                   
-                        
-                   
-                       
-
-                        // ES5 syntax
-                        myArray = myArray.filter(val => !toRemove.includes(val));
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            locale: 'es',
-                            plugins: ['interaction', 'dayGrid', 'timeGrid'],
-                            header: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'dayGridMonth'
-                            },
-                            defaultDate: '2019-03-12',
-                            navLinks: true, // can click day/week names to navigate views
-                            selectable: true,
-                            selectMirror: true,
-                            hiddenDays: myArray,
-                            select: function (arg) {
+                            else {
                                 var mapDias = new Map();
                                 mapDias.set(1, "Lunes");
                                 mapDias.set(2, "Martes");
@@ -128,9 +138,13 @@
                                     var citasDisponibles = []
                                     var largo = horas.length
                                     i = 0
-                                    while (i < (largo - i/2)) {
-                                        var minutosInicio = horas[i].Hours * 60
-                                        var minutosFinal = horas[i+1].Hours * 60
+
+                                    console.log(horas[0].Hours)
+                                    console.log(largo)
+                                    while (i < (largo)) {
+                                        var minutosInicio = horas[i].Hours * 60;
+                                        console.log(i)
+                                        var minutosFinal = horas[i + 1].Hours * 60;
 
                                         while (minutosInicio != minutosFinal) {
                                             citasDisponibles.push(timeConvert(minutosInicio))
@@ -138,11 +152,12 @@
 
                                         }
                                         i = 1 + i
+                                        largo = largo - 1
                                     }
-                                 
 
-                                    crearSelect(citasDisponibles)
-                                 
+
+                                    removerCitasReservadas(citasDisponibles)
+
                                 }
                                 function timeConvert(n) {
                                     var num = n;
@@ -155,10 +170,13 @@
                                     }
                                     return rhours + ":" + rminutes;
                                 }
+
                                 function crearSelect(citasDisponibles) {
+
+
                                     var opt = document.getElementById('idSelect');
                                     opt.options.length = 0;
-                                
+
 
                                     for (var i in citasDisponibles) {
                                         var option = document.createElement('option');
@@ -168,26 +186,54 @@
                                     }
 
                                 }
-                                
-                                $("#fecha").val(arg.start.getDate() + "-" + arg.start.getMonth() + "-" + arg.start.getFullYear());
+                                function removerCitasReservadas(citasDisponibles) {
+                                    var str = arg.start.getDate() + "/" + arg.start.getMonth() + "/" + arg.start.getFullYear()
+                                    citasDisponibles.push(str)
+                                    var datos = citasDisponibles;
+                                    citasDisponiblesSinConcurrencia = []
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Estudiante/GetCitasDisponibles",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(datos),
+                                        dataType: "json",
+                                        success: function (data) {
+                                            console.log(data)
+                                            citasDisponibles = []
+                                            $.each(data, function (i, v) {
+                                                console.log(v)
+                                                citasDisponibles.push(v)
+                                            })
+                                            crearSelect(citasDisponibles)
+
+                                        },
+
+                                    });
+
+
+                                }
+
+                                $("#fecha").val(arg.start.getDate() + "/" + arg.start.getMonth() + "/" + arg.start.getFullYear());
                                 $('#exampleModal').modal('show');
                                 $("#exampleModal").on('hidden.bs.modal', function () {
 
 
                                     calendar.unselect()
                                 });
-                            },
-                            editable: true,
-                            eventLimit: true, // allow "more" link when too many events
+                            }
 
-                        });
+                        },
+                        editable: true,
+                        eventLimit: true, // allow "more" link when too many events
 
-                        calendar.render();
-                    }
-                    
-                
-                });
-            
+                    });
+
+                    calendar.render();
+                }
+
+
+            });
+
         </script>
         <style>
 
@@ -242,159 +288,184 @@
 
 
 
-</head>
-        <body class="skin-blue">
-            <!-- header logo: style can be found in header.less -->
+    </head>
+    <body class="skin-blue">
+        <!-- header logo: style can be found in header.less -->
 
 
 
 
 
-            <header class="header">
-                <a href='@Url.Action("SeleccionarTematica", "Estudiante")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
-                    <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                    Sistema Horas Consulta
+        <header class="header">
+            <a href='@Url.Action("SeleccionarTematica", "Estudiante")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
+                <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                Sistema Horas Consulta
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" data-spy="scroll" role="navigation">
+                <!-- Sidebar toggle button-->
+
+                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </a>
-                <!-- Header Navbar: style can be found in header.less -->
-                <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" data-spy="scroll" role="navigation">
-                    <!-- Sidebar toggle button-->
+                <a href="@Url.Action("SeleccionarTematica", "Estudiante")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
+                    <span class="glyphicon glyphicon-home breadcrumb"></span>
+                </a>
+                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="LogOff">Salir</a>
+                        </li>
 
-                    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a href="@Url.Action("SeleccionarTematica", "Estudiante")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
-                        <span class="glyphicon glyphicon-home breadcrumb"></span>
-                    </a>
-                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                        <ul class="nav navbar-nav">
-                            <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                            <li class="hidden">
-                                <a href="#page-top"></a>
-                            </li>
-                            <li>
-                                <a class="page-scroll" href="LogOff">Salir</a>
-                            </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
 
-                        </ul>
-                    </div>
-                </nav>
-            </header>
+        <div class="row wrapper row-offcanvas row-offcanvas-left">
+            <!--Cuadro de dialogo-->
+            <div id="modal-container" class="modal hade fade in" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width: 560px;margin: 30px auto">
 
-            <div class="row wrapper row-offcanvas row-offcanvas-left">
-                <!--Cuadro de dialogo-->
-                <div id="modal-container" class="modal hade fade in" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content" style="width: 560px;margin: 30px auto">
-
-                        </div>
                     </div>
                 </div>
-                <!--Fin cuadro de dialogo-->
-                <!-- Left side column. contains the logo and sidebar -->
-                <aside class="left-side sidebar-offcanvas" style="background-color: rgba(249, 249, 249, 0.71);">
-                    <!-- sidebar: style can be found in sidebar.less -->
-                    <section class="sidebar">
-                        <!-- Sidebar user panel -->
-                        <div class="user-panel text-center">
-                            <div class="image">
-                                @if (Session["Foto"] != null)
-                                {
-                                    <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
-                                }
-                                else
-                                {
-                                    <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
-                                }
+            </div>
+            <!--Fin cuadro de dialogo-->
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="left-side sidebar-offcanvas" style="background-color: rgba(249, 249, 249, 0.71);">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel text-center">
+                        <div class="image">
+                            @if (Session["Foto"] != null)
+                            {
+                                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                            }
+                            else
+                            {
+                                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
+                            }
 
-                            </div>
-                            <div class="pull-left info">
-                                <p>Bienvenido(a)</p>
-                                <p> @Session["NOM_USUARIO"] </p>
-                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="panel-group">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a href="SeleccionarTematica">
-                                                <span class="glyphicon glyphicon-th">
-                                                    Temáticas
-                                                </span>
-
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a href="Agenda">
-                                                <span class="glyphicon glyphicon-list-alt">
-                                                    Agenda
-                                                </span>
-
-                                            </a>
-                                        </h4>
-                                    </div>
-
-
-                                </div> @*panel-group*@
-                            </div>
+                        <div class="pull-left info">
+                            <p>Bienvenido(a)</p>
+                            <p> @Session["NOM_USUARIO"] </p>
                         </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="SeleccionarTematica">
+                                            <span class="glyphicon glyphicon-th">
+                                                Temáticas
+                                            </span>
 
-                    </section>
-                    <!-- /.sidebar -->
-                </aside>
-                <!-- /.left-side -->
-                <!-- Main content -->
-                <aside class="right-side">
-                    <section class="content-header" style="
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="Agenda">
+                                            <span class="glyphicon glyphicon-list-alt">
+                                                Agenda
+                                            </span>
+
+                                        </a>
+                                    </h4>
+                                </div>
+
+
+                            </div> @*panel-group*@
+                        </div>
+                    </div>
+
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <!-- /.left-side -->
+            <!-- Main content -->
+            <aside class="right-side">
+                <section class="content-header" style="
     margin-top: 25px;">
-                        <h2>Solicitar Cita</h2>
-                    </section>
-                    <div class="container body-content">
+                    <h2>Solicitar Cita</h2>
+                </section>
+                <div class="container body-content">
 
-                        <div class="main main-raised">
-                            <div id='calendar' style="margin-top: 25px;margin-bottom: 75px;border-top-width: 10px;padding-top: 20px;"></div>
-                        </div>
+                    <div class="main main-raised">
+                        <div id='calendar' style="margin-top: 25px;margin-bottom: 75px;border-top-width: 10px;padding-top: 20px;"></div>
                     </div>
-                </aside>
-                <!-- /.right-side -->
-                <footer>
-                    <div class="nav navbar navbar-fixed-bottom text-center" style="color: #FFF; min-height: 40px">&copy; @DateTime.Now.Year - Sistema Horas Consulta - Tecnológico de Costa Rica</div>
-                </footer>
+                </div>
+            </aside>
+            <!-- /.right-side -->
+            <footer>
+                <div class="nav navbar navbar-fixed-bottom text-center" style="color: #FFF; min-height: 40px">&copy; @DateTime.Now.Year - Sistema Horas Consulta - Tecnológico de Costa Rica</div>
+            </footer>
+        </div>
+
+        @if (ViewBag.error != null)
+        {
+            <div class="alert alert-info alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <a href="#" class="alert-link">@ViewBag.error</a>
             </div>
+        }
 
-   
+        <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Horarios Disponibles</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
+                            <input type="text" class="form-control col-4" id="fecha" disabled />
 
-            <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Horarios Disponibles</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formulario" method="Post" data-toggle="modal" data-target="#myModal">
-                                <input type="text" class="form-control col-4" id="fecha" disabled />
-
-                            </form>
-                            <select id="idSelect" class="browser-default custom-select form-control">
-                               
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                        </form>
+                        <select id="idSelect" class="browser-default custom-select form-control"></select>
+                    </div>
+                    <div class="modal-footer">
+                        <div hidden id="cargando" class="spinner icon-spinner-2" style="color:white; float: right;" aria-hidden="true"></div>
+                        <button type="button" id="reservar" class="btn btn-primary">Reservar</button>
+                        
                     </div>
                 </div>
             </div>
-            <script>
+        </div>
+        <div class="modal" id="exedido" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ha exedido el número de citas reservadas en este día.</p>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content"></div>
+        <script>
 
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function (e) {
@@ -455,7 +526,7 @@
     //$("#accordion").accordion();
     //coloca el evento de cierre de sesión al botón
     $('#cerrarSession').on("click", function () {
-        window.location.href = '@Url.Action("LogOff", "Home")';
+        window.location.href = '@Url.Action("LogOff", "Estudiante")';
     });
 
     //alert('antes');
@@ -478,8 +549,8 @@
     //alert('despues del timeout');
 
 
-            </script>
-            <script>
+        </script>
+        <script>
 
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function (e) {
@@ -562,33 +633,50 @@
     //alert('despues del timeout');
 
 
-            </script>
-    <script>
-         $(document).ready(function () {
-       
-        $('#reservar').on("click", function () {
-            var fecha = $('#fecha').val();
-            var horaInicio = $('#idSelect').val();
-            var datos = [fecha, horaInicio];
-            $.ajax({
-                type: "POST",
-                url: "/Estudiante/ReservarCita",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(datos),
-                dataType: "json",
-                success: function (msg) {
-                   alert("Su cita fue reservada con exito.")
-                },
-                error: alert("Su cita fue reservada con exito.")
-                
+        </script>
+        <script>
+            $(document).ready(function () {
+
+                $('#reservar').on("click", function () {
+                   
+                    document.getElementById("cargando").style.color = "blue";
+                    $('#reservar').hide();
+                    var fecha = $('#fecha').val();
+                    var horaInicio = $('#idSelect').val();
+                    var datos = [fecha, horaInicio];
+                    $.ajax({
+                        type: "POST",
+                        url: "/Estudiante/ReservarCita",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(datos),
+                        dataType: "json",
+                        success: function (data) {
+                           
+                            if (data.boolRes) {
+                                
+                                alert("Su cita fue reservada con exito.")
+                                document.getElementById("cargando").style.color = "white";
+                                
+                                
+                            } else {
+                                alert("Cita no creada, ha exedido el número de citas reservadas en este día.")
+                                document.getElementById("cargando").style.color = "white";
+                            }
+                            $('#reservar').show();
+                            $('#exampleModal').modal('hide');
+
+                        },
+        
+
+                    });
+                    
+
+                });
+
             });
-            $('#exampleModal').modal('hide')
-
-        });
-
-    });
 
 
-    </script>
-        </body>
+        </script>
+        
+    </body>
 </html>

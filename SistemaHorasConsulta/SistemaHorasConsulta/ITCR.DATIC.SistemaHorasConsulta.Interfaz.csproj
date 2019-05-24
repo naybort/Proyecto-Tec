@@ -143,6 +143,10 @@
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HorariosController.cs" />
+    <Compile Include="Controllers\LugaresController.cs" />
+    <Compile Include="Controllers\ProfesoresController.cs" />
+    <Compile Include="Controllers\TematicasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -638,6 +642,26 @@
     <Content Include="Views\Administrador\Profesores.cshtml" />
     <Content Include="Views\Shared\_Administrador.cshtml" />
     <Content Include="Views\Administrador\Tematicas.cshtml" />
+    <Content Include="Views\Tematicas\Create.cshtml" />
+    <Content Include="Views\Tematicas\Delete.cshtml" />
+    <Content Include="Views\Tematicas\Details.cshtml" />
+    <Content Include="Views\Tematicas\Edit.cshtml" />
+    <Content Include="Views\Tematicas\Index.cshtml" />
+    <Content Include="Views\Horarios\Create.cshtml" />
+    <Content Include="Views\Horarios\Delete.cshtml" />
+    <Content Include="Views\Horarios\Details.cshtml" />
+    <Content Include="Views\Horarios\Edit.cshtml" />
+    <Content Include="Views\Horarios\Index.cshtml" />
+    <Content Include="Views\Profesores\Create.cshtml" />
+    <Content Include="Views\Profesores\Delete.cshtml" />
+    <Content Include="Views\Profesores\Details.cshtml" />
+    <Content Include="Views\Profesores\Edit.cshtml" />
+    <Content Include="Views\Profesores\Index.cshtml" />
+    <Content Include="Views\Lugares\Create.cshtml" />
+    <Content Include="Views\Lugares\Delete.cshtml" />
+    <Content Include="Views\Lugares\Details.cshtml" />
+    <Content Include="Views\Lugares\Edit.cshtml" />
+    <Content Include="Views\Lugares\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

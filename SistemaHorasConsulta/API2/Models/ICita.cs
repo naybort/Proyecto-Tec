@@ -14,7 +14,7 @@ namespace API.Models
      
         public int IdProfesor { get; set; }
         public int IdEstudiante { get; set; }
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
 
         public DateTime HoraInicio { get; set; }
 
@@ -24,17 +24,14 @@ namespace API.Models
             ICita temp = new ICita();
             return temp; 
         }
-
+   
         public void guardarCita(ICita cita)
         {
-            var parametroIdProfesor = new SqlParameter("@IdProfesor", cita.IdProfesor);
-            var parametroIdEstudiante = new SqlParameter("@IdEstudiante", cita.IdEstudiante);
-            var parametroHoraInicio = new SqlParameter("@HoraInicio", "7:00");
-            var parametroFecha = new SqlParameter("@Fecha", "12-12-2018");
-
+            /*API2.wsEmail.Email ws = new API2.wsEmail.Email();
+            ws.Enviar(destino, cc,asunto, titulo, true, prioridad, usuario, contrasena);*/
             var str = "exec Pr_Cita_Insertar @IdProfesor = "+ cita.IdProfesor.ToString() + ", @IdEstudiante = "+
                 
-                cita.IdEstudiante.ToString() +", @Fecha = '"+cita.Fecha+"', @Horainicio = '"+cita.HoraInicio.ToString("HH:mm") +"'";
+                cita.IdEstudiante.ToString() +", @Fecha = '"+cita.Fecha.ToShortDateString()+"', @HoraInicio = '"+cita.HoraInicio.ToString("HH:mm") +"'";
             var result =  bd.Database.ExecuteSqlCommand(str);
            
         }

@@ -1,0 +1,35 @@
+﻿@model ITCR.DATIC.SistemaHorasConsulta.Modelo.Tematica
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Principal.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tematica</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreTematica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreTematica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdTematica }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -20,11 +20,19 @@
                                     <div class="container-fluid">
                                         <div class="row">
 
-                                            <div class="card2 card2-profile">
+                                            
                                                 <div class="card2-avatar">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="~/assets/Images/Profesores/Jose_Pablo_Bolaños.PNG" />
-                                                    </a>
+                                                    <div class="image">
+                                                        @if (Session["Foto"] != null)
+                                                        {
+                                                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
+                                                        }
+
+                                                    </div>
                                                 </div>
                                                 <div class="card2-body">
                                                     <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
@@ -83,12 +91,12 @@
                                                             </div>
 
                                                 </div>
-                                            </div>
+                                      
 
                                         </div>
                                     </div>
-
-
+                                    </div>
+                                </div>
                         </li>
                     }
        
