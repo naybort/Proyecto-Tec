@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
-
+using PagedList;
 namespace SistemaHorasConsulta.Controllers
 {
     public class TematicasController : Controller

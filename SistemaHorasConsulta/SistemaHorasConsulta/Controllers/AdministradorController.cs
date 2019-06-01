@@ -4,21 +4,19 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using ITCR.DATIC.SistemaHorasConsulta.Negocio;
 
 namespace SistemaHorasConsulta.Controllers
 {
     public class AdministradorController : Controller
     {
+        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
         // GET: Administrador
-        public ActionResult Profesores()
+        public ActionResult BaseDatos()
         {
-            @Session["Encabezado"] = "Seleccionar Temática";
-
-            //IEnumerable<Profesor> profesores = null;
-            Session["ID_USUARIO"] = 2016136466;
-
-            return View();
+            
+            return View(db.Profesores.Include("Horarios").ToList());
         }
     }
 }

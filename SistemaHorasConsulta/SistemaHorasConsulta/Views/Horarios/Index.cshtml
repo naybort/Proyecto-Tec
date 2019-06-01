@@ -2,26 +2,26 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Principal.cshtml";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Lista de Horarios</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar Horario", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.HoraInicio)
+            Hora de Inicio
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HoraFinal)
+            Hora Final
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Dia)
+            Día
         </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -36,9 +36,9 @@
             @Html.DisplayFor(modelItem => item.Dia)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdHorario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdHorario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdHorario })
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdHorario }) |
+       
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.IdHorario })
         </td>
     </tr>
 }

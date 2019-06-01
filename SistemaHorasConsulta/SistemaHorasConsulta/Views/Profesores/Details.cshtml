@@ -2,90 +2,91 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Principal.cshtml";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalles de @Html.DisplayFor(model => model.Nombre) @Html.DisplayFor(model => model.PrimerApellido) @Html.DisplayFor(model => model.SegundoApellido)</h2>
 
 <div>
-    <h4>Profesore</h4>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimerApellido)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PrimerApellido)
-        </dd>
+                <div class="card2-avatar pull-center">
+                    <div class="image ">
+                        @if (Session["Foto"] != null)
+                        {
+                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle center-block" alt="Usuario" />
+                        }
+                        else
+                        {
+                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle center-block" alt="Usuario" />
+                        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SegundoApellido)
-        </dt>
+                    </div>
+                </div>
+                <div class="card2-body">
+                    <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
 
-        <dd>
-            @Html.DisplayFor(model => model.SegundoApellido)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Usuario)
-        </dt>
+                    <h4 class="card2-title">     </h4>
+                    <table class="table">
+                        <tr>
+                            <th>Campos de atención al estudiante:</th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Usuario)
-        </dd>
+                            <th>Correo Electrónico:</th>
+                            <th>Ubicación:</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Especialidades)
+                            </td>
+                            <td>@Html.DisplayFor(model => model.CorreoElectronico)</td>
+                            <td>
+                                @Html.DisplayFor(model => model.Lugare.Nombre)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Contrasena)
-        </dt>
+                            </td>
+                        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Contrasena)
-        </dd>
+                    </table>
+                    <h4 class="card2-title">Horario:</h4>
+                    <table class="table">
+                        @for (var i = 0; i < Model.Horarios.Count; i++)
+                        {
+                            <tr>
+                                <th>@Html.DisplayFor(model => model.Horarios.ToList()[i].Dia)</th>
+                                <th></th>
+                             
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => model.Horarios.ToList()[i].HoraInicio) a @Html.DisplayFor(model => model.Horarios.ToList()[i].HoraFinal)
+                                </td>
+                                <td >
+                                    @Html.ActionLink("Eliminar", "EliminarHorario", new { id = Model.IdProfesor })
+                                </td>
+                              
+                            </tr>
+                        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CorreoElectronico)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CorreoElectronico)
-        </dd>
+                    </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Especialidades)
-        </dt>
+                </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Especialidades)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
+            </div>
+        </div>
+    </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Lugare.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Lugare.Nombre)
-        </dd>
-
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.IdProfesor }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Asociar Horario", "AsociarHorario", new { id = Model.IdProfesor })
+
 </p>

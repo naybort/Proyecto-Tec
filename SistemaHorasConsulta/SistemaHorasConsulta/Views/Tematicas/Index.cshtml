@@ -1,24 +1,50 @@
-﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Modelo.Tematica>
+﻿@using PagedList;
+@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Modelo.Tematica>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Principal.cshtml";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Index</h2>
-
+<h2>Lista de Temáticas</h2>
+ 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar Temática", "Create")
 </p>
-<table class="table">
+            
+     
+
+
+
+<style> 
+
+input[type=text] {
+ width: 130px;
+ box-sizing: border-box;
+ border: 2px solid #ccc;
+ border-radius: 4px;
+ font-size: 16px;
+ background-color: white;
+ background-image: url('lupa.png');
+ background-position: 10px 10px; 
+ background-repeat: no-repeat;
+ padding: 12px 20px 12px 40px;
+ -webkit-transition: width 0.4s ease-in-out;
+ transition: width 0.4s ease-in-out;
+}
+input[type=text]:focus {
+ width: 100%;
+}
+</style>
+<table class="table" id="myTable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.NombreTematica)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripción
         </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -30,11 +56,16 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdTematica }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdTematica }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdTematica })
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdTematica }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.IdTematica })
+       
         </td>
     </tr>
 }
 
 </table>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>

@@ -2,13 +2,13 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Principal.cshtml";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Lista de profesores</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar Profesor", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,30 +16,20 @@
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrimerApellido)
+            Primer Apellido 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SegundoApellido)
+            Segundo Apellido
         </th>
+     
         <th>
-            @Html.DisplayNameFor(model => model.Usuario)
+            Correo Electrónico
         </th>
+     
         <th>
-            @Html.DisplayNameFor(model => model.Contrasena)
+           Lugar de atención
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CorreoElectronico)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Especialidades)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Foto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lugare.Nombre)
-        </th>
-        <th></th>
+        <th>Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -53,28 +43,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.SegundoApellido)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Usuario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contrasena)
-        </td>
+  
         <td>
             @Html.DisplayFor(modelItem => item.CorreoElectronico)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Especialidades)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Foto)
-        </td>
+    
         <td>
             @Html.DisplayFor(modelItem => item.Lugare.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdProfesor }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdProfesor }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdProfesor })
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdProfesor }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.IdProfesor }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdProfesor })
         </td>
     </tr>
 }
