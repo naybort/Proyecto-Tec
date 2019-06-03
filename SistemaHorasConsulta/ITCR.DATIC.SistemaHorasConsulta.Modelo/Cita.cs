@@ -25,6 +25,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public int IdCita { get; set; }
         public System.DateTime Fecha { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
+        public string Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CitaXEstudiante> CitaXEstudiantes { get; set; }

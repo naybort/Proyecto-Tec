@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
-using ITCR.DATIC.SistemaHorasConsulta.Negocio;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
@@ -15,8 +15,35 @@ namespace SistemaHorasConsulta.Controllers
         // GET: Administrador
         public ActionResult BaseDatos()
         {
-            
             return View(db.Profesores.Include("Horarios").ToList());
+
+        }
+        public ActionResult AsociarHorario(int id) {
+            NHorario horarioTemp = new NHorario();
+            var horarios = horarioTemp.getHorarios();
+            var horarioProfesor = horarioTemp.getHorarioProfesor(id);
+            var c = horarioTemp.getHorarios();
+            List<AHorario> listaHorario = new List<AHorario>();
+            foreach (var i in c) {
+                foreach (var x in horarioProfesor) {
+                    if (i.IdHorario == x.IdHorario) {
+                        horarios.Remove(horarios.Where(temp => temp.IdHorario == i.IdHorario).FirstOrDefault());
+                    }
+                }
+            }
+            return View(horarios);
+
+
+        }
+        public ActionResult HorarioProfesor(int id) {
+            NHorario horario = new NHorario();
+            horario.crearHorarioProfesor(id, (int)Session["IdProfeTemp"]);
+            return RedirectToAction("AsociarHorario", new { id = (int)Session["IdProfeTemp"] }); 
+        }
+        public ActionResult EliminarHorarioProfesor(int id) {
+            NHorario horario = new NHorario();
+            horario.EliminarHorarioProfesor(id, (int)Session["IdProfeTemp"]);
+            return RedirectToAction("Details","Profesores", new { id = (int)Session["IdProfeTemp"] });
         }
     }
 }

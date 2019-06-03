@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
-
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 namespace SistemaHorasConsulta.Controllers
 {
     public class ProfesoresController : Controller
@@ -17,23 +17,20 @@ namespace SistemaHorasConsulta.Controllers
         // GET: Profesores
         public ActionResult Index()
         {
-            var profesores = db.Profesores.Include(p => p.Lugare);
-            return View(profesores.ToList());
+            NProfesor lista = new NProfesor();
+
+            return View(lista.getProfesor().ToList());
         }
 
         // GET: Profesores/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Profesore profesore = db.Profesores.Find(id);
-            if (profesore == null)
-            {
-                return HttpNotFound();
-            }
-            return View(profesore);
+
+            NProfesor profesores = new NProfesor();
+            var profesor = profesores.getProfesor().ToList().Where(x => x.IdProfesor == id).FirstOrDefault();
+            Session["IdProfeTemp"] = profesor.IdProfesor;
+            Session["NombreProfeTemp"] = profesor.NombreProfesor + " " + profesor.PrimerApellido + " " + profesor.SegundoApellido;
+            return View(profesor);
         }
 
         // GET: Profesores/Create

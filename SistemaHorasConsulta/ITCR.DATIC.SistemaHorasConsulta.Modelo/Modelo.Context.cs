@@ -27,21 +27,59 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Bitacora> Bitacoras { get; set; }
         public virtual DbSet<Cita> Citas { get; set; }
         public virtual DbSet<Horario> Horarios { get; set; }
         public virtual DbSet<Lugare> Lugares { get; set; }
         public virtual DbSet<Profesore> Profesores { get; set; }
         public virtual DbSet<Tematica> Tematicas { get; set; }
+        public virtual DbSet<Administradore> Administradores { get; set; }
         public virtual DbSet<CitaXEstudiante> CitaXEstudiantes { get; set; }
         public virtual DbSet<FeedbackXCita> FeedbackXCitas { get; set; }
     
-        public virtual int Pr_Cita_Eliminar(Nullable<int> idCita)
+        public virtual int Pr_Administador_Editar(string usuarioActual, string usuarioNuevo)
+        {
+            var usuarioActualParameter = usuarioActual != null ?
+                new ObjectParameter("UsuarioActual", usuarioActual) :
+                new ObjectParameter("UsuarioActual", typeof(string));
+    
+            var usuarioNuevoParameter = usuarioNuevo != null ?
+                new ObjectParameter("UsuarioNuevo", usuarioNuevo) :
+                new ObjectParameter("UsuarioNuevo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Editar", usuarioActualParameter, usuarioNuevoParameter);
+        }
+    
+        public virtual int Pr_Administador_Eliminar(string usuario)
+        {
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Eliminar", usuarioParameter);
+        }
+    
+        public virtual ObjectResult<string> Pr_Administadores_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Pr_Administadores_Consultar");
+        }
+    
+        public virtual int Pr_Administadores_Insertar(string usuario)
+        {
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("usuario", usuario) :
+                new ObjectParameter("usuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administadores_Insertar", usuarioParameter);
+        }
+    
+        public virtual int Pr_Cita_Cancelar(Nullable<int> idCita)
         {
             var idCitaParameter = idCita.HasValue ?
                 new ObjectParameter("IdCita", idCita) :
                 new ObjectParameter("IdCita", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Cita_Eliminar", idCitaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Cita_Cancelar", idCitaParameter);
         }
     
         public virtual int Pr_Cita_Insertar(Nullable<int> idProfesor, Nullable<int> idEstudiante, Nullable<System.DateTime> fecha, Nullable<System.TimeSpan> horaInicio)
@@ -65,18 +103,18 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Cita_Insertar", idProfesorParameter, idEstudianteParameter, fechaParameter, horaInicioParameter);
         }
     
-        public virtual ObjectResult<Pr_Citas_Consultar_Result> Pr_Citas_Consultar()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Citas_Consultar_Result>("Pr_Citas_Consultar");
-        }
-    
-        public virtual int Pr_Citas_Eliminar(Nullable<int> idCita)
+        public virtual int Pr_CitaRealizada_Editar(Nullable<int> idCita)
         {
             var idCitaParameter = idCita.HasValue ?
                 new ObjectParameter("IdCita", idCita) :
                 new ObjectParameter("IdCita", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Citas_Eliminar", idCitaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_CitaRealizada_Editar", idCitaParameter);
+        }
+    
+        public virtual ObjectResult<Pr_Citas_Consultar_Result> Pr_Citas_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Citas_Consultar_Result>("Pr_Citas_Consultar");
         }
     
         public virtual ObjectResult<Pr_CitasFiltrarFecha_Consultar_Result> Pr_CitasFiltrarFecha_Consultar(Nullable<System.DateTime> fecha1, Nullable<System.DateTime> fecha2)
@@ -175,6 +213,45 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_HorarioProfesor_Consultar_Result>("Pr_HorarioProfesor_Consultar", idProfesorParameter);
         }
     
+        public virtual ObjectResult<Pr_Horarios_Consultar_Result> Pr_Horarios_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Horarios_Consultar_Result>("Pr_Horarios_Consultar");
+        }
+    
+        public virtual int Pr_HorarioXProfesor_Editar(Nullable<int> idHorarioActual, Nullable<int> idProfesorActual, Nullable<int> idHorarioNuevo, Nullable<int> idProfesorNuevo)
+        {
+            var idHorarioActualParameter = idHorarioActual.HasValue ?
+                new ObjectParameter("IdHorarioActual", idHorarioActual) :
+                new ObjectParameter("IdHorarioActual", typeof(int));
+    
+            var idProfesorActualParameter = idProfesorActual.HasValue ?
+                new ObjectParameter("IdProfesorActual", idProfesorActual) :
+                new ObjectParameter("IdProfesorActual", typeof(int));
+    
+            var idHorarioNuevoParameter = idHorarioNuevo.HasValue ?
+                new ObjectParameter("IdHorarioNuevo", idHorarioNuevo) :
+                new ObjectParameter("IdHorarioNuevo", typeof(int));
+    
+            var idProfesorNuevoParameter = idProfesorNuevo.HasValue ?
+                new ObjectParameter("IdProfesorNuevo", idProfesorNuevo) :
+                new ObjectParameter("IdProfesorNuevo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_HorarioXProfesor_Editar", idHorarioActualParameter, idProfesorActualParameter, idHorarioNuevoParameter, idProfesorNuevoParameter);
+        }
+    
+        public virtual int Pr_HorarioXProfesor_Eliminar(Nullable<int> idHorario, Nullable<int> idProfesor)
+        {
+            var idHorarioParameter = idHorario.HasValue ?
+                new ObjectParameter("IdHorario", idHorario) :
+                new ObjectParameter("IdHorario", typeof(int));
+    
+            var idProfesorParameter = idProfesor.HasValue ?
+                new ObjectParameter("IdProfesor", idProfesor) :
+                new ObjectParameter("IdProfesor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_HorarioXProfesor_Eliminar", idHorarioParameter, idProfesorParameter);
+        }
+    
         public virtual int Pr_HorarioXProfesor_Insertar(Nullable<int> idHorario, Nullable<int> idProfesor)
         {
             var idHorarioParameter = idHorario.HasValue ?
@@ -217,6 +294,111 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
                 new ObjectParameter("NombreLugar", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Lugar_Insertar", nombreLugarParameter);
+        }
+    
+        public virtual ObjectResult<Pr_Lugares_Consultar_Result> Pr_Lugares_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Lugares_Consultar_Result>("Pr_Lugares_Consultar");
+        }
+    
+        public virtual int Pr_Profesor_Editar(Nullable<int> idProfesor, string nombre, string primerApellido, string segundoApellido, string usuario, string contrasena, string correoElectronico, string especialidades, Nullable<int> idLugar, byte[] foto)
+        {
+            var idProfesorParameter = idProfesor.HasValue ?
+                new ObjectParameter("IdProfesor", idProfesor) :
+                new ObjectParameter("IdProfesor", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var primerApellidoParameter = primerApellido != null ?
+                new ObjectParameter("PrimerApellido", primerApellido) :
+                new ObjectParameter("PrimerApellido", typeof(string));
+    
+            var segundoApellidoParameter = segundoApellido != null ?
+                new ObjectParameter("SegundoApellido", segundoApellido) :
+                new ObjectParameter("SegundoApellido", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var contrasenaParameter = contrasena != null ?
+                new ObjectParameter("Contrasena", contrasena) :
+                new ObjectParameter("Contrasena", typeof(string));
+    
+            var correoElectronicoParameter = correoElectronico != null ?
+                new ObjectParameter("CorreoElectronico", correoElectronico) :
+                new ObjectParameter("CorreoElectronico", typeof(string));
+    
+            var especialidadesParameter = especialidades != null ?
+                new ObjectParameter("Especialidades", especialidades) :
+                new ObjectParameter("Especialidades", typeof(string));
+    
+            var idLugarParameter = idLugar.HasValue ?
+                new ObjectParameter("IdLugar", idLugar) :
+                new ObjectParameter("IdLugar", typeof(int));
+    
+            var fotoParameter = foto != null ?
+                new ObjectParameter("Foto", foto) :
+                new ObjectParameter("Foto", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Profesor_Editar", idProfesorParameter, nombreParameter, primerApellidoParameter, segundoApellidoParameter, usuarioParameter, contrasenaParameter, correoElectronicoParameter, especialidadesParameter, idLugarParameter, fotoParameter);
+        }
+    
+        public virtual int Pr_Profesor_Eliminar(Nullable<int> idProfesor)
+        {
+            var idProfesorParameter = idProfesor.HasValue ?
+                new ObjectParameter("IdProfesor", idProfesor) :
+                new ObjectParameter("IdProfesor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Profesor_Eliminar", idProfesorParameter);
+        }
+    
+        public virtual ObjectResult<Pr_Profesores_Consultar_Result> Pr_Profesores_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Profesores_Consultar_Result>("Pr_Profesores_Consultar");
+        }
+    
+        public virtual int Pr_Profesores_Insertar(string nombre, string primerApellido, string segundoApellido, string usuario, string contrasena, string correoElectronico, string especialidades, Nullable<int> idLugar, byte[] foto)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var primerApellidoParameter = primerApellido != null ?
+                new ObjectParameter("PrimerApellido", primerApellido) :
+                new ObjectParameter("PrimerApellido", typeof(string));
+    
+            var segundoApellidoParameter = segundoApellido != null ?
+                new ObjectParameter("SegundoApellido", segundoApellido) :
+                new ObjectParameter("SegundoApellido", typeof(string));
+    
+            var usuarioParameter = usuario != null ?
+                new ObjectParameter("Usuario", usuario) :
+                new ObjectParameter("Usuario", typeof(string));
+    
+            var contrasenaParameter = contrasena != null ?
+                new ObjectParameter("Contrasena", contrasena) :
+                new ObjectParameter("Contrasena", typeof(string));
+    
+            var correoElectronicoParameter = correoElectronico != null ?
+                new ObjectParameter("CorreoElectronico", correoElectronico) :
+                new ObjectParameter("CorreoElectronico", typeof(string));
+    
+            var especialidadesParameter = especialidades != null ?
+                new ObjectParameter("Especialidades", especialidades) :
+                new ObjectParameter("Especialidades", typeof(string));
+    
+            var idLugarParameter = idLugar.HasValue ?
+                new ObjectParameter("IdLugar", idLugar) :
+                new ObjectParameter("IdLugar", typeof(int));
+    
+            var fotoParameter = foto != null ?
+                new ObjectParameter("Foto", foto) :
+                new ObjectParameter("Foto", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Profesores_Insertar", nombreParameter, primerApellidoParameter, segundoApellidoParameter, usuarioParameter, contrasenaParameter, correoElectronicoParameter, especialidadesParameter, idLugarParameter, fotoParameter);
         }
     
         public virtual int Pr_Tematica_Editar(Nullable<int> idTematica, string nombre, string descripcion)
@@ -270,6 +452,40 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
                 new ObjectParameter("IdTematica", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_TematicasProfesor_Consultar_Result>("Pr_TematicasProfesor_Consultar", idTematicaParameter);
+        }
+    
+        public virtual int Pr_TematicaXProfesor_Editar(Nullable<int> idTematicaActual, Nullable<int> idProfesorActual, Nullable<int> idTematicaNueva, Nullable<int> idProfesorNuevo)
+        {
+            var idTematicaActualParameter = idTematicaActual.HasValue ?
+                new ObjectParameter("IdTematicaActual", idTematicaActual) :
+                new ObjectParameter("IdTematicaActual", typeof(int));
+    
+            var idProfesorActualParameter = idProfesorActual.HasValue ?
+                new ObjectParameter("IdProfesorActual", idProfesorActual) :
+                new ObjectParameter("IdProfesorActual", typeof(int));
+    
+            var idTematicaNuevaParameter = idTematicaNueva.HasValue ?
+                new ObjectParameter("IdTematicaNueva", idTematicaNueva) :
+                new ObjectParameter("IdTematicaNueva", typeof(int));
+    
+            var idProfesorNuevoParameter = idProfesorNuevo.HasValue ?
+                new ObjectParameter("IdProfesorNuevo", idProfesorNuevo) :
+                new ObjectParameter("IdProfesorNuevo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_TematicaXProfesor_Editar", idTematicaActualParameter, idProfesorActualParameter, idTematicaNuevaParameter, idProfesorNuevoParameter);
+        }
+    
+        public virtual int Pr_TematicaXProfesor_Eliminar(Nullable<int> idTematica, Nullable<int> idProfesor)
+        {
+            var idTematicaParameter = idTematica.HasValue ?
+                new ObjectParameter("IdTematica", idTematica) :
+                new ObjectParameter("IdTematica", typeof(int));
+    
+            var idProfesorParameter = idProfesor.HasValue ?
+                new ObjectParameter("IdProfesor", idProfesor) :
+                new ObjectParameter("IdProfesor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_TematicaXProfesor_Eliminar", idTematicaParameter, idProfesorParameter);
         }
     
         public virtual int Pr_TematicaXProfesor_Insertar(Nullable<int> idTematica, Nullable<int> idProfesor)

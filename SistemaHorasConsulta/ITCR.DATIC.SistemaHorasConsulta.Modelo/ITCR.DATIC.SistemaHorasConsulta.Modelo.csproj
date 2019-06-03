@@ -131,9 +131,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administradore.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Bitacora.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cita.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -187,6 +193,15 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Pr_HorarioProfesor_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_Horarios_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_Lugares_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_Profesores_Consultar_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Pr_TematicasProfesor_Consultar_Result.cs">

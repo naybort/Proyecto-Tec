@@ -133,13 +133,16 @@
     <Compile Include="Models\Citas.cs" />
     <Compile Include="Models\CitaXProfesor.cs" />
     <Compile Include="Models\getTematicas.cs" />
+    <Compile Include="Models\AHorario.cs" />
     <Compile Include="Models\HorarioProfesor.cs" />
     <Compile Include="Models\NCita.cs" />
     <Compile Include="Models\NHorario.cs" />
     <Compile Include="Models\NProfesor.cs" />
     <Compile Include="Models\NTematica.cs" />
     <Compile Include="Models\PorfesorPorTematica.cs" />
+    <Compile Include="Models\Profesor.cs" />
     <Compile Include="Models\ProfesoresPorTematica.cs" />
+    <Compile Include="Models\ProfesorInformacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

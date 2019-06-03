@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Models;
+using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace API.Controllers
 {
@@ -20,14 +21,15 @@ namespace API.Controllers
         }
 
         // GET: api/Profesor
-        public IEnumerable<IProfesor> Get()
+        public IEnumerable<Pr_Profesores_Consultar_Result> Get()
         {
             IProfesor profesor = new IProfesor();
+            
             return profesor.getProfesores();
         }
 
         // GET: api/Profesor/5
-        public IProfesor Get(int id)
+        public Pr_Profesores_Consultar_Result Get(int id)
         {
             IProfesor profesor = new IProfesor();
             return profesor.getProfesor(id);

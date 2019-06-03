@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Models;
+using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace API.Controllers
 {
@@ -21,16 +22,34 @@ namespace API.Controllers
             return horario.getHorarioProfesor(profesorId);
         }
 
-        // GET: api/Horario
-        public IEnumerable<IHorario> Get()
+        [Route("api/Horario/Asociar/")]
+        public void crearHorarioAsociar([FromBody]IHorario horario)
         {
-            //IHorario horarios = new IHorario();
-            //return horarios.getHorarios();
-            return null;
+            IHorario temp = new IHorario();
+            temp.Asociar(horario);
+
+        }
+       
+        [Route("api/Horario/Eliminar/{idHorario:int}/{idProfesor:int}")]
+        [HttpDelete]
+        [ResponseType(typeof(HttpResponseMessage))]
+        public HttpResponseMessage EliminarHorarioAsociar(int idHorario, int idProfesor)
+        {
+            IHorario temp = new IHorario();
+           
+            temp.EliminarAsociado(idHorario, idProfesor);
+            return new HttpResponseMessage();
+        }
+        // GET: api/Horario
+        public IEnumerable<Pr_Horarios_Consultar_Result> Get()
+        {
+            IHorario horarios = new IHorario();
+            return horarios.getHorarios();
+          
         }
 
         // GET: api/Horario/5
-        public IHorario Get(int id)
+        public Pr_Horarios_Consultar_Result Get(int id)
         {
             IHorario horarios = new IHorario();
             return horarios.getHorario(id);

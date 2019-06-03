@@ -10,8 +10,8 @@
 namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
 {
     using System;
-    
-    public partial class Pr_TematicasProfesor_Consultar_Result
+
+    public partial class Pr_Profesores_Consultar_Result
     {
         public int IdProfesor { get; set; }
         public string Nombre { get; set; }
@@ -22,6 +22,9 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public System.TimeSpan HoraInicio { get; set; }
         public System.TimeSpan HoraFinal { get; set; }
         public string NombreLugar { get; set; }
+        public string NombreTematica { get; set; }
         public string Especialidades { get; set; }
+        public string CorreoElectronico { get; set; }
+        public int IdHorario { get; set; }
     }
 }

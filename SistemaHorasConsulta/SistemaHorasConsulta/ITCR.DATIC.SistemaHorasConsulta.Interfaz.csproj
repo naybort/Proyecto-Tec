@@ -147,7 +147,10 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\AdministradoresController.cs" />
+    <Compile Include="Controllers\CitasController.cs" />
     <Compile Include="Controllers\EstudianteController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HorariosController.cs" />
     <Compile Include="Controllers\LugaresController.cs" />
@@ -669,6 +672,22 @@
     <Content Include="Views\Lugares\Index.cshtml" />
     <Content Include="Views\Shared\_PrincipalAdmin.cshtml" />
     <Content Include="Views\Administrador\BaseDatos.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Feedback\Delete.cshtml" />
+    <Content Include="Views\Feedback\Details.cshtml" />
+    <Content Include="Views\Feedback\Edit.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Administradores\Create.cshtml" />
+    <Content Include="Views\Administradores\Delete.cshtml" />
+    <Content Include="Views\Administradores\Details.cshtml" />
+    <Content Include="Views\Administradores\Edit.cshtml" />
+    <Content Include="Views\Administradores\Index.cshtml" />
+    <Content Include="Views\Citas\Create.cshtml" />
+    <Content Include="Views\Citas\Delete.cshtml" />
+    <Content Include="Views\Citas\Details.cshtml" />
+    <Content Include="Views\Citas\Edit.cshtml" />
+    <Content Include="Views\Citas\Index.cshtml" />
+    <Content Include="Views\Administrador\AsociarHorario.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.AHorario>
+@{
+    ViewBag.Title = "AsociarHorario";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
+}
+
+<h2>Horarios disponibles para asociar a @Session["NombreProfeTemp"]</h2>
+
+<p>
+    @Html.ActionLink("Agregar Horario", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Hora de Inicio
+        </th>
+        <th>
+            Hora Final
+        </th>
+        <th>
+            Día
+        </th>
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dia)
+            </td>
+            <td>
+                @Html.ActionLink("Agregar", "HorarioProfesor", new { id = item.IdHorario }) 
+
+             
+            </td>
+        </tr>
+    }
+
+</table>

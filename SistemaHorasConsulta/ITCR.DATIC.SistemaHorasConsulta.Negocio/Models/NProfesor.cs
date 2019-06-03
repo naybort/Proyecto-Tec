@@ -26,5 +26,23 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
             return new List<int>();
         }
 
+        public List<Profesor> getProfesor() {
+            var responseTask = conexion.client.GetAsync("Profesor");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsStringAsync();
+                readTask.Wait();
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                var profesores = serializer.Deserialize<List<ProfesorInformacion>>(readTask.Result);
+                Profesor listaTemp = new Profesor();
+                var listaSinConcurrencias = listaTemp.getProfesoresSinConcurrencias(profesores);
+                return listaSinConcurrencias;
+            }
+            return new List<Profesor>();
+        }
+
     }
 }
