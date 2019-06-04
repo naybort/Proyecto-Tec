@@ -142,13 +142,19 @@
                                     console.log(horas[0].Hours)
                                     console.log(largo)
                                     while (i < (largo)) {
-                                        var minutosInicio = horas[i].Hours * 60;
-                                        console.log(i)
-                                        var minutosFinal = horas[i + 1].Hours * 60;
-
+                                        var minutosInicio = horas[i].Hours * 60 + horas[i].Minutes;
+                                      
+                                        var minutosFinal = horas[i + 1].Hours * 60 + horas[i +1].Minutes;
+                                       
                                         while (minutosInicio != minutosFinal) {
-                                            citasDisponibles.push(timeConvert(minutosInicio))
-                                            minutosInicio = minutosInicio + 20
+                                            if ((minutosFinal - minutosInicio) < 20) {
+                                                citasDisponibles.push(timeConvert(minutosInicio))
+                                                minutosInicio = minutosInicio + (minutosFinal - minutosInicio)
+                                            } else {
+                                                citasDisponibles.push(timeConvert(minutosInicio))
+                                                minutosInicio = minutosInicio + 20
+                                            }
+                                           
 
                                         }
                                         i = 1 + i

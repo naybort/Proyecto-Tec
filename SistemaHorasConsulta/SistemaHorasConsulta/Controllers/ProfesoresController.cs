@@ -49,6 +49,9 @@ namespace SistemaHorasConsulta.Controllers
         {
             if (ModelState.IsValid)
             {
+                profesore.Usuario = null;
+                profesore.Contrasena = null;
+                profesore.Foto = null;
                 db.Profesores.Add(profesore);
                 db.SaveChanges();
                 return RedirectToAction("Index");

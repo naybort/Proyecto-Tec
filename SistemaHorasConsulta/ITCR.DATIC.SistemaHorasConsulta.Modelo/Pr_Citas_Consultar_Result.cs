@@ -20,6 +20,6 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public string SegundoApellido { get; set; }
         public int IdEstudiante { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
-        public string Lugar_de_la_cita { get; set; }
+        public string NombreLugar { get; set; }
     }
 }
