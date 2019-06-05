@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.getTematicas>
+@{
+    ViewBag.Title = "AsociarTematica";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
+}
+
+<h2>Horarios disponibles para asociar a @Session["NombreProfeTemp"]</h2>
+
+<p>
+    @Html.ActionLink("Agregar Temática", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripción
+        </th>
+  
+        <th>Opciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreTematica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+         
+            <td>
+                @Html.ActionLink("Agregar", "TematicaProfesor", new { id = item.IdTematica })
+
+
+            </td>
+        </tr>
+    }
+
+</table>

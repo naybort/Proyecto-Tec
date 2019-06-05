@@ -45,5 +45,25 @@ namespace SistemaHorasConsulta.Controllers
             horario.EliminarHorarioProfesor(id, (int)Session["IdProfeTemp"]);
             return RedirectToAction("Details","Profesores", new { id = (int)Session["IdProfeTemp"] });
         }
+
+        public ActionResult AsociarTematica(int id)
+        {
+            NTematica tematicaTemp = new NTematica();
+            var tematicas = tematicaTemp.getTematicas();
+      
+            return View(tematicas);
+
+        }
+        public ActionResult TematicaProfesor(int id)
+        {
+            
+            return RedirectToAction("AsociarHorario", new { id = (int)Session["IdProfeTemp"] });
+        }
+
+        public ActionResult AgregarEspecialidades(int id) {
+            NTematica tematicaTemp = new NTematica();
+            var tematicas = tematicaTemp.getTematicas().Where(x => x.IdTematica == id).FirstOrDefault();
+            return View(tematicas);
+        }
     }
 }

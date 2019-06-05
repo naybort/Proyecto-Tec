@@ -21,5 +21,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public int IdEstudiante { get; set; }
         public System.TimeSpan HoraInicio { get; set; }
         public string NombreLugar { get; set; }
+        public string Estado { get; set; }
+        public bool EstadoFeedBack { get; set; }
     }
 }

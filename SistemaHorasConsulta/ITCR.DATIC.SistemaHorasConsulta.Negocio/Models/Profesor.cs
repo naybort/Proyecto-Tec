@@ -41,7 +41,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
                     profesorTemp.CorreoElectronico = elemento.CorreoElectronico;
                     profesorTemp.Especialidades = elemento.Especialidades;
                     profesorTemp.Foto = elemento.Foto;
-                  
+                    
                     foreach (var value in concurrencias)
                     {
 

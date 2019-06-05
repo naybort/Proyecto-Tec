@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "AgregarEspecialidades";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
+}
+
+<h2>Agregar especialidades de temática</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="Especialidades" class="control-label col-md-2">Campos de atención en temática </label>
+            
+            <div class="col-md-10">
+      
+                <textarea class="form-control"
+                          id="Especialidades"
+                          name="Especialidades"
+                          rows="2"
+                          cols="20"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Asociar" class="btn btn-default pull-right" />
+            </div>
+        </div>
+    </div>
+}

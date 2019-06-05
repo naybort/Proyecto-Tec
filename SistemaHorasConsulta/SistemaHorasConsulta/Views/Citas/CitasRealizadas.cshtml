@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Citas Canceladas</h2>
+<h2>Citas Realizadas</h2>
 
 
 <table class="table">
@@ -28,10 +28,14 @@
         <th>
             Hora de Inicio
         </th>
+        <th>
+            FeedBack
+        </th>
 
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.IdCita)
@@ -51,7 +55,18 @@
         <td>
             @Html.DisplayFor(modelItem => item.HoraInicio)
         </td>
+
+        @if (item.EstadoFeedBack)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraInicio)
+            </td>
+        }
+        else
+        {
+            <td></td>
+        }
     </tr>
-}
+    }
 
 </table>

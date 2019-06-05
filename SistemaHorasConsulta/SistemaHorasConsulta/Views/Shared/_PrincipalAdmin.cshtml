@@ -210,7 +210,65 @@
                                     </a>
                                 </h4>
                             </div>
+                            <div class="panel-group" id="accordion">
+                             
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse" class="collapsed">
+                                                    <span class="glyphicon glyphicon-folder-close">
+                                                        Citas
+                                                    </span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse" class="panel-collapse collapse">
+                                        
+                                            <div class="panel-body" style="padding-bottom: 0 !important; padding-top: 0 !important">
+                                                <table class="table" style="margin-bottom: 0 !important">
 
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasPendientes", "Citas")">Citas Pendientes</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasRealizadas", "Citas")">Citas Realizadas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("Index", "Citas")">Citas Canceladas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    
+
+                                                </table> @* sub elementos del menu *@
+                                            </div>
+                                        </div>
+                                    </div>
+                               
+                            </div> @*panel-group*@
 
                         </div> @*panel-group*@
                     </div>
