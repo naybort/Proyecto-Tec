@@ -56,18 +56,27 @@ namespace API.Controllers
         }
 
         // POST: api/Horario
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Pr_Horarios_Consultar_Result value)
         {
+            IHorario horarios = new IHorario();
+            horarios.crearHorario(value.Dia, value.HoraFinal, value.HoraFinal);
         }
 
         // PUT: api/Horario/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Pr_Horarios_Consultar_Result value)
         {
+            IHorario horarios = new IHorario();
+            horarios.editarHorario(value.IdHorario.ToString(), value.Dia, value.HoraFinal.ToString(), value.HoraFinal.ToString());
         }
+
+
 
         // DELETE: api/Horario/5
         public void Delete(int id)
         {
+            IHorario horarios = new IHorario();
+             horarios.eliminarHorario(id);
         }
+
     }
 }

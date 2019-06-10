@@ -4,18 +4,16 @@
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Horarios disponibles para asociar a @Session["NombreProfeTemp"]</h2>
+<h2>Temáticas disponibles para asociar a @Session["NombreProfeTemp"]</h2>
 
-<p>
-    @Html.ActionLink("Agregar Temática", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
             Nombre
         </th>
         <th>
-            Descripción
+            Especialidades
         </th>
   
         <th>Opciones</th>
@@ -28,11 +26,10 @@
                 @Html.DisplayFor(modelItem => item.NombreTematica)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
+                @Html.DisplayFor(modelItem => item.Descripcion)</td>
          
             <td>
-                @Html.ActionLink("Agregar", "TematicaProfesor", new { id = item.IdTematica })
+                @Html.ActionLink("Agregar", "AgregarEspecialidades", new { id = item.IdTematica }, null)
 
 
             </td>

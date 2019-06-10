@@ -60,6 +60,17 @@ namespace SistemaHorasConsulta.Controllers
             return new JsonResult { Data = listaHorarios, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
+        public JsonResult GetTematicas(List<string> id)
+        {
+            var idTemp = int.Parse(id[0]);
+            NTematica tematica = new NTematica();
+            var listaTematicas = tematica.getTematicasPorProfesor(idTemp);
+
+
+
+            return new JsonResult { Data = listaTematicas, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
         public JsonResult GetCitasDisponibles(List<string> Datos)
         {
            

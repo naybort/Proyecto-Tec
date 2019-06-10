@@ -4,22 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="663de2d171a140a487d20c80bdd5ea4b" Name="Diagram1">
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Bitacora" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Cita" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Horario" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Lugare" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Profesore" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Tematica" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Administradore" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.CitaXEstudiante" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.FeedbackXCita" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+      <Diagram DiagramId="44d0c66e2f184941a25a6186969ddb8c" Name="Diagram1">
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Bitacora" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Cita" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Horario" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Lugare" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Profesore" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.sysdiagram" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Tematica" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.Administradore" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.CitaXEstudiante" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.FeedbackXCita" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SistemaHorasConsultaModelo.TematicaXProfesor" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <AssociationConnector Association="SistemaHorasConsultaModelo.FK_CitaXEstudiante_Citas" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaHorasConsultaModelo.FK_FeedbackXCita_Citas" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaHorasConsultaModelo.FK_Profesores_Lugares" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaHorasConsultaModelo.FK_TematicaXProfesor_Profesores" ManuallyRouted="false" />
+        <AssociationConnector Association="SistemaHorasConsultaModelo.FK_TematicaXProfesor_Tematicas" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaHorasConsultaModelo.CitaXProfesor" ManuallyRouted="false" />
         <AssociationConnector Association="SistemaHorasConsultaModelo.HorarioXProfesor" ManuallyRouted="false" />
-        <AssociationConnector Association="SistemaHorasConsultaModelo.TematicaXProfesor" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

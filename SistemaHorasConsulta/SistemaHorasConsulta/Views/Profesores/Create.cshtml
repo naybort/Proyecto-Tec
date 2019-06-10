@@ -1,4 +1,4 @@
-﻿@model ITCR.DATIC.SistemaHorasConsulta.Modelo.Profesore
+﻿@model ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.ProfesorInformacion
 
 @{
     ViewBag.Title = "Create";
@@ -7,7 +7,7 @@
 
 
 <h2>Información del Profesor</h2>
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Profesores", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -51,14 +51,15 @@
                     @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(model => model.Especialidades, htmlAttributes: new { @class = "control-label col-md-4" })
+                <label class="control-label col-md-4"> Usuario</label>
                 <div class="col-md-8">
-                    @Html.TextAreaFor(model => model.Especialidades, new { htmlAttributes = new { @class = "form-control", @rows = "3" } })
-                    @Html.ValidationMessageFor(model => model.Especialidades, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+
 
             <div class="form-group">
                 <label class="control-label col-md-4"> Lugar de atención</label>
@@ -77,7 +78,7 @@
                             <div class="col-sm-2 imgUp">
                                 <div class="imagePreview center-block"></div>
                                 <label class="btn btn-primary">
-                                    Cargar Imagen<input type="file" class="uploadFile img " value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+                                    Cargar Imagen<input type="file" id="Foto" name="Foto" class="uploadFile img " value="Cargar Foto" style="width: 0px;height: 0px;overflow: hidden;">
                                 </label>
                             </div><!-- col-2 -->
                             <i class="fa fa-plus imgAdd"></i>

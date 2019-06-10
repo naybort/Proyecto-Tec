@@ -69,6 +69,42 @@ namespace API.Models
         }
 
 
+        public void eliminarHorario(int idHorario)
+        {
+            var id = new SqlParameter("@IdHorario", idHorario);
+
+            var horario = bd.Database.SqlQuery<int>("Pr_Horario_Eliminar @IdHorario", id);
+          
+
+        }
+
+
+
+        public void editarHorario(string id, string dia, string inicio, string final)
+        {
+            var idHorario = new SqlParameter("@IdHorario", id);
+            var horarioDia = new SqlParameter("@Dia", dia);
+            var horaInicio = new SqlParameter("@HoraInicio", inicio);
+            var horaFinal = new SqlParameter("@HoraFinal", final);
+
+            var horario = bd.Database.SqlQuery<int>("Pr_Horario_Editar @IdHorario,@Dia, @HoraInicio, @HoraFinal", idHorario, horarioDia, horaInicio, horaFinal);
+            
+        }
+
+        public void horarioProfesorEdita(int idHorarioViejo, int idHorarioNuevo, int profesorViejo, int profesorNuevo)
+        {
+            var hv = new SqlParameter("@IdHorarioActual", idHorarioViejo);
+            var hn = new SqlParameter("@IdHorarioNuevo", idHorarioNuevo);
+            var pv = new SqlParameter("@IdProfesorActual", profesorViejo);
+            var pn = new SqlParameter("@IdProfesorNuevo", profesorNuevo);
+
+            var horario = bd.Database.SqlQuery<int>("Pr_HorarioXProfesor_Editar @IdHorarioActual,@IdProfesorActual, @IdHorarioNuevo, @IdProfesorNuevo", hv, pv, hv, hn);
+
+
+        }
+
+
+
 
 
 

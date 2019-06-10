@@ -20,86 +20,91 @@
                                     <div class="container-fluid">
                                         <div class="row">
 
-                                            
-                                                <div class="card2-avatar">
-                                                    <div class="image">
-                                                        @if (Session["Foto"] != null)
-                                                        {
-                                                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
-                                                        }
 
-                                                    </div>
+                                            <div class="card2-avatar">
+                                                <div class="image">
+                                                    @if (Session["Foto"] != null)
+                                                    {
+                                                        <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
+                                                    }
+
                                                 </div>
-                                                <div class="card2-body">
-                                                    <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
-                                                
-                                                    
-                                                            <h4 class="card2-title"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.NombreProfesor</h4>
-                                                            <table class="table">
-                                                                <tr>
-                                                                    <th>Campos de atención al estudiante:</th>
+                                            </div>
+                                            <div class="card2-body">
+                                                <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
 
 
-                                                                    <th>Ubicación:</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        @profesor.Especialidades
-                                                                    </td>
-
-                                                                    <td>
-                                                                        @profesor.NombreLugar
-                                                                    </td>
-                                                                </tr>
-
-                                                            </table>
-                                                      
-                                                            <h4 class="pull-left">Días de atención:</h4>
-                                                            <table class="table">
-                                                                <tr>
-                                                                    @foreach (var i in profesor.horarios)
-                                                                    {
+                                                <h4 class="card2-title"> @profesor.PrimerApellido @profesor.SegundoApellido @profesor.NombreProfesor</h4>
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Campos de atención al estudiante:</th>
 
 
-                                                                        <th>@i.Dia:</th>
-
-
-                                                                    }
-                                                                </tr>
-                                                                <tr>
-                                                                    @foreach (var i in profesor.horarios)
-                                                                    {
-
-                                                                        <td>
-                                                                            @i.HoraInicio a @i.HoraFinal
-                                                                        </td>
-
-
-                                                                    }
-                                                                </tr>
-                                                                </table>
+                                                        <th>Ubicación:</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>@profesor.Especialidades
+                                                               <br> <a href="#" onclick="getTematicas('@profesor.IdProfesor')">Más epecialidades de @profesor.NombreProfesor</a>
+</p>
                                                             
+                                                            
+
+                                                        </td>
                                                      
+                                                        <td>
+                                                            @profesor.NombreLugar
+                                                        </td>
+                                                    </tr>
 
-                                                            <div class="collapsible-body" style="">
-                                                                <p></p>
-                                                                @Html.ActionLink("Ver disponibilidad de citas", "Calendario", new { idProfesor = profesor.IdProfesor }, new { @class = "btn btn-primary" })
-                                                            </div>
+                                                </table>
 
+                                                <h4 class="pull-left">Días de atención:</h4>
+                                                <table class="table">
+                                                    <tr>
+                                                        @foreach (var i in profesor.horarios)
+                                                        {
+
+
+                                                            <th>@i.Dia:</th>
+
+
+                                                        }
+                                                    </tr>
+                                                    <tr>
+                                                        @foreach (var i in profesor.horarios)
+                                                        {
+
+                                                            <td>
+                                                                @i.HoraInicio a @i.HoraFinal
+                                                            </td>
+
+
+                                                        }
+                                                    </tr>
+                                                </table>
+
+
+
+                                                <div class="collapsible-body" style="">
+                                                    <p></p>
+                                                    @Html.ActionLink("Ver disponibilidad de citas", "Calendario", new { idProfesor = profesor.IdProfesor }, new { @class = "btn btn-primary" })
                                                 </div>
-                                      
+
+                                            </div>
+
 
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
+                            </div>
                         </li>
                     }
-       
+
 
                 </ul>
 
@@ -110,4 +115,68 @@
         </div>
     </div>
 </div>
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Otras especialidades:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table" id="especialidades">
+                    <tr>
+                        <th>Temática</th>
+                     
+                        <th>Especialidad</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+              
 
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    function getTematicas(id) {
+
+        var tematicas = {}
+        var idTemp = []
+        idTemp.push(id)
+        $("#especialidades td").remove(); 
+        $.ajax({
+            type: "POST",
+            url: "/Estudiante/GetTematicas",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(idTemp),
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                $.each(data, function (i, v) {
+                    $("#especialidades").append(
+                        "<tr>" +
+                        "<td><a href=/SeleccionarTematica/" + v.IdTematica+">" + v.NombreTematica + "</a></td>" +
+                  
+                        "<td>" + v.Especialidades + "</td>" +
+                        "</tr>"
+                    );
+
+                })
+                $('#exampleModal').modal('show');
+                return true
+            },
+
+        });
+
+
+    };
+
+
+
+
+</script>

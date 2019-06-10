@@ -12,12 +12,13 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
        
 
         public int IdProfesor { get; set; }
-        public string NombreProfesor { get; set; }
+        public string Nombre { get; set; }
         public byte[] Foto { get; set; }
         public string PrimerApellido { get; set; }
         public string SegundoApellido { get; set; }
         public string NombreLugar { get; set; }
-        public string Especialidades { get; set; }
+        public string Usuario { get; set; }
+        public int IdLugar { get; set; }
         public string CorreoElectronico { get; set; }
 
         public List<Profesor> getProfesoresSinConcurrencias(List<ProfesorInformacion> lista)
@@ -34,12 +35,12 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
                     Profesor profesorTemp = new Profesor();
                     profesorTemp.IdProfesor = elemento.IdProfesor;
-                    profesorTemp.NombreProfesor = elemento.Nombre;
+                    profesorTemp.Nombre = elemento.Nombre;
                     profesorTemp.PrimerApellido = elemento.PrimerApellido;
                     profesorTemp.SegundoApellido = elemento.SegundoApellido;
                     profesorTemp.NombreLugar = elemento.NombreLugar;
                     profesorTemp.CorreoElectronico = elemento.CorreoElectronico;
-                    profesorTemp.Especialidades = elemento.Especialidades;
+               
                     profesorTemp.Foto = elemento.Foto;
                     
                     foreach (var value in concurrencias)

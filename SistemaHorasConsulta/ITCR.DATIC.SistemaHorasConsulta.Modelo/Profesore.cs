@@ -17,9 +17,9 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Profesore()
         {
+            this.TematicaXProfesors = new HashSet<TematicaXProfesor>();
             this.Citas = new HashSet<Cita>();
             this.Horarios = new HashSet<Horario>();
-            this.Tematicas = new HashSet<Tematica>();
         }
     
         public int IdProfesor { get; set; }
@@ -27,18 +27,16 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public string PrimerApellido { get; set; }
         public string SegundoApellido { get; set; }
         public string Usuario { get; set; }
-        public string Contrasena { get; set; }
         public string CorreoElectronico { get; set; }
-        public string Especialidades { get; set; }
         public int IdLugar { get; set; }
         public byte[] Foto { get; set; }
     
         public virtual Lugare Lugare { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TematicaXProfesor> TematicaXProfesors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cita> Citas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Horario> Horarios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tematica> Tematicas { get; set; }
     }
 }

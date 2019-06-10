@@ -1,4 +1,4 @@
-﻿@model ITCR.DATIC.SistemaHorasConsulta.Modelo.Profesore
+﻿@model ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.ProfesorInformacion
 
 @{
     ViewBag.Title = "Edit";
@@ -25,7 +25,14 @@
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
 
+               
+                <div class="col-md-7">
+                    <input type="text" hidden id="IdProfesor" name="IdProfesor" value="@Model.IdProfesor" />
+                    
+                </div>
+            </div>
             <div class="form-group">
 
                 <label class="control-label col-md-5"> Primer Apellido</label>
@@ -54,13 +61,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Especialidades, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.TextAreaFor(model => model.Especialidades, new { htmlAttributes = new { @class = "form-control", @rows = "3" } })
-                    @Html.ValidationMessageFor(model => model.Especialidades, "", new { @class = "text-danger" })
-                </div>
-            </div>
+  
 
             <div class="form-group">
                 <label class="control-label col-md-4"> Lugar de atención</label>

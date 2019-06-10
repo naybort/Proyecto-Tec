@@ -36,18 +36,28 @@ namespace API.Controllers
         }
 
         // POST: api/Profesor
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Pr_Profesores_Consultar_Result value)
         {
+            IProfesor profesor = new IProfesor();
+            profesor.insertarProfesor(value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
+                , value.IdLugar);
+
         }
 
         // PUT: api/Profesor/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Pr_Profesores_Consultar_Result value)
         {
+
+            IProfesor profesor = new IProfesor();
+            profesor.editarProfesor(value.IdProfesor, value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Nombre, value.Nombre, value.CorreoElectronico
+                , Int32.Parse(value.Nombre), value.Foto);
         }
 
         // DELETE: api/Profesor/5
         public void Delete(int id)
         {
+            IProfesor profesor = new IProfesor();
+            profesor.eliminarProfesor(id);
         }
     }
 }

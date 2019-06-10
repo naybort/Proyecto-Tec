@@ -29,14 +29,15 @@ namespace SistemaHorasConsulta.Controllers
             NProfesor profesores = new NProfesor();
             var profesor = profesores.getProfesor().ToList().Where(x => x.IdProfesor == id).FirstOrDefault();
             Session["IdProfeTemp"] = profesor.IdProfesor;
-            Session["NombreProfeTemp"] = profesor.NombreProfesor + " " + profesor.PrimerApellido + " " + profesor.SegundoApellido;
+            Session["NombreProfeTemp"] = profesor.Nombre + " " + profesor.PrimerApellido + " " + profesor.SegundoApellido;
             return View(profesor);
         }
 
         // GET: Profesores/Create
         public ActionResult Create()
         {
-            ViewBag.IdLugar = new SelectList(db.Lugares, "IdLugar", "Nombre");
+            NLugares lugar = new NLugares();
+            ViewBag.IdLugar = new SelectList(lugar.getLugares().ToList(), "IdLugar", "Nombre");
             return View();
         }
 
@@ -45,20 +46,28 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdProfesor,Nombre,PrimerApellido,SegundoApellido,Usuario,Contrasena,CorreoElectronico,Especialidades,IdLugar,Foto")] Profesore profesore)
+        public ActionResult Create([Bind(Include = "Nombre,PrimerApellido,SegundoApellido,Usuario,CorreoElectronico,IdLugar")] Profesor profesor, HttpPostedFileBase Foto)
         {
             if (ModelState.IsValid)
             {
-                profesore.Usuario = null;
-                profesore.Contrasena = null;
-                profesore.Foto = null;
-                db.Profesores.Add(profesore);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(Foto == null)
+                {
+                    profesor.Foto = null;
+                }
+                else {
+                    profesor.Foto = new byte[Foto.ContentLength];
+                    Foto.InputStream.Read(profesor.Foto, 0, Foto.ContentLength);
+                }
+                NProfesor profeTemp = new NProfesor();
+                profeTemp.crearProfesor(profesor);
+                
+               
+                return RedirectToAction("index");
             }
+            NLugares lugar = new NLugares();
 
-            ViewBag.IdLugar = new SelectList(db.Lugares, "IdLugar", "Nombre", profesore.IdLugar);
-            return View(profesore);
+            ViewBag.IdLugar = new SelectList(lugar.getLugares(), "IdLugar", "Nombre", profesor.IdLugar);
+            return View(profesor);
         }
 
         // GET: Profesores/Edit/5
@@ -68,13 +77,16 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profesore profesore = db.Profesores.Find(id);
-            if (profesore == null)
+            NProfesor lista = new NProfesor();
+            var profesor = lista.getProfesor2().ToList().Where(x => x.IdProfesor == id).FirstOrDefault();
+            
+            if (profesor == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdLugar = new SelectList(db.Lugares, "IdLugar", "Nombre", profesore.IdLugar);
-            return View(profesore);
+            NLugares lugar = new NLugares();
+            ViewBag.IdLugar = new SelectList(lugar.getLugares(), "IdLugar", "Nombre", profesor.IdLugar);
+            return View(profesor);
         }
 
         // POST: Profesores/Edit/5
@@ -82,19 +94,25 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdProfesor,Nombre,PrimerApellido,SegundoApellido,Usuario,Contrasena,CorreoElectronico,Especialidades,IdLugar,Foto")] Profesore profesore)
+        public ActionResult Edit([Bind(Include = "IdProfesor,Nombre,PrimerApellido,SegundoApellido,Usuario,CorreoElectronico,IdLugar")] Profesor profesor, HttpPostedFileBase Foto)
         {
             if (ModelState.IsValid)
             {
-                profesore.Usuario = null;
-                profesore.Contrasena = null;
-                profesore.Foto = null;
-                db.Entry(profesore).State = EntityState.Modified;
-                db.SaveChanges();
+                if (Foto == null)
+                {
+                    profesor.Foto = null;
+                }
+                else {
+                    profesor.Foto = new byte[Foto.ContentLength];
+                    Foto.InputStream.Read(profesor.Foto, 0, Foto.ContentLength);
+                }
+                NProfesor profeTemp = new NProfesor();
+                profeTemp.actualizarProfesor(profesor);
                 return RedirectToAction("Index");
             }
-            ViewBag.IdLugar = new SelectList(db.Lugares, "IdLugar", "Nombre", profesore.IdLugar);
-            return View(profesore);
+            NLugares lugar = new NLugares();
+            ViewBag.IdLugar = new SelectList(lugar.getLugares(), "IdLugar", "Nombre", profesor.IdLugar);
+            return View(profesor);
         }
 
         // GET: Profesores/Delete/5
@@ -104,12 +122,13 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profesore profesore = db.Profesores.Find(id);
-            if (profesore == null)
+            NProfesor lista = new NProfesor();
+            var profesor = lista.getProfesor2().ToList().Where(x => x.IdProfesor == id).FirstOrDefault();
+            if (profesor == null)
             {
                 return HttpNotFound();
             }
-            return View(profesore);
+            return View(profesor);
         }
 
         // POST: Profesores/Delete/5

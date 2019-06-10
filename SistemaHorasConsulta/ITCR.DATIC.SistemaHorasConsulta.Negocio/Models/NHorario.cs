@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using ITCR.DATIC.SistemHorasConsulta.Negocio;
 using System.Net.Http;
+using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 {
@@ -100,6 +101,67 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
             return false;
         }
+
+       public bool eliminarHorario(int id)
+        {
+            /*var responseTask = conexion.client.DeleteAsync("Horario/" + id.ToSring());
+            responseTask.Wait();
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            */
+            return false;
+
+
+        }
+
+        public bool actualizarHorario(Pr_Horarios_Consultar_Result valor)
+        {
+
+            /*
+            var responseTask = conexion.client.PutAsync("Horario/", valor);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            */
+            return false;
+
+
+        }
+
+        public bool crearHorario(Pr_Horarios_Consultar_Result valor)
+        {
+            /*
+            var responseTask = conexion.client.PostAsync("Horario/", valor);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            */
+            return false;
+            
+
+        }
+
+
 
 
     }

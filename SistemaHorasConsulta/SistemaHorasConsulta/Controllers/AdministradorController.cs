@@ -48,16 +48,31 @@ namespace SistemaHorasConsulta.Controllers
 
         public ActionResult AsociarTematica(int id)
         {
+            Session["IdProfeTemp"] = id;
             NTematica tematicaTemp = new NTematica();
             var tematicas = tematicaTemp.getTematicas();
-      
+            var horarioProfesor = tematicaTemp.getTematicasPorProfesor(id);
+            var c = tematicaTemp.getTematicas();
+            
+            foreach (var i in c)
+            {
+                foreach (var x in horarioProfesor)
+                {
+                    if (i.IdTematica == x.IdTematica)
+                    {
+                        tematicas.Remove(tematicas.Where(temp => temp.IdTematica == i.IdTematica).FirstOrDefault());
+                    }
+                }
+            }
             return View(tematicas);
 
         }
-        public ActionResult TematicaProfesor(int id)
+        public ActionResult TematicaProfesor(List<String> Datos)
         {
-            
-            return RedirectToAction("AsociarHorario", new { id = (int)Session["IdProfeTemp"] });
+            NTematica tematica = new NTematica();
+            tematica.crearTematicaPorProfesor(Datos[0], int.Parse(Datos[1]), (int)Session["IdProfeTemp"]);
+            var res = new { Success = "True" };
+            return Json(res, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AgregarEspecialidades(int id) {

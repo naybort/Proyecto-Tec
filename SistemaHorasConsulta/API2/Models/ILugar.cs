@@ -21,36 +21,38 @@ namespace API.Models
 
         }
 
-        public ILugar getLugar(int id)
+
+        public void eliminarLugar(int id)
         {
-            //Lugar temp = bd.Lugars.FirstOrDefault(x => x.IdLugar == id);
-            ILugar lugar = new ILugar();
-           /* if(temp != null)
-            {
-                lugar.IdLugar = temp.IdLugar;
-                lugar.Nombre = temp.Nombre;
-            }*/
+            var idLugar = new SqlParameter("@IdLugar", id);
+
+            var lugar = bd.Database.SqlQuery<int>("Pr_Lugar_Eliminar @IdLugar", idLugar);
             
-            return lugar;
         }
 
-        public List<ILugar> getLugares()
+        public void editarLugar(int id, string nombre)
         {
-            //var temp = bd.Lugars.Select(x => x).ToList();
+            var idLugar = new SqlParameter("@IdLugar", id);
+            var parametroNombre = new SqlParameter("@Nombre", nombre);
 
-            List<ILugar> listLugares = new List<ILugar>();
-           /* for (int i = 0; i < temp.Count; i++)
-            {
-                ILugar lugar = new ILugar();
-                lugar.IdLugar = temp[i].IdLugar;
-                lugar.Nombre = temp[i].Nombre;
+            var lugar = bd.Database.SqlQuery<int>("Pr_Lugar_Editar @IdLugar, @Nombre", idLugar, parametroNombre);
+        }
 
-                listLugares.Add(lugar);
+        public Pr_Lugares_Consultar_Result getLugar(int id)
+        {
+            var lugares = bd.Database.SqlQuery<Pr_Lugares_Consultar_Result>("Pr_Lugares_Consultar").ToList();
+            // buscar por id jeje en lugares
+            return lugares[0];
+        }
 
-            }*/
-
-            return listLugares;
+        public List<Pr_Lugares_Consultar_Result> getLugares()
+        {
+            var lugares = bd.Database.SqlQuery<Pr_Lugares_Consultar_Result>("Pr_Lugares_Consultar").ToList();
+            return lugares;
 
         }
     }
+
+
+
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using API.Models;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
@@ -53,8 +54,28 @@ namespace API.Controllers
             cita.eliminarCita(id);
         }
 
-    
 
-    
+        [Route("api/Cita/fecha/{fecha1:datetime}/{fecha2:datetime}")]
+        [ResponseType(typeof(IEnumerable<Pr_CitasFiltrarFecha_Consultar_Result>))]
+        public IEnumerable<Pr_CitasFiltrarFecha_Consultar_Result> GetCitaPorHorario(DateTime fecha1, DateTime fecha2)
+        {
+            ICita cita = new ICita();
+
+            return cita.getCitasPorFecha(fecha1, fecha2);
+        }
+
+        [Route("api/Cita/{dia:datetime}/dias")]
+        [ResponseType(typeof(IEnumerable<Pr_DiasCita_Consultar_Result>))]
+        public IEnumerable<Pr_DiasCita_Consultar_Result> GetCitaDias(DateTime dia)
+        {
+            ICita cita = new ICita();
+
+            return cita.diasCita(dia);
+        }
+
+
+
+
+
     }
 }

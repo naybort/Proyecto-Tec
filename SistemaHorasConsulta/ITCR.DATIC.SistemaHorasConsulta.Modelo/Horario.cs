@@ -20,9 +20,9 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
             this.Profesores = new HashSet<Profesore>();
         }
     
-        public int IdHorario { get; set; }
-        public System.TimeSpan HoraInicio { get; set; }
-        public System.TimeSpan HoraFinal { get; set; }
+        public int? IdHorario { get; set; }
+        public System.TimeSpan? HoraInicio { get; set; }
+        public System.TimeSpan? HoraFinal { get; set; }
         public string Dia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

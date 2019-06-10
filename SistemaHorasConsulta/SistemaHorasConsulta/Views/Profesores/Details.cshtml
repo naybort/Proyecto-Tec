@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Detalles de @Html.DisplayFor(model => model.NombreProfesor) @Html.DisplayFor(model => model.PrimerApellido) @Html.DisplayFor(model => model.SegundoApellido)</h2>
+<h2>Detalles de @Html.DisplayFor(model => model.Nombre) @Html.DisplayFor(model => model.PrimerApellido) @Html.DisplayFor(model => model.SegundoApellido)</h2>
 
 <div>
 
@@ -31,19 +31,17 @@
                 <div class="card2-body">
                     <!--<h6 class="card2-category text-gray">CEO / Co-Founder</h6>-->
 
-
+                    <input id="IdProfe" type="hidden" hidden value=@Session["IdProfeTemp"]>
                     <h4 class="card2-title">     </h4>
                     <table class="table">
                         <tr>
-                            <th>Campos de atención al estudiante:</th>
+
 
                             <th>Correo Electrónico:</th>
                             <th>Ubicación:</th>
                         </tr>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(model => model.Especialidades)
-                            </td>
+
                             <td>@Html.DisplayFor(model => model.CorreoElectronico)</td>
                             <td>
                                 @Html.DisplayFor(model => model.NombreLugar)
@@ -58,35 +56,78 @@
                         {
                             <tr>
                                 <th>@Html.DisplayFor(model => model.horarios.ToList()[i].Dia)</th>
-                             
+
                                 <th></th>
-                             
+
                             </tr>
-                            
+
                             <tr>
                                 <td>
                                     @Html.DisplayFor(model => model.horarios.ToList()[i].HoraInicio) a @Html.DisplayFor(model => model.horarios.ToList()[i].HoraFinal)
                                 </td>
-                                <td >
+                                <td>
                                     @Html.ActionLink("Eliminar", "EliminarHorarioProfesor", "Administrador", new { id = Model.horarios.ToList()[i].IdHorario }, null)
                                 </td>
-                              
+
                             </tr>
                         }
 
 
                     </table>
+                    <table class="table" id="tematicas">
+                        <tr>
+                            <th>Temática</th>
 
+                            <th>Especialidad</th>
+                        </tr>
+                    </table>
                 </div>
 
-
+                
             </div>
         </div>
     </div>
     </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProfesor }) |
-    @Html.ActionLink("Asociar Horario", "AsociarHorario", "Administrador",new { id = Model.IdProfesor }, null)
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdProfesor }) |
+    @Html.ActionLink("Asociar Temática", "AsociarTematica","Administrador", new { id = Model.IdProfesor }, null) |
+    @Html.ActionLink("Asociar Horario", "AsociarHorario", "Administrador", new { id = Model.IdProfesor }, null)
+
 
 </p>
+
+<script>
+        var id = document.getElementById("IdProfe").value
+        console.log(id)
+        var tematicas = {}
+        var idTemp = []
+        idTemp.push(id)
+       
+        $.ajax({
+            type: "POST",
+            url: "/Estudiante/GetTematicas",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(idTemp),
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                $.each(data, function (i, v) {
+                    $("#tematicas").append(
+                        "<tr>" +
+                        "<td>" + v.NombreTematica +"</td>" +
+
+                        "<td>" + v.Especialidades + "</td>" +
+                        "</tr>"
+                    );
+
+                })
+         
+            },
+
+        });
+
+
+
+
+</script>

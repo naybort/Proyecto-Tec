@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ITCR.DATIC.SistemHorasConsulta.Negocio;
 
 namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
-{ 
-    public class PorfesorPorTematica: Pr_ProfesoresXTematica_Consultar_Result
+{
+    public class TematicaPorProfesor: Pr_TematicasXProfesor_Consultar_Result
     {
     }
 }

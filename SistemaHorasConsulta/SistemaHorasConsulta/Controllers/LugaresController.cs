@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
@@ -17,7 +18,8 @@ namespace SistemaHorasConsulta.Controllers
         // GET: Lugares
         public ActionResult Index()
         {
-            return View(db.Lugares.ToList());
+            NLugares lugares = new NLugares();
+            return View(lugares.getLugares().ToList());
         }
 
         // GET: Lugares/Details/5

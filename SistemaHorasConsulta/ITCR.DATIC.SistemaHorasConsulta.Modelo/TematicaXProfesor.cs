@@ -12,19 +12,13 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     using System;
     using System.Collections.Generic;
     
-    public partial class Tematica
+    public partial class TematicaXProfesor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tematica()
-        {
-            this.TematicaXProfesors = new HashSet<TematicaXProfesor>();
-        }
-    
         public int IdTematica { get; set; }
-        public string NombreTematica { get; set; }
-        public string Descripcion { get; set; }
+        public int IdProfesor { get; set; }
+        public string Especialidades { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TematicaXProfesor> TematicaXProfesors { get; set; }
+        public virtual Profesore Profesore { get; set; }
+        public virtual Tematica Tematica { get; set; }
     }
 }
