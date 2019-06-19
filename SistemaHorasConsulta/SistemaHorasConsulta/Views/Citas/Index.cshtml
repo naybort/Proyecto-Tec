@@ -4,11 +4,35 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
+<style>
+    #myInput {
+        width: 100%;
+        font-size: 16px;
+        padding: 6px 0px 6px 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
 
+    #myInput1 {
+        width: 100%;
+        font-size: 16px;
+        padding: 6px 0px 6px 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+</style>
 <h2>Citas Canceladas</h2>
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-6">
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Nombre de Profesor" title="Type in a name" style="max-width:100%;">
+    </div>
+    <div class="col-xs-6">
+        <input type="text" class="form-control" id="myInput1" onkeyup="myFunction1()" placeholder="Carnet de Estudiante" title="Type in a name" style="max-width:100%;">
+    </div>
 
+</div>
 
-<table class="table">
+<table class="table" id="myTable">
     <tr>
         <th>
             ID
@@ -55,3 +79,44 @@
 }
 
 </table>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction1() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+</script>

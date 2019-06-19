@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Models;
+using API2.Models;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace API.Controllers
@@ -30,14 +31,13 @@ namespace API.Controllers
 
         }
        
-        [Route("api/Horario/Eliminar/{idHorario:int}/{idProfesor:int}")]
-        [HttpDelete]
-        [ResponseType(typeof(HttpResponseMessage))]
-        public HttpResponseMessage EliminarHorarioAsociar(int idHorario, int idProfesor)
+        [Route("api/Horario/Eliminar/")]
+
+        public HttpResponseMessage EliminarHorarioAsociar([FromBody]IAsociar asociar)
         {
             IHorario temp = new IHorario();
            
-            temp.EliminarAsociado(idHorario, idProfesor);
+            temp.EliminarAsociado(asociar.id, asociar.id2);
             return new HttpResponseMessage();
         }
         // GET: api/Horario

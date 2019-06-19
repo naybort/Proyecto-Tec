@@ -17,9 +17,9 @@
 
                 <div class="card2-avatar pull-center">
                     <div class="image ">
-                        @if (Model.Foto != null)
+                        @if (Model.stringFoto != null)
                         {
-                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Model.Foto" class="img-circle center-block" alt="Usuario" />
+                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Model.stringFoto" class="img-circle center-block" alt="Usuario" />
                         }
                         else
                         {
@@ -79,6 +79,7 @@
                             <th>Temática</th>
 
                             <th>Especialidad</th>
+                            <th></th>
                         </tr>
                     </table>
                 </div>
@@ -118,6 +119,10 @@
                         "<td>" + v.NombreTematica +"</td>" +
 
                         "<td>" + v.Especialidades + "</td>" +
+                        "<td><a href=/Administrador/EliminarTematicaProfesor/" + v.IdTematica+">Eliminar</a></td>" +
+                         
+                                   
+                              
                         "</tr>"
                     );
 

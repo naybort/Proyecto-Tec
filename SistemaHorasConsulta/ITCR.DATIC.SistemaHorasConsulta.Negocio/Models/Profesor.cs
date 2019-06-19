@@ -11,7 +11,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
         public List<Horario> horarios = new List<Horario>();
        
 
-        public int IdProfesor { get; set; }
+        public int? IdProfesor { get; set; }
         public string Nombre { get; set; }
         public byte[] Foto { get; set; }
         public string PrimerApellido { get; set; }
@@ -20,6 +20,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
         public string Usuario { get; set; }
         public int IdLugar { get; set; }
         public string CorreoElectronico { get; set; }
+        public string stringFoto { get; set; }
 
         public List<Profesor> getProfesoresSinConcurrencias(List<ProfesorInformacion> lista)
         {
@@ -40,6 +41,8 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
                     profesorTemp.SegundoApellido = elemento.SegundoApellido;
                     profesorTemp.NombreLugar = elemento.NombreLugar;
                     profesorTemp.CorreoElectronico = elemento.CorreoElectronico;
+                    profesorTemp.stringFoto = elemento.stringFoto;
+                    profesorTemp.Usuario = elemento.Usuario;
                
                     profesorTemp.Foto = elemento.Foto;
                     

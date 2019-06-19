@@ -48,19 +48,10 @@ namespace API.Models
         {
             var idTematica = new SqlParameter("@IdTematica", id);
             var profesores = bd.Database.SqlQuery<Pr_ProfesoresXTematica_Consultar_Result>("Pr_ProfesoresXTematica_Consultar @IdTematica", idTematica).ToList();
-            //ITematica temp = new ITematica();
-            //temp = temp.getTematica(idTematica);
+     
 
             List<IProfesor> listaProfesores = new List<IProfesor>();
-            /*
-            var tematicaXprofesor = bd.ProfesorXTematicas.Where(x => x.IdTematica == temp.IdTematica).ToList();
-            foreach (var profesor in tematicaXprofesor)
-            {
-                IProfesor temProfesor = new IProfesor();
-                listaProfesores.Add(temProfesor.getProfesor(profesor.IdProfesor));
-
-            }
-            */
+      
             return profesores;
         }
         public List<Pr_TematicasXProfesor_Consultar_Result> getTematicaPorProfesor(int id)
@@ -72,15 +63,18 @@ namespace API.Models
             return profesores;
         }
 
-        public int eliminarTematica(int id)
+        public void eliminarTematica(int id)
         {
-            var idTematica = new SqlParameter("@IdTematica", id);
-            var tematica = bd.Database.ExecuteSqlCommand("Pr_Tematica_Eliminar @IdTematica", idTematica);
-            return tematica;
+           
+            var str = "Pr_Tematica_Eliminar @IdTematica =" + id.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
         }
 
         public int editarTematica(int id, string nombre, string descripcion)
         {
+            if (descripcion == null) {
+                descripcion = "";
+            }
             var idTematica = new SqlParameter("@IdTematica", id);
             var nombreTematica = new SqlParameter("@Nombre", nombre);
             var descripcionTematica = new SqlParameter("@Descripcion", descripcion);
@@ -89,13 +83,17 @@ namespace API.Models
             return tematica;
         }
 
-        public int crearTematica(string nombre, string descripcion)
+        public void crearTematica(string nombre, string descripcion)
         {
-            var nombreTematica = new SqlParameter("@NombreTematica", nombre);
-            var descripcionTematica = new SqlParameter("@Descripcion", descripcion);
+            var str = "Pr_Tematica_Insertar @NombreTematica = '"+ nombre+"',@Descripcion = '" +descripcion + "'";
+            var result = bd.Database.ExecuteSqlCommand(str);
+        }
+        public bool EliminarAsociado(int idTematica, int idProfesor)
+        {
+            var str = "exec Pr_TematicaXProfesor_Eliminar @IdTematica = " + idTematica.ToString() + ",  @IdProfesor = " + idProfesor.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
 
-            var tematica = bd.Database.ExecuteSqlCommand("Pr_Tematica_Insertar @Nombre,@Descripcion", nombreTematica, descripcionTematica);
-            return tematica;
+            return true;
         }
 
     }

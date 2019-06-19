@@ -24,23 +24,43 @@ namespace API.Controllers
         public IEnumerable<Pr_Profesores_Consultar_Result> Get()
         {
             IProfesor profesor = new IProfesor();
-            
-            return profesor.getProfesores();
+            var profesores = profesor.getProfesores();
+            foreach(var i in profesores){
+                if (i.Foto != null)
+                {
+                    i.stringFoto = Convert.ToBase64String(i.Foto);
+                    i.Foto = null;
+                }
+            }
+
+            return profesores;
         }
 
         // GET: api/Profesor/5
         public Pr_Profesores_Consultar_Result Get(int id)
         {
             IProfesor profesor = new IProfesor();
-            return profesor.getProfesor(id);
+            var profesorx = profesor.getProfesor(id);
+            profesorx.stringFoto = Convert.ToBase64String(profesorx.Foto);
+            profesorx.Foto = null;
+            return profesorx;
         }
 
         // POST: api/Profesor
         public void Post([FromBody]Pr_Profesores_Consultar_Result value)
         {
             IProfesor profesor = new IProfesor();
-            profesor.insertarProfesor(value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
-                , value.IdLugar);
+            if (value.stringFoto != null)
+            {
+                value.Foto = System.Convert.FromBase64String(value.stringFoto);
+                profesor.insertarProfesor(value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
+                    , value.IdLugar, value.Foto);
+            }
+            else {
+                profesor.insertarProfesor(value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
+                    , value.IdLugar, null);
+            }
+            
 
         }
 
@@ -49,8 +69,18 @@ namespace API.Controllers
         {
 
             IProfesor profesor = new IProfesor();
-            profesor.editarProfesor(value.IdProfesor, value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Nombre, value.Nombre, value.CorreoElectronico
-                , Int32.Parse(value.Nombre), value.Foto);
+            if (value.stringFoto != null)
+            {
+                value.Foto = System.Convert.FromBase64String(value.stringFoto);
+                profesor.editarProfesor(id, value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
+           , value.IdLugar, value.Foto);
+            }
+            else
+            {
+                profesor.editarProfesor(id, value.Nombre, value.PrimerApellido, value.SegundoApellido, value.Usuario, value.CorreoElectronico
+            , value.IdLugar, null);
+            }
+       
         }
 
         // DELETE: api/Profesor/5

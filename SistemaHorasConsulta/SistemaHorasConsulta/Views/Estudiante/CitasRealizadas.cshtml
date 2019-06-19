@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.Citas>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Principal.cshtml";
+}
+<div class="main main-raised">
+    <div class="container" style="width:100%;">
+        <h2>Citas Realizadas</h2>
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Profesor
+                </th>
+                <th>
+                    Carnet de Estudiante
+                </th>
+                <th>
+                    Estado de la cita
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Hora de Inicio
+                </th>
+                <th>
+                    FeedBack
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCita)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre) @Html.DisplayFor(modelItem => item.SegundoApellido) @Html.DisplayFor(modelItem => item.PrimerApellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdEstudiante)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @item.Fecha.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraInicio)
+                    </td>
+
+                    @if (item.EstadoFeedBack)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoraInicio)
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+
+        </table>
+    </div>
+    </div>

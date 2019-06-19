@@ -154,6 +154,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HorariosController.cs" />
     <Compile Include="Controllers\LugaresController.cs" />
+    <Compile Include="Controllers\ProfesorController.cs" />
     <Compile Include="Controllers\ProfesoresController.cs" />
     <Compile Include="Controllers\TematicasController.cs" />
     <Compile Include="Global.asax.cs">
@@ -166,6 +167,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Web References\wsDar\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\wsEmail\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -647,7 +653,13 @@
     <Content Include="Connected Services\WSSeguridadTec\SistemaHorasConsulta.WSSeguridadTec.Usu_ValidarRelacionADResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Content\img\star-empty.svg" />
+    <Content Include="Content\img\star-full.svg" />
+    <Content Include="Content\img\star-half.svg" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Star\star-rating.css" />
+    <Content Include="Content\Star\star-rating.min.css" />
+    <Content Include="Content\Star\star-rating.min.js" />
     <Content Include="Views\Estudiante\Agenda.cshtml" />
     <Content Include="Views\Shared\_Administrador.cshtml" />
     <Content Include="Views\Tematicas\Create.cshtml" />
@@ -682,16 +694,25 @@
     <Content Include="Views\Administradores\Details.cshtml" />
     <Content Include="Views\Administradores\Edit.cshtml" />
     <Content Include="Views\Administradores\Index.cshtml" />
-    <Content Include="Views\Citas\Create.cshtml" />
-    <Content Include="Views\Citas\Delete.cshtml" />
-    <Content Include="Views\Citas\Details.cshtml" />
-    <Content Include="Views\Citas\Edit.cshtml" />
     <Content Include="Views\Citas\Index.cshtml" />
     <Content Include="Views\Administrador\AsociarHorario.cshtml" />
     <Content Include="Views\Citas\CitasRealizadas.cshtml" />
     <Content Include="Views\Citas\CitasPendientes.cshtml" />
     <Content Include="Views\Administrador\AsociarTematica.cshtml" />
     <Content Include="Views\Administrador\AgregarEspecialidades.cshtml" />
+    <Content Include="Views\Estudiante\CitasRealizadas.cshtml" />
+    <Content Include="Views\Estudiante\CitasPendientes.cshtml" />
+    <Content Include="Views\Estudiante\CitasCanceladas.cshtml" />
+    <Content Include="Views\Profesor\Index.cshtml" />
+    <Content Include="Views\Profesor\CitasPendientes.cshtml" />
+    <Content Include="Views\Profesor\CitasRealizadas.cshtml" />
+    <Content Include="Views\Estudiante\completarFeedBack.cshtml" />
+    <Content Include="Views\Shared\_PrincipalProfesor.cshtml" />
+    <None Include="Web References\wsEmail\Email.wsdl" />
+    <Content Include="Web References\wsEmail\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -899,6 +920,7 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Views\Estudiante\Calendario.cshtml" />
     <None Include="Web References\wsDar\admisionyregistro.disco" />
+    <None Include="Web References\wsEmail\Email.disco" />
     <Content Include="Web References\wsFotosEstudiantes\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -983,6 +1005,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>SistemaHorasConsulta_wsDar_AdmisionyRegistro</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://tec-apps/wsEmail/Email.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\wsEmail\</RelPath>
+      <UpdateFromURL>http://tec-apps/wsEmail/Email.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SistemaHorasConsulta_wsEviar_Email</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="http://vtec-desarrollo/wsseguridad/seguridad.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>

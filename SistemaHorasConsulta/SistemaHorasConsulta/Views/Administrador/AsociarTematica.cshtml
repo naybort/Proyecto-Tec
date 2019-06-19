@@ -6,16 +6,19 @@
 
 <h2>Temáticas disponibles para asociar a @Session["NombreProfeTemp"]</h2>
 
+<div style="margin-bottom: 10px;">
+    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Nombre de Temática" title="Type in a name" style="max-width:100%;">
+</div>
 
-<table class="table">
+<table class="table" id="myTable">
     <tr>
         <th>
             Nombre
         </th>
         <th>
-            Especialidades
+            Descripción
         </th>
-  
+
         <th>Opciones</th>
     </tr>
 
@@ -26,8 +29,9 @@
                 @Html.DisplayFor(modelItem => item.NombreTematica)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)</td>
-         
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+
             <td>
                 @Html.ActionLink("Agregar", "AgregarEspecialidades", new { id = item.IdTematica }, null)
 
@@ -37,3 +41,25 @@
     }
 
 </table>
+@Html.ActionLink("Volver", "Details", "Profesores", new { id = Session["IdProfeTemp"] }, null)
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>

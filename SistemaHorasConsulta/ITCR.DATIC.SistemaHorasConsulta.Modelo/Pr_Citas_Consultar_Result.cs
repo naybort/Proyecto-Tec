@@ -15,6 +15,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     {
         public int IdCita { get; set; }
         public System.DateTime Fecha { get; set; }
+        public int IdProfesor { get; set; }
         public string Nombre { get; set; }
         public string PrimerApellido { get; set; }
         public string SegundoApellido { get; set; }
@@ -23,5 +24,6 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public string NombreLugar { get; set; }
         public string Estado { get; set; }
         public bool EstadoFeedBack { get; set; }
+        public string CorreoEstudiante { get; set; }
     }
 }

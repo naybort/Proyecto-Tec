@@ -1,35 +1,26 @@
-﻿@model ITCR.DATIC.SistemaHorasConsulta.Modelo.FeedbackXCita
+﻿@model ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.FeedBack
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>FeedbackXCita</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ComentarioAdicional)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ComentarioAdicional)
-        </dd>
+<h4>Calificación del 1 al 5:</h4>
+<hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Cita.Estado)
-        </dt>
+<input type="text" value="@Model.respuesta1" id="respuesta1" class="form-control" name="respuesta1" readonly>
+<h4>Se presentó a tiempo el docente al momento de la consulta:</h4>
+<hr />
+<textarea id="respuesta2" readonly name="respuesta2" rows="2" class="form-control" cols="50">@Model.respuesta2
+</textarea>
+<h4>Comentarios:</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.Cita.Estado)
-        </dd>
+<hr />
+<textarea id="respuesta3" readonly name="respuesta3" rows="2" class="form-control" cols="50">@Model.respuesta3
+</textarea>
+<hr />
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

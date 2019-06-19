@@ -13,18 +13,19 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     
     public partial class Pr_Profesores_Consultar_Result
     {
-        public int IdProfesor { get; set; }
+        public Nullable<int> IdProfesor { get; set; }
         public string Nombre { get; set; }
+        public string stringFoto { get; set; }
         public string PrimerApellido { get; set; }
         public string CorreoElectronico { get; set; }
         public string Usuario { get; set; }
         public byte[] Foto { get; set; }
         public string SegundoApellido { get; set; }
         public string Dia { get; set; }
-        public System.TimeSpan? HoraInicio { get; set; }
-        public System.TimeSpan? HoraFinal { get; set; }
+        public Nullable<System.TimeSpan> HoraInicio { get; set; }
+        public Nullable<System.TimeSpan> HoraFinal { get; set; }
         public string NombreLugar { get; set; }
-        public int? IdHorario { get; set; }
-        public int IdLugar { get; set; }
+        public Nullable<int> IdHorario { get; set; }
+        public Nullable<int> IdLugar { get; set; }
     }
 }

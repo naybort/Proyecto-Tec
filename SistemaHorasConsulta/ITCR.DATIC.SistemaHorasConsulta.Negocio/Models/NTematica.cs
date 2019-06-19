@@ -76,45 +76,35 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
         public bool eliminarTematica(int id)
         {
-            /*
-            var responseTask = conexion.client.DeleteAsync("Tematica/", id);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            var a = result.RequestMessage;
-            if (result.IsSuccessStatusCode)
-            {
-
-                return true;
-            }
-            */
-            return false;
-
-        }
-
-        public bool actualizarTematica(Pr_TematicasXProfesor_Consultar_Result valor)
-        {
-            /*
-            var responseTask = conexion.client.PutAsync("Tematica/", valor);
-            responseTask.Wait();
-
-
-            var result = responseTask.Result;
-            var a = result.RequestMessage;
-            if (result.IsSuccessStatusCode)
-            {
-
-                return true;
-            }
-            */
-            return false;
-
-        }
-
-        public bool crearTematica(Pr_TematicasXProfesor_Consultar_Result valor)
-        {
             
-            /*
-            var responseTask = conexion.client.PostAsync("Tematica/", valor);
+            var responseTask = conexion.client.DeleteAsync("Tematica/"+id.ToString());
+            responseTask.Wait();
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            
+            return false;
+
+        }
+
+        public bool actualizarTematica(getTematicas valor)
+        {
+
+            var values = new Dictionary<string, string>
+             {
+
+                 {"NombreTematica",valor.NombreTematica },
+                 {"Descripcion", valor.Descripcion }
+
+
+
+             };
+            var content = new FormUrlEncodedContent(values);
+            var responseTask = conexion.client.PutAsync("Tematica/" + valor.IdTematica.ToString(), content);
             responseTask.Wait();
 
 
@@ -125,7 +115,36 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
                 return true;
             }
-            */
+            
+            return false;
+
+        }
+
+        public bool crearTematica(getTematicas valor)
+        {
+
+            var values = new Dictionary<string, string>
+             {
+
+                 {"NombreTematica",valor.NombreTematica },
+                 {"Descripcion", valor.Descripcion }
+                 
+
+
+             };
+            var content = new FormUrlEncodedContent(values);
+            var responseTask = conexion.client.PostAsync("Tematica/", content);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            
             return false;
         }
 
@@ -145,6 +164,31 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
             var content = new FormUrlEncodedContent(values);
 
             var responseTask = conexion.client.PostAsync("Tematica/Asociar/", content);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+
+            return false;
+        }
+        public bool EliminarHorarioProfesor(int idTematica, int idProfesor)
+        {
+
+            var values = new Dictionary<string, string>
+            {
+                {"id",idTematica.ToString() },
+                {"id2",idProfesor.ToString() }
+
+            };
+
+            var content = new FormUrlEncodedContent(values);
+            var responseTask = conexion.client.PostAsync("Tematica/Eliminar/", content);
             responseTask.Wait();
 
 

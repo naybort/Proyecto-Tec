@@ -6,13 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 namespace SistemaHorasConsulta.Controllers
 {
     public class ProfesoresController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+       
 
         // GET: Profesores
         public ActionResult Index()
@@ -108,7 +107,7 @@ namespace SistemaHorasConsulta.Controllers
                 }
                 NProfesor profeTemp = new NProfesor();
                 profeTemp.actualizarProfesor(profesor);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = profesor.IdProfesor});
             }
             NLugares lugar = new NLugares();
             ViewBag.IdLugar = new SelectList(lugar.getLugares(), "IdLugar", "Nombre", profesor.IdLugar);
@@ -136,19 +135,10 @@ namespace SistemaHorasConsulta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Profesore profesore = db.Profesores.Find(id);
-            db.Profesores.Remove(profesore);
-            db.SaveChanges();
+            NProfesor profe = new NProfesor();
+            profe.eliminarProfesor(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

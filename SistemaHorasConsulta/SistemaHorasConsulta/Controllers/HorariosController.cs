@@ -6,16 +6,16 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+
 
 namespace SistemaHorasConsulta.Controllers
 {
     public class HorariosController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+        //private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
 
         // GET: Horarios
-        public ActionResult Index()
+       /* public ActionResult Index()
         {
             return View(db.Horarios.ToList());
         }
@@ -122,6 +122,6 @@ namespace SistemaHorasConsulta.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
+        }*/
     }
 }

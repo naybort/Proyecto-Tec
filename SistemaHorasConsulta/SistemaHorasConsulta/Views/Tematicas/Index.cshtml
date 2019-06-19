@@ -1,5 +1,5 @@
 ﻿@using PagedList;
-@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Modelo.Tematica>
+@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.getTematicas>
 
 @{
     ViewBag.Title = "Index";
@@ -12,30 +12,12 @@
     @Html.ActionLink("Agregar Temática", "Create")
 </p>
             
-     
+<div style="margin-bottom: 10px;">
+    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Nombre de Temática" title="Type in a name" style="max-width:100%;">
+</div>     
 
 
 
-<style> 
-
-input[type=text] {
- width: 130px;
- box-sizing: border-box;
- border: 2px solid #ccc;
- border-radius: 4px;
- font-size: 16px;
- background-color: white;
- background-image: url('lupa.png');
- background-position: 10px 10px; 
- background-repeat: no-repeat;
- padding: 12px 20px 12px 40px;
- -webkit-transition: width 0.4s ease-in-out;
- transition: width 0.4s ease-in-out;
-}
-input[type=text]:focus {
- width: 100%;
-}
-</style>
 <table class="table" id="myTable">
     <tr>
         <th>
@@ -68,4 +50,25 @@ input[type=text]:focus {
     $(document).ready(function () {
         $('#myTable').DataTable();
     });
+</script>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
 </script>

@@ -177,6 +177,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pr_Administadores_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pr_CitasFiltrarFecha_Consultar_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -192,6 +195,9 @@
     <Compile Include="Pr_DiasCita_Consultar_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pr_Feedback_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pr_HorarioProfesor_Consultar_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
@@ -205,6 +211,9 @@
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Pr_Profesores_Consultar_Result.cs">
+      <DependentUpon>Modelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_Profesores_Insertar_Result.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Pr_TematicasXProfesor_Consultar_Result.cs">
@@ -268,7 +277,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

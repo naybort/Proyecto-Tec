@@ -7,7 +7,7 @@
 
 
 <h2>Editando a @Html.DisplayFor(model => model.Nombre)</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Profesores", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -15,6 +15,19 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.IdProfesor)
+    <div class="card2-avatar pull-center" style="margin-bottom: 30px;">
+        <div class="image ">
+            @if (Model.stringFoto != null)
+            {
+                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Model.stringFoto" class="img-circle center-block" alt="Usuario" />
+            }
+            else
+            {
+                <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle center-block" alt="Usuario" />
+            }
+
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-4">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -27,10 +40,10 @@
             </div>
             <div class="form-group">
 
-               
+
                 <div class="col-md-7">
                     <input type="text" hidden id="IdProfesor" name="IdProfesor" value="@Model.IdProfesor" />
-                    
+
                 </div>
             </div>
             <div class="form-group">
@@ -60,8 +73,14 @@
                     @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-md-4"> Usuario</label>
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-  
 
             <div class="form-group">
                 <label class="control-label col-md-4"> Lugar de atención</label>
@@ -80,11 +99,12 @@
                             <div class="col-sm-2 imgUp">
                                 <div class="imagePreview"></div>
                                 <label class="btn btn-primary">
-                                    Cargar Imagen<input type="file" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
+                                    Cargar Foto nueva<input type="file" id="Foto" name="Foto" class="uploadFile img" value="Upload Photo" style="width: 0px;height: 0px;overflow: hidden;">
                                 </label>
                             </div><!-- col-2 -->
                             <i class="fa fa-plus imgAdd"></i>
                         </div><!-- row -->
+
                     </div><!-- container -->
                 </div>
             </div>

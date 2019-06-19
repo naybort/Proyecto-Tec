@@ -114,8 +114,7 @@
                                     url: "/Estudiante/GetHorarios",
                                     success: function (data) {
                                         $.each(data, function (i, v) {
-                                            console.log(dia)
-                                            console.log(v.Dia)
+                                       
                                             if (v.Dia == dia) {
                                                 horas.push(
 
@@ -127,6 +126,7 @@
 
 
                                         })
+                                        
                                         successFunc(horas)
 
                                     },
@@ -135,13 +135,13 @@
                                     }
                                 })
                                 function successFunc(horas) {
+                                    console.log(horas)
                                     var citasDisponibles = []
                                     var largo = horas.length
                                     i = 0
 
-                                    console.log(horas[0].Hours)
-                                    console.log(largo)
-                                    while (i < (largo)) {
+                                  
+                                    while (i < (largo-1)) {
                                         var minutosInicio = horas[i].Hours * 60 + horas[i].Minutes;
                                       
                                         var minutosFinal = horas[i + 1].Hours * 60 + horas[i +1].Minutes;
@@ -149,7 +149,7 @@
                                         while (minutosInicio != minutosFinal) {
                                             if ((minutosFinal - minutosInicio) < 20) {
                                                 citasDisponibles.push(timeConvert(minutosInicio))
-                                                minutosInicio = minutosInicio + (minutosFinal - minutosInicio)
+                                                minutosInicio = minutosFinal
                                             } else {
                                                 citasDisponibles.push(timeConvert(minutosInicio))
                                                 minutosInicio = minutosInicio + 20
@@ -157,10 +157,11 @@
                                            
 
                                         }
-                                        i = 1 + i
-                                        largo = largo - 1
+                                        i = 2 + i
+                                        
                                     }
-
+                                    
+                                    console.log(citasDisponibles)
 
                                     removerCitasReservadas(citasDisponibles)
 
@@ -204,7 +205,7 @@
                                         data: JSON.stringify(datos),
                                         dataType: "json",
                                         success: function (data) {
-                                            console.log(data)
+                                            
                                             citasDisponibles = []
                                             $.each(data, function (i, v) {
                                                 console.log(v)
@@ -380,16 +381,65 @@
                                         </a>
                                     </h4>
                                 </div>
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a href="Agenda">
-                                            <span class="glyphicon glyphicon-list-alt">
-                                                Agenda
-                                            </span>
+                                <div class="panel-group" id="accordion">
 
-                                        </a>
-                                    </h4>
-                                </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse" class="collapsed">
+                                                    <span class="glyphicon glyphicon-list-alt">
+                                                        Agenda
+                                                    </span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse" class="panel-collapse collapse">
+
+                                            <div class="panel-body" style="padding-bottom: 0 !important; padding-top: 0 !important">
+                                                <table class="table" style="margin-bottom: 0 !important">
+
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasPendientes", "Estudiante")">Citas Pendientes</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasRealizadas", "Estudiante")">Citas Realizadas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasCanceladas", "Estudiante")">Citas Canceladas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </table> @* sub elementos del menu *@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div> @*panel-group*@
 
 
                             </div> @*panel-group*@

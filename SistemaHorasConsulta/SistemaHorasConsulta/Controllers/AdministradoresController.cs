@@ -6,34 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
     public class AdministradoresController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+       
 
         // GET: Administradores
         public ActionResult Index()
         {
-            return View(db.Administradores.ToList());
+            NAdministrador temp = new NAdministrador();
+            return View(temp.getAdministradores());
         }
 
-        // GET: Administradores/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Administradore administradore = db.Administradores.Find(id);
-            if (administradore == null)
-            {
-                return HttpNotFound();
-            }
-            return View(administradore);
-        }
+
 
         // GET: Administradores/Create
         public ActionResult Create()
@@ -46,31 +34,33 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Usuario")] Administradore administradore)
+        public ActionResult Create([Bind(Include = "Usuario")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                db.Administradores.Add(administradore);
-                db.SaveChanges();
+                NAdministrador temp = new NAdministrador();
+                temp.crearAdministrador(administrador);
+         
                 return RedirectToAction("Index");
             }
 
-            return View(administradore);
+            return View(administrador);
         }
 
         // GET: Administradores/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Administradore administradore = db.Administradores.Find(id);
-            if (administradore == null)
+            NAdministrador temp = new NAdministrador();
+            var administrador = temp.getAdministradores().Where(x => x.IdAdministrador == id).FirstOrDefault();
+            if (administrador == null)
             {
                 return HttpNotFound();
             }
-            return View(administradore);
+            return View(administrador);
         }
 
         // POST: Administradores/Edit/5
@@ -78,50 +68,43 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Usuario")] Administradore administradore)
+        public ActionResult Edit([Bind(Include = "IdAdministrador,Usuario")] Administrador administrador)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(administradore).State = EntityState.Modified;
-                db.SaveChanges();
+                NAdministrador temp = new NAdministrador();
+                temp.actualizarAdministrador(administrador);
                 return RedirectToAction("Index");
             }
-            return View(administradore);
+            return View(administrador);
         }
 
         // GET: Administradores/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Administradore administradore = db.Administradores.Find(id);
-            if (administradore == null)
+            NAdministrador temp = new NAdministrador();
+            var administrador = temp.getAdministradores().Where(x => x.IdAdministrador == id).FirstOrDefault();
+            if (administrador == null)
             {
                 return HttpNotFound();
             }
-            return View(administradore);
+            return View(administrador);
         }
 
         // POST: Administradores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Administradore administradore = db.Administradores.Find(id);
-            db.Administradores.Remove(administradore);
-            db.SaveChanges();
+            NAdministrador temp = new NAdministrador();
+            temp.eliminarAdministrador(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+   
     }
 }

@@ -6,14 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
     public class LugaresController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+       
 
         // GET: Lugares
         public ActionResult Index()
@@ -29,12 +28,14 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lugare lugare = db.Lugares.Find(id);
-            if (lugare == null)
+            NLugares lugares = new NLugares();
+            Lugares temp = lugares.getLugares().Where(x => x.IdLugar == id).FirstOrDefault();
+         
+            if (temp == null)
             {
                 return HttpNotFound();
             }
-            return View(lugare);
+            return View(temp);
         }
 
         // GET: Lugares/Create
@@ -48,16 +49,18 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdLugar,Nombre")] Lugare lugare)
+        public ActionResult Create([Bind(Include = "Nombre")] Lugares lugar)
         {
             if (ModelState.IsValid)
             {
-                db.Lugares.Add(lugare);
-                db.SaveChanges();
+
+                NLugares temp = new NLugares();
+                temp.crearLugar(lugar);
+         
                 return RedirectToAction("Index");
             }
 
-            return View(lugare);
+            return View(lugar);
         }
 
         // GET: Lugares/Edit/5
@@ -67,12 +70,13 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lugare lugare = db.Lugares.Find(id);
-            if (lugare == null)
+            NLugares temp = new NLugares();
+            var lugar = temp.getLugares().Where(x => x.IdLugar == id).FirstOrDefault();
+            if (lugar == null)
             {
                 return HttpNotFound();
             }
-            return View(lugare);
+            return View(lugar);
         }
 
         // POST: Lugares/Edit/5
@@ -80,15 +84,15 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdLugar,Nombre")] Lugare lugare)
+        public ActionResult Edit([Bind(Include = "IdLugar,Nombre")] Lugares lugar)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(lugare).State = EntityState.Modified;
-                db.SaveChanges();
+                NLugares temp = new NLugares();
+                temp.actualizarLugar(lugar);
                 return RedirectToAction("Index");
             }
-            return View(lugare);
+            return View(lugar);
         }
 
         // GET: Lugares/Delete/5
@@ -98,12 +102,13 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lugare lugare = db.Lugares.Find(id);
-            if (lugare == null)
+            NLugares temp = new NLugares();
+            var lugar = temp.getLugares().Where(x => x.IdLugar == id).FirstOrDefault();
+            if (lugar == null)
             {
                 return HttpNotFound();
             }
-            return View(lugare);
+            return View(lugar);
         }
 
         // POST: Lugares/Delete/5
@@ -111,19 +116,11 @@ namespace SistemaHorasConsulta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Lugare lugare = db.Lugares.Find(id);
-            db.Lugares.Remove(lugare);
-            db.SaveChanges();
+            NLugares temp = new NLugares();
+            temp.eliminarLugar(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      
     }
 }

@@ -87,7 +87,16 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
         }
         public bool EliminarHorarioProfesor(int idHorario, int idProfesor)
         {
-            var responseTask = conexion.client.DeleteAsync("Horario/Eliminar/" + idHorario.ToString() + "/" + idProfesor.ToString());
+
+            var values = new Dictionary<string, string>
+            {
+                {"id",idHorario.ToString() },
+                {"id2",idProfesor.ToString() }
+
+            };
+
+            var content = new FormUrlEncodedContent(values);
+            var responseTask = conexion.client.PostAsync("Horario/Eliminar/", content);
             responseTask.Wait();
 
 

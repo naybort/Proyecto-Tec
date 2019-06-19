@@ -6,18 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using PagedList;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 namespace SistemaHorasConsulta.Controllers
 {
     public class TematicasController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+        
 
         // GET: Tematicas
         public ActionResult Index()
         {
-            return View(db.Tematicas.ToList());
+            NTematica temp = new NTematica();
+            return View(temp.getTematicas());
         }
 
         // GET: Tematicas/Details/5
@@ -27,7 +28,8 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tematica tematica = db.Tematicas.Find(id);
+            NTematica temp = new NTematica();
+            var tematica = temp.getTematicas().Where(x => x.IdTematica == id).FirstOrDefault();
             if (tematica == null)
             {
                 return HttpNotFound();
@@ -46,12 +48,12 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdTematica,NombreTematica,Descripcion")] Tematica tematica)
+        public ActionResult Create([Bind(Include = "NombreTematica,Descripcion")] getTematicas tematica)
         {
             if (ModelState.IsValid)
             {
-                db.Tematicas.Add(tematica);
-                db.SaveChanges();
+                NTematica temp = new NTematica();
+                temp.crearTematica(tematica);
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +67,8 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tematica tematica = db.Tematicas.Find(id);
+            NTematica temp = new NTematica();
+            var tematica = temp.getTematicas().Where(x => x.IdTematica == id).FirstOrDefault();
             if (tematica == null)
             {
                 return HttpNotFound();
@@ -78,12 +81,12 @@ namespace SistemaHorasConsulta.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdTematica,NombreTematica,Descripcion")] Tematica tematica)
+        public ActionResult Edit([Bind(Include = "IdTematica,NombreTematica,Descripcion")] getTematicas tematica)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tematica).State = EntityState.Modified;
-                db.SaveChanges();
+                NTematica temp = new NTematica();
+                temp.actualizarTematica(tematica);
                 return RedirectToAction("Index");
             }
             return View(tematica);
@@ -96,7 +99,8 @@ namespace SistemaHorasConsulta.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tematica tematica = db.Tematicas.Find(id);
+            NTematica temp = new NTematica();
+            var tematica = temp.getTematicas().Where(x => x.IdTematica == id).FirstOrDefault();
             if (tematica == null)
             {
                 return HttpNotFound();
@@ -109,19 +113,11 @@ namespace SistemaHorasConsulta.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tematica tematica = db.Tematicas.Find(id);
-            db.Tematicas.Remove(tematica);
-            db.SaveChanges();
+            NTematica temp = new NTematica();
+            temp.eliminarTematica(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+    
     }
 }

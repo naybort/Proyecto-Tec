@@ -7,7 +7,7 @@
 <div class="container body-content">
 
     <div class="main main-raised">
-        <div class="container">
+        <div class="container" style="width:100%;">
             <div class="section text-center">
                 <ul class="collapsible popout" data-collapsible="accordion">
                     @foreach (var profesor in Model)
@@ -23,9 +23,9 @@
 
                                             <div class="card2-avatar">
                                                 <div class="image">
-                                                    @if (Session["Foto"] != null)
+                                                    @if (profesor.stringFoto != null)
                                                     {
-                                                        <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                                                        <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@profesor.stringFoto" class="img-circle" alt="Usuario" />
                                                     }
                                                     else
                                                     {
@@ -49,7 +49,7 @@
                                                     <tr>
                                                         <td>
                                                             <p>@profesor.Especialidades
-                                                               <br> <a href="#" onclick="getTematicas('@profesor.IdProfesor')">Más epecialidades de @profesor.NombreProfesor</a>
+                                                               <br> <a href="#" onclick="getTematicas('@profesor.IdProfesor')">Más especialidades de @profesor.NombreProfesor</a>
 </p>
                                                             
                                                             
@@ -160,7 +160,7 @@
                 $.each(data, function (i, v) {
                     $("#especialidades").append(
                         "<tr>" +
-                        "<td><a href=/SeleccionarTematica/" + v.IdTematica+">" + v.NombreTematica + "</a></td>" +
+                        "<td><a href=/Estudiante/SeleccionarProfesor?idTematica=" + v.IdTematica+"#>" + v.NombreTematica + "</a></td>" +
                   
                         "<td>" + v.Especialidades + "</td>" +
                         "</tr>"

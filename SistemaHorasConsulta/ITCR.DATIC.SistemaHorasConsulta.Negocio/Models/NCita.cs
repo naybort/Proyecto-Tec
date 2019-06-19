@@ -14,6 +14,34 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
     {
         ConexionAPI conexion = new ConexionAPI();
 
+        public bool crearFeedBack(FeedBack feedback)
+        {
+
+            var values = new Dictionary<string, string>
+            {
+                {"IdCita",feedback.IdCita.ToString() },
+                {"respuesta1",feedback.respuesta1 },
+                {"respuesta2",feedback.respuesta2 },
+                {"respuesta3",feedback.respuesta3 }
+            };
+
+            var content = new FormUrlEncodedContent(values);
+
+            var responseTask = conexion.client.PostAsync("FeedBack/", content);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+
+            return false;
+        }
+
         public bool crearCita(NCita cita)
         {
             
@@ -44,6 +72,34 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
 
             return false;
         }
+        public bool citaRealizada(int id)
+        {
+
+            var values = new Dictionary<string, string>
+            {
+                {"IdCita",id.ToString() }
+               
+            };
+
+            var content = new FormUrlEncodedContent(values);
+
+            // JavaScriptSerializer serializer = new JavaScriptSerializer();
+            // var jasonObject = serializer.Serialize(cita);
+            //  var stringContent = new StringContent(jasonObject.ToString());
+            var responseTask = conexion.client.PostAsync("Cita/Realizada", content);
+            responseTask.Wait();
+
+
+            var result = responseTask.Result;
+            var a = result.RequestMessage;
+            if (result.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+
+            return false;
+        }
         public List<Citas> getCitas()
         {
             var responseTask = conexion.client.GetAsync("Cita");
@@ -60,6 +116,23 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
             }
 
             return new List<Citas>();
+        }
+        public List<FeedBack> getFeedback()
+        {
+            var responseTask = conexion.client.GetAsync("FeedBack");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsStringAsync();
+                readTask.Wait();
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+
+                var feedBacks = serializer.Deserialize<List<FeedBack>>(readTask.Result);
+                return feedBacks;
+            }
+
+            return new List<FeedBack>();
         }
         public bool eliminarCita(int IdCita) {
             var responseTask = conexion.client.DeleteAsync("Cita/" + IdCita.ToString());

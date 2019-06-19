@@ -9,6 +9,7 @@ using System.ServiceModel;
 using SistemaHorasConsulta.WSSeguridadTec;
 using SistemaHorasConsulta.wsSeguridad;
 using Microsoft.Ajax.Utilities;
+using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
@@ -88,14 +89,56 @@ namespace SistemaHorasConsulta.Controllers
                                     _Correo = _Usuario + "@itcr.ac.cr";
                                     Session["Email"] = _Correo;
                                     Session["NUM_CEDULA"] = _Cedula;
-                                    var res = new { Success = "True" };
-                                    return Json(res, JsonRequestBehavior.AllowGet);
+                                    NAdministrador usuario = new NAdministrador();
+                                    var tipoUsuario = usuario.getAdministradores().Where(x => x.Usuario == _Usuario).FirstOrDefault();
+                                    NProfesor temp = new NProfesor();
+
+                                    var tipoUsuario2 = temp.getProfesor().Where(x => x.Usuario == _Usuario).FirstOrDefault();
+                                    if (tipoUsuario == null)
+                                    {
+                                        if (tipoUsuario2 != null)
+                                        {
+                                            Session["IdProfesor"] = tipoUsuario2.IdProfesor;
+                                            Session["CorreoProfe"] = tipoUsuario2.CorreoElectronico;
+                                            Session["TipoUsuario"] = 2;
+                                            Session["Permisos"] = 0;
+                                            var res = new { Success = "True" };
+                                            return Json(res, JsonRequestBehavior.AllowGet);
+                                        }
+                                        else
+                                        {
+                                            var res = new { Success = "False" };
+                                            return Json(res, JsonRequestBehavior.AllowGet);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (tipoUsuario2 != null)
+                                        {
+                                            Session["IdProfesor"] = tipoUsuario2.IdProfesor;
+                                            Session["TipoUsuario"] = 2;
+                                            Session["Permisos"] = 1;
+                                            var res = new { Success = "True" };
+                                            return Json(res, JsonRequestBehavior.AllowGet);
+                                        }
+                                        else
+                                        {
+
+                                            Session["TipoUsuario"] = 2;
+                                            Session["Permisos"] = 1;
+                                            var res = new { Success = "True" };
+                                            return Json(res, JsonRequestBehavior.AllowGet);
+                                        }
+                                    }
                                 }
+
                                 else
                                 {
+
                                     var res = new { Success = "False" };
                                     return Json(res, JsonRequestBehavior.AllowGet);
                                 }
+                                
                             }
                         case 2:
                             {
@@ -140,7 +183,10 @@ namespace SistemaHorasConsulta.Controllers
                                     Session.Add("COD_USUARIO", "ESTUDIANTE");
                                     Session.Add("NUM_CEDULA", wsseg.ObtenerCedula(_Usuario)); //obtener número de cédula si tiene.
                                     Session.Add("NOM_USUARIO", wsseg.ObtenerNombreUsuario(_Usuario)); //obtener nombre completo del usuario.
+                                   
+                               
                                     Session.Add("COD_SEDE", Session["COD_SEDE"].ToString());
+                                    Session["TipoUsuario"] = 3;
                                     var res = new { Success = "True" };
                                     return Json(res, JsonRequestBehavior.AllowGet);
                                 }
@@ -154,6 +200,7 @@ namespace SistemaHorasConsulta.Controllers
                             {
                                 wsseg.ValidarUsuarioSistema(_Usuario, _Contraseña, MvcApplication.CodAplicación, Session["COD_SEDE"].ToString());
                                 Session.Add("ID_USUARIO", _Usuario);
+                             
                                 Session.Add("NUM_CEDULA", wsseg.ObtenerCedula(_Usuario)); //obtener número de cédula si tiene.
                                 Session.Add("NOM_USUARIO", wsseg.ObtenerNombreUsuario(_Usuario)); //obtener nombre completo del usuario.
                                 Session.Add("COD_SEDE", Session["COD_SEDE"].ToString());

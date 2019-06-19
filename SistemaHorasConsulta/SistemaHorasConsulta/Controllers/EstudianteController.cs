@@ -17,11 +17,40 @@ namespace SistemaHorasConsulta.Controllers
         // GET: Estudiante
         public ActionResult SeleccionarTematica()
         {
-            @Session["Encabezado"] = "Seleccionar Temática";
-            NTematica tematica = new NTematica();
-            var listaTematicas = tematica.getTematicas();
+            NCita citaTemp = new NCita();
+            
+            var citaParaFeedBack = citaTemp.getCitas().Where(x => x.IdEstudiante == int.Parse(Session["CARNE"].ToString()) && x.EstadoFeedBack == false && x.Estado == "Realizada").FirstOrDefault();
+            if (citaParaFeedBack == null) {
+                @Session["Encabezado"] = "Seleccionar Temática";
+                NTematica tematica = new NTematica();
+                var listaTematicas = tematica.getTematicas();
 
-            return View(listaTematicas);
+                return View(listaTematicas);
+            }
+            else {
+                return RedirectToAction("completarFeedBack", new { id = citaParaFeedBack.IdCita});
+            }
+
+        }
+        public ActionResult completarFeedBack(int id) {
+            NCita temp = new NCita();
+            var cita = temp.getCitas().Where(x => x.IdCita == id).FirstOrDefault();
+            return View(cita);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult completarFeedBack([Bind(Include = "IdCita,respuesta1,respuesta2,respuesta3")] FeedBack feedback)
+        {
+            @Session["Encabezado"] = "Evaluación de Profesor";
+            if (ModelState.IsValid)
+            {
+                NCita temp = new NCita();
+                temp.crearFeedBack(feedback);
+                return RedirectToAction("SeleccionarTematica");
+            }
+
+           
+            return View(feedback);
         }
         public ActionResult SeleccionarProfesor(int idTematica)
         {
@@ -29,25 +58,42 @@ namespace SistemaHorasConsulta.Controllers
             NTematica profesor = new NTematica();
             var listaProfesores = profesor.getProfesorPorTematica(idTematica);
             return View(listaProfesores);
-   
+
 
         }
         public ActionResult Calendario(int idProfesor)
         {
-            @Session["IdProfesor"]= idProfesor;
-            @Session["IdEstudiante"] = 2016136466;
+            NProfesor temp = new NProfesor();
+            var profe = temp.getProfesor().Where(x => x.IdProfesor == idProfesor).FirstOrDefault();
+            @Session["NombreProfe"] =  profe.SegundoApellido +" "+ profe.PrimerApellido +" " + profe.Nombre ;
+            @Session["IdProfesor"] = idProfesor;
+  
             NHorario horario = new NHorario();
             var listaHorarios = horario.getHorarioProfesor(idProfesor);
 
             return View(listaHorarios);
         }
-        public ActionResult Agenda() {
-            @Session["Encabezado"] = "Agenda";
+     
+        public ActionResult  CitasCanceladas()
+        {
+            @Session["Encabezado"] = "";
             NCita cita = new NCita();
-            var citas = cita.getCitas();
-            var listaCitas = citas.Where(x => x.IdEstudiante == (int)@Session["IdEstudiante"]);
-            return View(listaCitas);
-            
+            var citas = cita.getCitas().Where(x => x.IdEstudiante == int.Parse(@Session["CARNE"].ToString()));
+            return View(citas.Where(x => x.Estado == "Cancelada"));
+        }
+        public ActionResult CitasRealizadas()
+        {
+            @Session["Encabezado"] = "";
+            NCita cita = new NCita();
+            var citas = cita.getCitas().Where(x => x.IdEstudiante == int.Parse(@Session["CARNE"].ToString()));
+            return View(citas.Where(x => x.Estado == "Realizada"));
+        }
+        public ActionResult CitasPendientes()
+        {
+            @Session["Encabezado"] = "";
+            NCita cita = new NCita();
+            var citas = cita.getCitas().Where(x => x.IdEstudiante == int.Parse(@Session["CARNE"].ToString()));
+            return View(citas.Where(x => x.Estado == "Pendiente"));
         }
 
         public JsonResult GetHorarios()
@@ -79,7 +125,7 @@ namespace SistemaHorasConsulta.Controllers
             var fechaTemp = Datos[Datos.Count-1];
             DateTime fecha = DateTime.ParseExact(fechaTemp, "d/M/yyyy", CultureInfo.InstalledUICulture);
             Datos.RemoveAt(Datos.Count-1);
-            var listaCitas = citas.Where(x => x.IdEstudiante == (int)@Session["IdEstudiante"] && x.Fecha == fecha);
+            var listaCitas = citas.Where(x => x.IdEstudiante == int.Parse(Session["CARNE"].ToString()) && x.Fecha == fecha);
         
             if (listaCitas != null)
             {
@@ -107,7 +153,7 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult ReservarCita(List<String> Datos) {
                 var resultadoAjax = true;
                 NCita cita = new NCita();
-                cita.IdEstudiante = (int)@Session["IdEstudiante"];
+            cita.IdEstudiante = int.Parse(Session["CARNE"].ToString());
                 cita.IdProfesor = (int)@Session["IdProfesor"];
 
               
@@ -122,7 +168,7 @@ namespace SistemaHorasConsulta.Controllers
 
 
             var citaTemp = cita.getCitas();
-            var cantidad = citaTemp.Where(x => x.Fecha == fecha && x.IdEstudiante== (int)Session["IdEstudiante"]).Count();
+            var cantidad = citaTemp.Where(x => x.Fecha == fecha && x.IdEstudiante == int.Parse(Session["CARNE"].ToString()) && x.IdProfesor == cita.IdProfesor).Count();
             if (cantidad >= 2)
             {
                 ViewBag.error = "Ha exedido el máximo de citas en este día";
@@ -135,21 +181,11 @@ namespace SistemaHorasConsulta.Controllers
 
                 if (resultado)
                 {
-                    MailMessage correo = new MailMessage();
-                    correo.From = new MailAddress("sistemahc@itcr.ac.cr");
-                    correo.To.Add("mcorear97@gmail.com");
-                    correo.Subject = "Cita reservada";
-                    correo.Body = "Se reservó una cita con el estudiante " + Session["NOM_USUARIO"] + " para la fecha " + Datos[0] + " a las " + Datos[1];
+                  
 
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.live.com";
-                    smtp.Port = 25;
-                    smtp.EnableSsl = true;
-                    smtp.UseDefaultCredentials = true;
-                    string cuentaCorreo = "sistemahc@itcr.ac.cr";
-                    string contrasenaCorreo = "2016@ITcr";
-                    smtp.Credentials = new System.Net.NetworkCredential(cuentaCorreo, contrasenaCorreo);
-                    smtp.Send(correo);
+                    wsEmail.Email ws = new wsEmail.Email();
+                    ws.Enviar("mcorear97@gmail.com", "", "Reservación de Cita", "La cita de consulta con el/la docente  " + Session["NombreProfe"] + " para la día " + Datos[0] + " a las " + Datos[1], true, "high", "sistemahc", "2016@ITcr");
+                    ws.Enviar("jpcastillo@itcr.ac.cr", "", "Reservación de Cita", "La cita de consulta con  " + Session["NOM_USUARIO"] + ",código de carnet "+Session["CARNE"].ToString()+" para el día " + Datos[0] + " a las " + Datos[1] + " ha sido reservada", true, "high", "sistemahc", "2016@ITcr");
                 }
                 else
                 {
@@ -161,9 +197,15 @@ namespace SistemaHorasConsulta.Controllers
             return Json(new { boolRes = resultadoAjax });
         }
         public ActionResult EliminarCita(int IdCita) {
+
             NCita cita = new NCita();
+            var citas = cita.getCitas().Where(x=> x.IdCita == IdCita).FirstOrDefault();
             var respuesta = cita.eliminarCita(IdCita);
-            return RedirectToAction("Agenda");
+            if (respuesta) {
+                wsEmail.Email ws = new wsEmail.Email();
+                ws.Enviar("mcorear97@gmail.com", "", "Cancelación de Cita", "El estudiante "+ Session["NOM_USUARIO"] + " canceló la cita del día " + citas.Fecha.ToShortDateString() + " a las " + citas.HoraInicio, true, "high", "sistemahc", "2016@ITcr");
+            }
+            return RedirectToAction("CitasCanceladas");
         }
         public ActionResult LogOff()
         {

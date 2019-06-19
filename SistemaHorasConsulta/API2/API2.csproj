@@ -176,7 +176,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="ConexionBD.cs" />
+    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\CitaController.cs" />
+    <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\HorarioController.cs" />
     <Compile Include="Controllers\LugarController.cs" />
     <Compile Include="Controllers\ProfesorController.cs" />
@@ -185,8 +187,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IAdministrador.cs" />
+    <Compile Include="Models\IAsociar.cs" />
     <Compile Include="Models\ICita.cs" />
     <Compile Include="Models\ICitaXEstudiante.cs" />
+    <Compile Include="Models\IFeedBack.cs" />
     <Compile Include="Models\IHorario.cs" />
     <Compile Include="Models\ILugar.cs" />
     <Compile Include="Models\IProfesor.cs" />

@@ -10,8 +10,10 @@ warning 6002: The table/view 'SistemaConsultas.dbo.Administradores' does not hav
         <EntityType Name="Administradores">
           <Key>
             <PropertyRef Name="Usuario" />
+            <PropertyRef Name="IdAdministrador" />
           </Key>
           <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdAdministrador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Bitacora">
           <Key>
@@ -56,15 +58,12 @@ warning 6002: The table/view 'SistemaConsultas.dbo.FeedbackXCita' does not have 
           <Key>
             <PropertyRef Name="IdCita" />
             <PropertyRef Name="Estado" />
-            <PropertyRef Name="RespuestaPregunta1" />
-            <PropertyRef Name="RespuestaPregunta2" />
-            <PropertyRef Name="RespuestaPregunta3" />
           </Key>
           <Property Name="IdCita" Type="int" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
-          <Property Name="RespuestaPregunta1" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="RespuestaPregunta2" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="RespuestaPregunta3" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RespuestaPregunta1" Type="nvarchar" MaxLength="100" />
+          <Property Name="RespuestaPregunta2" Type="nvarchar" MaxLength="100" />
+          <Property Name="RespuestaPregunta3" Type="nvarchar" MaxLength="100" />
           <Property Name="ComentarioAdicional" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Horarios">
@@ -246,11 +245,11 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="Pr_Administador_Editar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UsuarioActual" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdAdministrador" Type="int" Mode="In" />
           <Parameter Name="UsuarioNuevo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="Pr_Administador_Eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Usuario" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdAdministrador" Type="int" Mode="In" />
         </Function>
         <Function Name="Pr_Administadores_Consultar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Pr_Administadores_Insertar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -281,6 +280,14 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
         </Function>
         <Function Name="Pr_DiasCita_Consultar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dia" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Pr_Feedback_Consultar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Pr_Feedback_Editar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCita" Type="int" Mode="In" />
+          <Parameter Name="Respuesta1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Respuesta2" Type="nvarchar" Mode="In" />
+          <Parameter Name="Respuesta3" Type="nvarchar" Mode="In" />
+          <Parameter Name="Comentario" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="Pr_Horario_Editar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdHorario" Type="int" Mode="In" />
@@ -423,7 +430,8 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           <EntitySet Name="Tematicas" EntityType="Self.Tematicas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Administradores" EntityType="Self.Administradores" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Administradores].[Usuario] AS [Usuario]
+    [Administradores].[Usuario] AS [Usuario], 
+    [Administradores].[IdAdministrador] AS [IdAdministrador]
     FROM [dbo].[Administradores] AS [Administradores]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="CitaXEstudiante" EntityType="Self.CitaXEstudiante" store:Type="Tables" store:Schema="dbo">
@@ -580,8 +588,10 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
         <EntityType Name="Administradore">
           <Key>
             <PropertyRef Name="Usuario" />
+            <PropertyRef Name="IdAdministrador" />
           </Key>
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdAdministrador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="CitaXEstudiante">
           <Key>
@@ -596,15 +606,12 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           <Key>
             <PropertyRef Name="IdCita" />
             <PropertyRef Name="Estado" />
-            <PropertyRef Name="RespuestaPregunta1" />
-            <PropertyRef Name="RespuestaPregunta2" />
-            <PropertyRef Name="RespuestaPregunta3" />
           </Key>
           <Property Name="IdCita" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="RespuestaPregunta1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RespuestaPregunta2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RespuestaPregunta3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RespuestaPregunta1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RespuestaPregunta2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RespuestaPregunta3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ComentarioAdicional" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cita" Relationship="Self.FK_FeedbackXCita_Citas" FromRole="FeedbackXCita" ToRole="Citas" />
         </EntityType>
@@ -729,13 +736,13 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
             <End Role="Profesores" EntitySet="Profesores" />
           </AssociationSet>
           <FunctionImport Name="Pr_Administador_Editar">
-            <Parameter Name="UsuarioActual" Mode="In" Type="String" />
+            <Parameter Name="IdAdministrador" Mode="In" Type="Int32" />
             <Parameter Name="UsuarioNuevo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Pr_Administador_Eliminar">
-            <Parameter Name="Usuario" Mode="In" Type="String" />
+            <Parameter Name="IdAdministrador" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="Pr_Administadores_Consultar" ReturnType="Collection(String)" />
+          <FunctionImport Name="Pr_Administadores_Consultar" ReturnType="Collection(SistemaHorasConsultaModelo.Pr_Administadores_Consultar_Result)" />
           <FunctionImport Name="Pr_Administadores_Insertar">
             <Parameter Name="usuario" Mode="In" Type="String" />
           </FunctionImport>
@@ -764,6 +771,14 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           </FunctionImport>
           <FunctionImport Name="Pr_DiasCita_Consultar" ReturnType="Collection(SistemaHorasConsultaModelo.Pr_DiasCita_Consultar_Result)">
             <Parameter Name="Dia" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pr_Feedback_Consultar" ReturnType="Collection(SistemaHorasConsultaModelo.Pr_Feedback_Consultar_Result)" />
+          <FunctionImport Name="Pr_Feedback_Editar">
+            <Parameter Name="IdCita" Mode="In" Type="Int32" />
+            <Parameter Name="Respuesta1" Mode="In" Type="String" />
+            <Parameter Name="Respuesta2" Mode="In" Type="String" />
+            <Parameter Name="Respuesta3" Mode="In" Type="String" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Pr_Horario_Editar">
             <Parameter Name="IdHorario" Mode="In" Type="Int32" />
@@ -822,7 +837,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
             <Parameter Name="IdProfesor" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Pr_Profesores_Consultar" ReturnType="Collection(SistemaHorasConsultaModelo.Pr_Profesores_Consultar_Result)" />
-          <FunctionImport Name="Pr_Profesores_Insertar">
+          <FunctionImport Name="Pr_Profesores_Insertar" ReturnType="Collection(SistemaHorasConsultaModelo.Pr_Profesores_Insertar_Result)">
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="PrimerApellido" Mode="In" Type="String" />
             <Parameter Name="SegundoApellido" Mode="In" Type="String" />
@@ -897,9 +912,14 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="Pr_Administadores_Consultar_Result">
+          <Property Type="String" Name="Usuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdAdministrador" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="Pr_Citas_Consultar_Result">
           <Property Type="Int32" Name="IdCita" Nullable="false" />
           <Property Type="DateTime" Name="Fecha" Nullable="false" />
+          <Property Type="Int32" Name="IdProfesor" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="PrimerApellido" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SegundoApellido" Nullable="false" MaxLength="50" />
@@ -907,6 +927,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           <Property Type="Time" Name="HoraInicio" Nullable="false" />
           <Property Type="String" Name="NombreLugar" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Estado" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="EstadoFeedBack" Nullable="false" />
         </ComplexType>
         <ComplexType Name="Pr_CitasFiltrarFecha_Consultar_Result">
           <Property Type="DateTime" Name="Fecha" Nullable="false" />
@@ -936,6 +957,14 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           <Property Type="Time" Name="HoraInicio" Nullable="false" />
           <Property Type="Time" Name="HoraFinal" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="Pr_Feedback_Consultar_Result">
+          <Property Type="Int32" Name="IdCita" Nullable="false" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="respuesta1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="respuesta2" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="respuesta3" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ComentarioAdicional" Nullable="true" MaxLength="100" />
+        </ComplexType>
         <ComplexType Name="Pr_HorarioProfesor_Consultar_Result">
           <Property Type="Int32" Name="IdHorario" Nullable="false" />
           <Property Type="Int32" Name="IdProfesor" Nullable="false" />
@@ -957,17 +986,29 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="Pr_Profesores_Consultar_Result">
+          <Property Type="Int32" Name="IdProfesor" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PrimerApellido" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="50" />
+          <Property Type="Binary" Name="Foto" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="SegundoApellido" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Dia" Nullable="true" MaxLength="50" />
+          <Property Type="Time" Name="HoraInicio" Nullable="true" />
+          <Property Type="Time" Name="HoraFinal" Nullable="true" />
+          <Property Type="String" Name="NombreLugar" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdHorario" Nullable="true" />
+          <Property Type="Int32" Name="IdLugar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Pr_Profesores_Insertar_Result">
           <Property Type="Int32" Name="IdProfesor" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="PrimerApellido" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="50" />
-          <Property Type="Binary" Name="Foto" Nullable="true" MaxLength="Max" />
           <Property Type="String" Name="SegundoApellido" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Dia" Nullable="false" MaxLength="50" />
-          <Property Type="Time" Name="HoraInicio" Nullable="false" />
-          <Property Type="Time" Name="HoraFinal" Nullable="false" />
-          <Property Type="String" Name="NombreLugar" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdHorario" Nullable="false" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CorreoElectronico" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdLugar" Nullable="false" />
+          <Property Type="Binary" Name="Foto" Nullable="true" MaxLength="Max" />
         </ComplexType>
         <ComplexType Name="Pr_ProfesoresXTematica_Consultar_Result">
           <Property Type="Int32" Name="IdProfesor" Nullable="false" />
@@ -1085,6 +1126,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
             <EntityTypeMapping TypeName="SistemaHorasConsultaModelo.Administradore">
               <MappingFragment StoreEntitySet="Administradores">
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdAdministrador" ColumnName="IdAdministrador" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1135,7 +1177,14 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="Pr_Administador_Editar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Administador_Editar" />
           <FunctionImportMapping FunctionImportName="Pr_Administador_Eliminar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Administador_Eliminar" />
-          <FunctionImportMapping FunctionImportName="Pr_Administadores_Consultar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Administadores_Consultar" />
+          <FunctionImportMapping FunctionImportName="Pr_Administadores_Consultar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Administadores_Consultar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SistemaHorasConsultaModelo.Pr_Administadores_Consultar_Result">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdAdministrador" ColumnName="IdAdministrador" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Pr_Administadores_Insertar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Administadores_Insertar" />
           <FunctionImportMapping FunctionImportName="Pr_Cita_Cancelar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Cita_Cancelar" />
           <FunctionImportMapping FunctionImportName="Pr_Cita_Insertar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Cita_Insertar" />
@@ -1145,6 +1194,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
               <ComplexTypeMapping TypeName="SistemaHorasConsultaModelo.Pr_Citas_Consultar_Result">
                 <ScalarProperty Name="IdCita" ColumnName="IdCita" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdProfesor" ColumnName="IdProfesor" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
                 <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
@@ -1152,6 +1202,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
                 <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
                 <ScalarProperty Name="NombreLugar" ColumnName="NombreLugar" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EstadoFeedBack" ColumnName="EstadoFeedBack" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1199,6 +1250,19 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pr_Feedback_Consultar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Feedback_Consultar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SistemaHorasConsultaModelo.Pr_Feedback_Consultar_Result">
+                <ScalarProperty Name="IdCita" ColumnName="IdCita" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="respuesta1" ColumnName="respuesta1" />
+                <ScalarProperty Name="respuesta2" ColumnName="respuesta2" />
+                <ScalarProperty Name="respuesta3" ColumnName="respuesta3" />
+                <ScalarProperty Name="ComentarioAdicional" ColumnName="ComentarioAdicional" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Pr_Feedback_Editar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Feedback_Editar" />
           <FunctionImportMapping FunctionImportName="Pr_Horario_Editar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Horario_Editar" />
           <FunctionImportMapping FunctionImportName="Pr_Horario_Eliminar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Horario_Eliminar" />
           <FunctionImportMapping FunctionImportName="Pr_Horario_Insertar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Horario_Insertar" />
@@ -1249,6 +1313,7 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
@@ -1256,10 +1321,24 @@ warning 6002: The table/view 'SistemaConsultas.dbo.TematicaXProfesor' does not h
                 <ScalarProperty Name="HoraFinal" ColumnName="HoraFinal" />
                 <ScalarProperty Name="NombreLugar" ColumnName="NombreLugar" />
                 <ScalarProperty Name="IdHorario" ColumnName="IdHorario" />
+                <ScalarProperty Name="IdLugar" ColumnName="IdLugar" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Pr_Profesores_Insertar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Profesores_Insertar" />
+          <FunctionImportMapping FunctionImportName="Pr_Profesores_Insertar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_Profesores_Insertar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SistemaHorasConsultaModelo.Pr_Profesores_Insertar_Result">
+                <ScalarProperty Name="IdProfesor" ColumnName="IdProfesor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="IdLugar" ColumnName="IdLugar" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Pr_ProfesoresXTematica_Consultar" FunctionName="SistemaHorasConsultaModelo.Store.Pr_ProfesoresXTematica_Consultar">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SistemaHorasConsultaModelo.Pr_ProfesoresXTematica_Consultar_Result">

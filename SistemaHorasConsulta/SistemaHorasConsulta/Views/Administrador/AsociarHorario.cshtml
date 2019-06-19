@@ -6,10 +6,17 @@
 
 <h2>Horarios disponibles para asociar a @Session["NombreProfeTemp"]</h2>
 
-<p>
-    @Html.ActionLink("Agregar Horario", "Create")
-</p>
-<table class="table">
+
+<select id="myInput" class="form-control" onchange="myFunction()">
+    <option value="Lunes">Lunes</option>
+    <option value="Martes">Martes</option>
+    <option value="Miercoles">Miércoles</option>
+    <option value="Jueves">Jueves</option>
+    <option value="Viernes">Viernes</option>
+    <option value="Sabado">Sábados</option>
+
+</select>
+<table class="table" id="myTable">
     <tr>
         <th>
             Hora de Inicio
@@ -36,11 +43,49 @@
                 @Html.DisplayFor(modelItem => item.Dia)
             </td>
             <td>
-                @Html.ActionLink("Agregar", "HorarioProfesor", new { id = item.IdHorario }) 
+                @Html.ActionLink("Agregar", "HorarioProfesor", new { id = item.IdHorario })
 
-             
+
             </td>
         </tr>
     }
 
 </table>
+@Html.ActionLink("Volver", "Details", "Profesores", new { id = Session["IdProfeTemp"] }, null)
+<script>
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>

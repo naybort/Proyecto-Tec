@@ -15,7 +15,7 @@ namespace API.Models
         public int IdProfesor { get; set; }
         public int IdEstudiante { get; set; }
         public DateTime Fecha { get; set; }
-
+        public int IdCita { get; set; }
         public DateTime HoraInicio { get; set; }
         public bool Estado { get; set; }
         public ICita GetCita(int id)
@@ -27,13 +27,18 @@ namespace API.Models
    
         public void guardarCita(ICita cita)
         {
-            /*API2.wsEmail.Email ws = new API2.wsEmail.Email();
-            ws.Enviar(destino, cc,asunto, titulo, true, prioridad, usuario, contrasena);*/
+            
+            
             var str = "exec Pr_Cita_Insertar @IdProfesor = "+ cita.IdProfesor.ToString() + ", @IdEstudiante = "+
                 
-                cita.IdEstudiante.ToString() +", @Fecha = '"+cita.Fecha.ToShortDateString()+"', @HoraInicio = '"+cita.HoraInicio.ToString("HH:mm") +"'";
+                cita.IdEstudiante.ToString() +", @Fecha = '"+cita.Fecha.ToShortDateString()+"', @HoraInicio = '"+cita.HoraInicio.ToString("HH:mm") +"', @CorreoEstudiante=''" +
+                "";
             var result =  bd.Database.ExecuteSqlCommand(str);
            
+        }
+        public void citaRealizada(ICita cita) {
+            var str = "exec Pr_CitaRealizada_Editar @IdCita = " + cita.IdCita.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
         }
 
         public List<Pr_Citas_Consultar_Result> getCitas()
@@ -43,8 +48,9 @@ namespace API.Models
         }
 
         public bool eliminarCita(int IdCita) {
-            var IdCita1 = new SqlParameter("@IdCita", IdCita);
-            bd.Database.ExecuteSqlCommand("Pr_Cita_Eliminar @IdCita", IdCita1);
+            var str = "exec Pr_Cita_Cancelar @IdCita = " + IdCita.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
+            
             return true;
         }
 

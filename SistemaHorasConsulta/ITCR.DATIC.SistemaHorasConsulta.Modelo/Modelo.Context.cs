@@ -39,31 +39,31 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
         public virtual DbSet<FeedbackXCita> FeedbackXCitas { get; set; }
         public virtual DbSet<TematicaXProfesor> TematicaXProfesors { get; set; }
     
-        public virtual int Pr_Administador_Editar(string usuarioActual, string usuarioNuevo)
+        public virtual int Pr_Administador_Editar(Nullable<int> idAdministrador, string usuarioNuevo)
         {
-            var usuarioActualParameter = usuarioActual != null ?
-                new ObjectParameter("UsuarioActual", usuarioActual) :
-                new ObjectParameter("UsuarioActual", typeof(string));
+            var idAdministradorParameter = idAdministrador.HasValue ?
+                new ObjectParameter("IdAdministrador", idAdministrador) :
+                new ObjectParameter("IdAdministrador", typeof(int));
     
             var usuarioNuevoParameter = usuarioNuevo != null ?
                 new ObjectParameter("UsuarioNuevo", usuarioNuevo) :
                 new ObjectParameter("UsuarioNuevo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Editar", usuarioActualParameter, usuarioNuevoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Editar", idAdministradorParameter, usuarioNuevoParameter);
         }
     
-        public virtual int Pr_Administador_Eliminar(string usuario)
+        public virtual int Pr_Administador_Eliminar(Nullable<int> idAdministrador)
         {
-            var usuarioParameter = usuario != null ?
-                new ObjectParameter("Usuario", usuario) :
-                new ObjectParameter("Usuario", typeof(string));
+            var idAdministradorParameter = idAdministrador.HasValue ?
+                new ObjectParameter("IdAdministrador", idAdministrador) :
+                new ObjectParameter("IdAdministrador", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Eliminar", usuarioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Administador_Eliminar", idAdministradorParameter);
         }
     
-        public virtual ObjectResult<string> Pr_Administadores_Consultar()
+        public virtual ObjectResult<Pr_Administadores_Consultar_Result> Pr_Administadores_Consultar()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Pr_Administadores_Consultar");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Administadores_Consultar_Result>("Pr_Administadores_Consultar");
         }
     
         public virtual int Pr_Administadores_Insertar(string usuario)
@@ -157,6 +157,36 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
                 new ObjectParameter("Dia", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_DiasCita_Consultar_Result>("Pr_DiasCita_Consultar", diaParameter);
+        }
+    
+        public virtual ObjectResult<Pr_Feedback_Consultar_Result> Pr_Feedback_Consultar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Feedback_Consultar_Result>("Pr_Feedback_Consultar");
+        }
+    
+        public virtual int Pr_Feedback_Editar(Nullable<int> idCita, string respuesta1, string respuesta2, string respuesta3, string comentario)
+        {
+            var idCitaParameter = idCita.HasValue ?
+                new ObjectParameter("IdCita", idCita) :
+                new ObjectParameter("IdCita", typeof(int));
+    
+            var respuesta1Parameter = respuesta1 != null ?
+                new ObjectParameter("Respuesta1", respuesta1) :
+                new ObjectParameter("Respuesta1", typeof(string));
+    
+            var respuesta2Parameter = respuesta2 != null ?
+                new ObjectParameter("Respuesta2", respuesta2) :
+                new ObjectParameter("Respuesta2", typeof(string));
+    
+            var respuesta3Parameter = respuesta3 != null ?
+                new ObjectParameter("Respuesta3", respuesta3) :
+                new ObjectParameter("Respuesta3", typeof(string));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Feedback_Editar", idCitaParameter, respuesta1Parameter, respuesta2Parameter, respuesta3Parameter, comentarioParameter);
         }
     
         public virtual int Pr_Horario_Editar(Nullable<int> idHorario, string dia, Nullable<System.TimeSpan> horaInicio, Nullable<System.TimeSpan> horaFinal)
@@ -354,7 +384,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Profesores_Consultar_Result>("Pr_Profesores_Consultar");
         }
     
-        public virtual int Pr_Profesores_Insertar(string nombre, string primerApellido, string segundoApellido, string usuario, string correoElectronico, Nullable<int> idLugar, byte[] foto)
+        public virtual ObjectResult<Pr_Profesores_Insertar_Result> Pr_Profesores_Insertar(string nombre, string primerApellido, string segundoApellido, string usuario, string correoElectronico, Nullable<int> idLugar, byte[] foto)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -384,7 +414,7 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
                 new ObjectParameter("Foto", foto) :
                 new ObjectParameter("Foto", typeof(byte[]));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pr_Profesores_Insertar", nombreParameter, primerApellidoParameter, segundoApellidoParameter, usuarioParameter, correoElectronicoParameter, idLugarParameter, fotoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pr_Profesores_Insertar_Result>("Pr_Profesores_Insertar", nombreParameter, primerApellidoParameter, segundoApellidoParameter, usuarioParameter, correoElectronicoParameter, idLugarParameter, fotoParameter);
         }
     
         public virtual ObjectResult<Pr_ProfesoresXTematica_Consultar_Result> Pr_ProfesoresXTematica_Consultar(Nullable<int> idTematica)

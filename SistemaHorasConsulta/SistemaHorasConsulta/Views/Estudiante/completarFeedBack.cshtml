@@ -1,0 +1,61 @@
+﻿@model ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.Citas
+@{
+    ViewBag.Title = "completarFeedBack";
+    Layout = "~/Views/Shared/_Principal.cshtml";
+}
+<div class="main main-raised">
+    <div class="container" style="width:100%;">
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => model.IdCita)
+            @Html.AntiForgeryToken()
+            <h4>Evaluación de la atención de cita de consulta del docente @Model.SegundoApellido @Model.PrimerApellido @Model.Nombre el @Model.Fecha.ToShortDateString() a las @Model.HoraInicio</h4>
+            <hr />
+            <h4>Califique el desempeño del docente al momento de aclarar sus dudas: </h4>
+            <hr />
+            <div class="form-field ">
+                <select id="glsr-ltr" name="glsr-ltr" onchange="myFunction(event)" class="star-rating ">
+                    <option value="">Seleccione puntaje</option>
+                    <option value="4">Muy Bueno</option>
+                    <option value="3">Bueno</option>
+
+                    <option value="2">Regular</option>
+                    <option value="1">Malo</option>
+                </select>
+            </div>
+            <input type="text" id="respuesta1" class="form-control" name="respuesta1" readonly>
+            <hr />
+            <h4>¿Se presentó a tiempo el docente al momento de la consulta?</h4>
+            <hr />
+
+            <label for="Si">Si</label>
+            <input id="Si" name="Si" value="Si" onclick="changeTheText(this.value);" type="radio">
+            <label for="No">No</label>
+            <input id="No" name="Si" value="No" onclick="changeTheText(this.value);" type="radio">
+            <input hidden type="hidden" id="respuesta2" onclick="changeTheText(this.value);" class="form-control" name="respuesta2" readonly>
+
+            <hr />
+            <h4>Comentarios:</h4>
+
+            <hr />
+            <textarea id="respuesta3" name="respuesta3" rows="2" class="form-control" cols="50">
+
+</textarea>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Enviar" style="
+    margin-bottom: 5px;
+" class="btn btn-default pull-right" />
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function myFunction(e) {
+        document.getElementById("respuesta1").value = e.target.value
+    }
+
+    function changeTheText(theValue) {
+        document.getElementById('respuesta2').value = theValue;
+    }
+</script>

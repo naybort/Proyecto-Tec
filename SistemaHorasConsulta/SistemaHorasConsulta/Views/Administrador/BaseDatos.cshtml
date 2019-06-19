@@ -1,8 +1,29 @@
-﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Modelo.Profesore>
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.Profesor>
 @{
     Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
 }
-<table class="table">
+
+<h2>Base de Datos</h2>
+
+
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Nombre" title="Type in a name" style="max-width:100%;">
+    </div>
+    <div class="col-xs-4">
+        <select id="myInput1" class="form-control" onchange="myFunction1()">
+            <option value="">Todos</option>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miercoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sabados">Sábados</option>
+        </select>
+        </div>
+
+</div>
+<table class="table" id="myTable">
     <tr>
         <th>Docente</th>
         <th>7:30-8:30</th>
@@ -11,43 +32,127 @@
         <th>10:30-11:30</th>
         <th>11:30-12:30</th>
         <th>1:00-2:00</th>
+        <th>2:00-3:00</th>
         <th>3:00-4:00</th>
         <th>4:00-5:00</th>
-        <th class="table-dark">5:00-6:00</th>
+        <th>5:00-6:00</th>
         <th>Día</th>
     </tr>
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
+        List<List<string>> horarios = new List<List<string>>();
+        List<string> dias = new List<string> { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
 
-        @for (var i = 0; i < 9; i++)
+        foreach (var dia in dias)
         {
-            List<string> array = new List<string> { "7:30", "8:30", "9:30", "10:30", "11:30", "1:00", "2:00", "3:00", "4:00", "5:00" };
-            TimeSpan time = TimeSpan.Parse(array[i]);
-            var horaInicio = item.Horarios.Where(x => x.HoraInicio == time).FirstOrDefault();
-
-            if (horaInicio != null)
+            var horariosTemp = item.horarios.Where(x => x.Dia == dia);
+            if (horariosTemp.FirstOrDefault() != null)
             {
-                <td bgcolor="70a2ff"></td>
+                List<string> lista = new List<string>();
+                lista.Add(dia);
+                foreach (var concurrencia in horariosTemp)
+                {
+                    lista.Add(concurrencia.HoraInicio.ToString());
+                }
+                horarios.Add(lista);
             }
-            else
-            {
-                <td></td>
-            }
-
 
         }
-        <td>
-            Martes
-        </td>
+        foreach (var horario in horarios)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre) @Html.DisplayFor(modelItem => item.PrimerApellido) @Html.DisplayFor(modelItem => item.SegundoApellido)
+                </td>
+
+                @if (true)
+                {
+                    List<int> color = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    for (var i = 0; i < 10; i++)
+                    {
+                        List<string> array = new List<string> { "7:30", "8:30", "9:30", "10:30", "11:30", "1:00", "2:00", "3:00", "4:00", "5:00" };
+
+                        TimeSpan time = TimeSpan.Parse(array[i]);
+
+                        for (int j = 1; j < horario.Count; j++)
+                        {
+                            TimeSpan horaInicio = TimeSpan.Parse(horario[j]);
+                            if (horaInicio == time)
+                            {
+                                color[i] = 1;
 
 
-    </tr>
+                            }
+
+                        }
+
+
+
+
+                    }
+                    foreach (var num in color)
+                    {
+                        if (num == 1)
+                        {
+                            <td bgcolor="70a2ff"></td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    }
+                    <td>
+                        @horario[0]
+                    </td>
+                }
+            </tr>
+
+        }
     }
 
 </table>
 
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction1() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+   
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[11];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        
+    }
+
+</script>

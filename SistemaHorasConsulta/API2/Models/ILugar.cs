@@ -16,26 +16,28 @@ namespace API.Models
 
         public void lugarInsertar(string nombre)
         {
-            var parametroNombre = new SqlParameter("@NombreLugar", nombre);
-            var horario = bd.Database.ExecuteSqlCommand("exec Pr_Lugar_Insertar @NombreLugar", parametroNombre);
+
+            var str = "exec Pr_Lugar_Insertar  @NombreLugar = '" + nombre+"'";
+            var result = bd.Database.ExecuteSqlCommand(str);
+
 
         }
 
 
         public void eliminarLugar(int id)
         {
-            var idLugar = new SqlParameter("@IdLugar", id);
+    
+            var str = "exec Pr_Lugar_Eliminar  @IdLugar= " + id.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
 
-            var lugar = bd.Database.SqlQuery<int>("Pr_Lugar_Eliminar @IdLugar", idLugar);
-            
         }
 
         public void editarLugar(int id, string nombre)
-        {
-            var idLugar = new SqlParameter("@IdLugar", id);
-            var parametroNombre = new SqlParameter("@Nombre", nombre);
 
-            var lugar = bd.Database.SqlQuery<int>("Pr_Lugar_Editar @IdLugar, @Nombre", idLugar, parametroNombre);
+        { 
+            var str = "exec Pr_Lugar_Editar @IdLugar = "+id.ToString()+", @Nombre = '" + nombre + "'";
+            var result = bd.Database.ExecuteSqlCommand(str);
+
         }
 
         public Pr_Lugares_Consultar_Result getLugar(int id)

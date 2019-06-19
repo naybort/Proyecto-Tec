@@ -54,6 +54,13 @@ namespace API.Controllers
             cita.eliminarCita(id);
         }
 
+        [Route("api/Cita/Realizada/")]
+        public void citaRealizada([FromBody]ICita cita)
+        {
+            ICita temp = new ICita();
+            temp.citaRealizada(cita);
+
+        }
 
         [Route("api/Cita/fecha/{fecha1:datetime}/{fecha2:datetime}")]
         [ResponseType(typeof(IEnumerable<Pr_CitasFiltrarFecha_Consultar_Result>))]

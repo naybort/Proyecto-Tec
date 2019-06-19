@@ -15,5 +15,6 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     public partial class Administradore
     {
         public string Usuario { get; set; }
+        public int IdAdministrador { get; set; }
     }
 }

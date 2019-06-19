@@ -77,14 +77,15 @@
 </head>
 @{
     //revisa al inicio vía razor si la sesión del usuario aún es válida
-    /* if (Session["ID_USUARIO"] != null)
-     {
-         var iduser = Session["ID_USUARIO"];
-     }
-     else
-     {
-         Session.Abandon();
-         Response.Redirect("~/Home/LogOff");*/
+    if (int.Parse(Session["TipoUsuario"].ToString()) == 2 && int.Parse(Session["Permisos"].ToString()) == 0)
+    {
+        Response.Redirect("~/Profesor/CitasPendientes");
+    }
+    else if(int.Parse(Session["TipoUsuario"].ToString()) != 2){
+        Session.Abandon();
+        Response.Redirect("~/Home/LogOff");
+    }
+
 }
 
 <body class="skin-blue">
@@ -114,7 +115,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="LogOff">Salir</a>
+                        <a class="page-scroll" href="~/Home/LogOff">Salir</a>
                     </li>
 
                 </ul>
@@ -149,81 +150,95 @@
                         }
 
                     </div>
-                    <div class="pull-left info">
+                    <div class="pull-center info">
                         <p>Bienvenido(a)</p>
                         <p> @Session["NOM_USUARIO"] </p>
 
 
                     </div>
                 </div>
-                <div class="text-center">
+                <div align="left" style="
+    margin-left: 17px;
+>
                     <div class="panel-group">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="@Url.Action("Index", "Profesores")">
-                                        <span class="glyphicon glyphicon-user">
-                                            Profesores
-                                        </span>
+                            @if (int.Parse(Session["Permisos"].ToString()) == 1)
+                            {
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="@Url.Action("Index", "Profesores")">
+                                            <span class="glyphicon glyphicon-user">
+                                                Profesores
+                                            </span>
 
-                                    </a>
-                                </h4>
-                            </div>
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="@Url.Action("Index", "Tematicas")">
-                                        <span class="glyphicon glyphicon-th">
-                                            Temáticas
-                                        </span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="@Url.Action("Index", "Administradores")">
+                                            <span class="glyphicon glyphicon-briefcase">
+                                                Administradores
+                                            </span>
 
-                                    </a>
-                                </h4>
-                            </div>
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="@Url.Action("Index", "Horarios")">
-                                        <span class="glyphicon glyphicon-time">
-                                            Horarios
-                                        </span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="@Url.Action("Index", "Tematicas")">
+                                            <span class="glyphicon glyphicon-th">
+                                                Temáticas
+                                            </span>
 
-                                    </a>
-                                </h4>
-                            </div>
+                                        </a>
+                                    </h4>
+                                </div>
+                                @*<div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="@Url.Action("Index", "Horarios")">
+                        <span class="glyphicon glyphicon-time">
+                            Horarios
+                        </span>
 
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="@Url.Action("Index", "Lugares")">
-                                        <span class="glyphicon glyphicon-list-alt">
-                                            Lugares
-                                        </span>
+                    </a>
+                </h4>
+            </div>
+                                *@
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="@Url.Action("Index", "Lugares")">
+                                            <span class="glyphicon glyphicon-list-alt">
+                                                Lugares
+                                            </span>
 
-                                    </a>
-                                </h4>
-                            </div>
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="@Url.Action("BaseDatos", "Administrador")">
-                                        <span class="glyphicon glyphicon-folder-close">
-                                            BD
-                                        </span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="@Url.Action("BaseDatos", "Administrador")">
+                                            <span class="glyphicon glyphicon-folder-close">
+                                                BD
+                                            </span>
 
-                                    </a>
-                                </h4>
-                            </div>
-                            <div class="panel-group" id="accordion">
-                             
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-group" id="accordion">
+
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse" class="collapsed">
-                                                    <span class="glyphicon glyphicon-folder-close">
+                                                    <span class="glyphicon glyphicon-calendar">
                                                         Citas
                                                     </span>
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapse" class="panel-collapse collapse">
-                                        
+
                                             <div class="panel-body" style="padding-bottom: 0 !important; padding-top: 0 !important">
                                                 <table class="table" style="margin-bottom: 0 !important">
 
@@ -260,16 +275,78 @@
 
                                                         </td>
                                                     </tr>
-                                                    
-                                                    
+
+
 
                                                 </table> @* sub elementos del menu *@
                                             </div>
                                         </div>
                                     </div>
-                               
-                            </div> @*panel-group*@
 
+                                </div> @*panel-group*@
+                            }
+                            @if (Session["IdProfesor"] != null)
+                            {
+                                <div class="panel-group" id="accordion1">
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1" class="collapsed">
+                                                    <span class="glyphicon glyphicon-calendar">
+                                                        Agenda
+                                                    </span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse1" class="panel-collapse collapse">
+
+                                            <div class="panel-body" style="padding-bottom: 0 !important; padding-top: 0 !important">
+                                                <table class="table" style="margin-bottom: 0 !important">
+
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasPendientes", "Profesor")">Citas Pendientes</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("CitasRealizadas", "Profesor")">Citas Realizadas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <span></span>
+
+                                                            <a href="@Url.Action("Index", "Profesor")">Citas Canceladas</a>
+
+
+
+
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div> @*panel-group*@
+                            }
                         </div> @*panel-group*@
                     </div>
                 </div>
@@ -284,7 +361,7 @@
             </section>
             <div class="container body-content">
                 <div class="main main-raised">
-                    <div class="container">
+                    <div class="container" style="width:100%;margin-bottom: 75px;">
                         @RenderBody()
                         </div>
                     </div>
@@ -312,21 +389,36 @@
     <script>
 
     //Enable sidebar toggle
-    $("[data-toggle='offcanvas']").click(function (e) {
-        e.preventDefault();
+        $("[data-toggle='offcanvas']").click(function (e) {
+            e.preventDefault();
 
-        //If window is small enough, enable sidebar push menu
-        if ($(window).width() <= 992) {
-            $('.row-offcanvas').toggleClass('active');
-            $('.left-side').removeClass("collapse-left");
-            $(".right-side").removeClass("strech");
-            $('.row-offcanvas').toggleClass("relative");
-        } else {
-            //Else, enable content streching
-            $('.left-side').toggleClass("collapse-left");
-            $(".right-side").toggleClass("strech");
-        }
-    });
+            //If window is small enough, enable sidebar push menu
+            if ($(window).width() <= 992) {
+                $('.row-offcanvas').toggleClass('active');
+                $('.left-side').removeClass("collapse-left");
+                $(".right-side").removeClass("strech");
+                $('.row-offcanvas').toggleClass("relative");
+                var margin = $('.right-side').css('margin-left')
+                if (margin == '220px') {
+                    $('.right-side').css('margin-left', '0px')
+                }
+                else {
+                    $('.right-side').css('margin-left', '220px')
+                }
+
+            } else {
+                var margin = $('.right-side').css('margin-left')
+                //Else, enable content streching
+                if (margin == '220px') {
+                    $('.right-side').css('margin-left', '0px')
+                }
+                else {
+                    $('.right-side').css('margin-left', '220px')
+                }
+                $('.left-side').toggleClass("collapse-left");
+                $(".right-side").toggleClass("strech");
+            }
+        });
 
     //document.getElementById("fotoEstudiante").src = "data:image/png;base64," + @Session["FOTO"];
 

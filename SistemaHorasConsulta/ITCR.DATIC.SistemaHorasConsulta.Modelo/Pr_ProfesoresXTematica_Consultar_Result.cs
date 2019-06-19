@@ -15,6 +15,8 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Modelo
     {
         public int IdProfesor { get; set; }
         public string Nombre { get; set; }
+        public string stringFoto { get; set; }
+        public string Usuario { get; set; }
         public string PrimerApellido { get; set; }
         public string CorreoElectronico { get; set; }
         public byte[] Foto { get; set; }

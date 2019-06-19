@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>Sistema Horas Consulta</title>
+
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="icon" type="image/x-icon" href="~/Content/Imagenes/favicon.ico" />
+    <meta name="description" content="Sistema Horas Consulta">
+    @Styles.Render("~/Content/css")
+    @*Al poner en producción poner esto como bundles para optimizar el rendimiento y AB*@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+
+    <!-- Theme style NECESARIO-->
+    <link href="~/Content/paginaInicio/AdminLTE.css" rel="stylesheet" />
+    <!-- Estilos de checkbox NECESARIO-->
+    <link href="~/Content/paginaInicio/bootstrap-toggle.min.css" rel="stylesheet" />
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+
+    <link href="~/Content/paginaInicio/loadings.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href='~/Content/packages/core/main.css' rel='stylesheet' />
+    <link href='~/Content/packages/daygrid/main.css' rel='stylesheet' />
+    <link href='~/Content/packages/timegrid/main.css' rel='stylesheet' />
+    @RenderSection("header", required: false)
+
+    <!-- Theme style -->
+    @*<link href="~/SR_Admin/css/AdminLTE.css" rel="stylesheet" />*@
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    @RenderSection("header", required: false)
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- Estilo del cuadro de dialogo-->
+    <link href="~/Content/icons.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/paginaInicio/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery-2.2.4.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @Scripts.Render("~/bundles/jquery-ui")
+    @* <script src="~/Scripts/bootstrap-toggle.min.js"></script>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="~/Scripts/toastr.js"></script>
+
+        <script src="~/Scripts/bootstrap-select.js"></script>
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+        <script src="~/Scripts/locales/bootstrap-datepicker.es.min.js"></script>
+        <script src="~/Scripts/formatoFecha.js"></script>
+        <script src="~/Scripts/loading.js"></script>
+        <script src="~/Scripts/formatoMoneda.js"></script>
+        <script src="~/Scripts/jquery.mask.js"></script>
+        <script src="~/Scripts/paginaInicio/fileinput.js"></script>
+        <script src="~/Scripts/locales/es.js"></script>
+        <script src="~/Scripts/locales/LANG.js"></script>*@
+
+
+
+    <script src='~/Content/packages/core/main.js'></script>
+    <script src='~/Content/packages/daygrid/main.js'></script>
+    <script src='~/Content/packages/timegrid/main.js'></script>
+</head>
+@{
+    //revisa al inicio vía razor si la sesión del usuario aún es válida
+    /* if (Session["ID_USUARIO"] != null)
+     {
+         var iduser = Session["ID_USUARIO"];
+     }
+     else
+     {
+         Session.Abandon();
+         Response.Redirect("~/Home/LogOff");*/
+}
+
+<body class="skin-blue">
+    <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        <a href='@Url.Action("SeleccionarTematica", "Estudiante")' class="logo" style="background-color: rgb(16, 14, 48) !important;">
+            <!-- Add the class icon to your logo image or logo icon to add the margining -->
+            Sistema Horas Consulta
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" data-spy="scroll" role="navigation">
+            <!-- Sidebar toggle button-->
+
+            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a href="@Url.Action("Index", "Profesores")" class="navbar-btn sidebar-toggle" data-toggle="tooltip" title="Inicio" style="margin-top: 0;" role="button">
+                <span class="glyphicon glyphicon-home breadcrumb"></span>
+            </a>
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="LogOff">Salir</a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="row wrapper row-offcanvas row-offcanvas-left">
+        <!--Cuadro de dialogo-->
+        <div id="modal-container" class="modal hade fade in" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 560px;margin: 30px auto">
+
+                </div>
+            </div>
+        </div>
+        <!--Fin cuadro de dialogo-->
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="left-side sidebar-offcanvas" style="background-color: rgba(249, 249, 249, 0.71);">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel text-center">
+                    <div class="image">
+                        @if (Session["Foto"] != null)
+                        {
+                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="data:image/png;base64,@Session["FOTO"]" class="img-circle" alt="Usuario" />
+                        }
+                        else
+                        {
+                            <img style="height: 5em;width: 4.5em" id="fotoEstudiante" src="~/Content/Imagenes/user1.png" class="img-circle" alt="Usuario" />
+                        }
+
+                    </div>
+                    <div class="pull-center info">
+                        <p>Bienvenido(a)</p>
+                        <p> @Session["NOM_USUARIO"] </p>
+
+
+                    </div>
+                </div>
+                <div align="left" style="
+    margin-left: 17px;>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+           
+              
+            
+              
+          
+                            <div class="panel-group" id="accordion">
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse" class="collapsed">
+                                                <span class="glyphicon glyphicon-calendar">
+                                                    Agenda
+                                                </span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse" class="panel-collapse collapse">
+
+                                        <div class="panel-body" style="padding-bottom: 0 !important; padding-top: 0 !important">
+                                            <table class="table" style="margin-bottom: 0 !important">
+
+                                                <tr>
+                                                    <td style="border-top: 0">
+                                                        <span></span>
+
+                                                        <a href="@Url.Action("CitasPendientes", "Profesor")">Citas Pendientes</a>
+
+
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border-top: 0">
+                                                        <span></span>
+
+                                                        <a href="@Url.Action("CitasRealizadas", "Profesor")">Citas Realizadas</a>
+
+
+
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="border-top: 0">
+                                                        <span></span>
+
+                                                        <a href="@Url.Action("Index", "Profesor")">Citas Canceladas</a>
+
+
+
+
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </table> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> @*panel-group*@
+
+                        </div> @*panel-group*@
+                    </div>
+                </div>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- /.left-side -->
+        <!-- Main content -->
+        <aside class="right-side">
+            <section class="content-header"></section>
+            <div class="container body-content">
+                <div class="main main-raised">
+                    <div class="container">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- /.right-side -->
+        <footer>
+            <div class="nav navbar navbar-fixed-bottom text-center" style="color: #FFF; min-height: 40px">&copy; @DateTime.Now.Year - Sistema Horas Consulta - Tecnológico de Costa Rica</div>
+        </footer>
+    </div>
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jquery-ui")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    <script src="~/Scripts/bootstrap.js"></script>
+    <!-- Bootstrap session timeout -->
+    <script src="~/Scripts/bootstrap-session-timeout.js"></script>
+    @*<script src="~/Content/bootstrap-3.2.0/dist/js/bootstrap.min.js"></script>*@
+    <!-- AdminLTE App -->
+    @*<script src="~/SR_Admin/js/AdminLTE/app.js"></script>*@
+
+
+
+    <script>
+
+    //Enable sidebar toggle
+    $("[data-toggle='offcanvas']").click(function (e) {
+        e.preventDefault();
+
+        //If window is small enough, enable sidebar push menu
+        if ($(window).width() <= 992) {
+            $('.row-offcanvas').toggleClass('active');
+            $('.left-side').removeClass("collapse-left");
+            $(".right-side").removeClass("strech");
+            $('.row-offcanvas').toggleClass("relative");
+        } else {
+            //Else, enable content streching
+            $('.left-side').toggleClass("collapse-left");
+            $(".right-side").toggleClass("strech");
+        }
+    });
+
+    //document.getElementById("fotoEstudiante").src = "data:image/png;base64," + @Session["FOTO"];
+
+
+
+
+
+
+    $(function () {
+        $(":checkbox").css('display', 'none');
+        $(".iCheck-helper").css('display', 'none');
+        // Initialize numeric spinner input boxes
+        //$(".numeric-spinner").spinedit();
+        // Initialize modal dialog
+        // attach modal-container bootstrap attributes to links with .modal-link class.
+        // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+        $('body').on('click', '.modal-link', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container');
+            $(this).attr('data-toggle', 'modal');
+        });
+        // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+        $('body').on('click', '.modal-close-btn', function () {
+            $('#modal-container').modal('hide');
+        });
+        //clear modal cache, so that new content can be loaded
+        $('#modal-container').on('hidden.bs.modal', function () {
+            $(this).removeData('bs.modal');
+        });
+        $('#CancelModal').on('click', function () {
+            return false;
+        });
+
+        });
+
+
+  $(document).on('click', '.element-card',function () {
+
+  if ($(this).hasClass('open')) {
+    $(this).removeClass('open');
+  } else {
+    $('.element-card').removeClass('open');
+    $(this).addClass('open');
+  }
+    });
+        $(".collapsible li").click(function () {
+            $(this).siblings().removeClass("active"); //comment this line to make the accordion expansible
+            $(this).toggleClass("active");
+            if ($(this).hasClass("active")) {
+                $(this).siblings().find('.collapsible-body').slideUp(300);
+                $(this).find('.collapsible-body').slideDown(300);
+            } else {
+                $(this).find('.collapsible-body').slideUp(300);
+            }
+            //$(this).find('.collapsible-body').slideToggle(500); //change display property
+        });
+
+
+
+    //$("#accordion").accordion();
+    //coloca el evento de cierre de sesión al botón
+    $('#cerrarSession').on("click", function () {
+        window.location.href = '@Url.Action("LogOff", "Home")';
+    });
+
+    //alert('antes');
+
+    //alerta de timeout y redirección del usuario - cambiarlo a los valores del web.config
+    $.sessionTimeout({
+        title: 'Fin Sesión',
+        message: 'La sesión va a terminar por inactividad',
+        logoutButton: null,
+        keepAliveButton: null,
+        logoutUrl: '@Url.Action("LogOff", "Home")',
+        redirUrl: '@Url.Action("Autenticacion", "Home")',
+        keepAliveUrl: '@Url.Action("Autenticacion", "Home")',
+        //warnAfter: 28000,LEARY
+        //redirAfter: 30000,LEARY
+        warnAfter: 128000,
+        redirAfter: 130000,
+        countdownBar: true
+    });
+    //alert('despues del timeout');
+
+
+    </script>
+
+
+</body>
+</html>

@@ -33,17 +33,17 @@ namespace API.Controllers
 
 
         // POST: api/Lugar
-        public void Post([FromBody]string value)
+        public void Post([FromBody]ILugar lugar)
         {
-            ILugar lugar = new ILugar();
-            lugar.lugarInsertar(value);
+            ILugar lugarTemp = new ILugar();
+            lugarTemp.lugarInsertar(lugar.Nombre);
         }
 
         // PUT: api/Lugar/5
         public void Put(int id, [FromBody]Pr_Lugares_Consultar_Result value)
         {
             ILugar lugar = new ILugar();
-            lugar.editarLugar(value.IdLugar, value.Nombre);
+            lugar.editarLugar(id, value.Nombre);
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -31,54 +32,69 @@ namespace API.Models
             return getProfesores().Where(x => x.IdProfesor == id).FirstOrDefault();
         }
 
-        public void editarProfesor(int idProfesor, string name, string primerApellido, string segundoApellido, string usuario, string contrasena, string correoElectronico,  int idLugar, byte[] foto)
+        public void editarProfesor(int idProfesor, string name, string primerApellido, string segundoApellido, string usuario, string correoElectronico,  int? idLugar, byte[] foto)
         {
             var idP = new SqlParameter("@IdProfesor", idProfesor);
             var nombre = new SqlParameter("@Nombre", name);
             var apellido1 = new SqlParameter("@PrimerApellido", primerApellido);
             var apellido2 = new SqlParameter("@SegundoApellido", segundoApellido);
             var user = new SqlParameter("@Usuario", usuario);
-            var pass = new SqlParameter("@Contrasena", contrasena);
+           
             var correo = new SqlParameter("@CorreoElectronico", correoElectronico);
           
             var lugar = new SqlParameter("@IdLugar", idLugar);
-            var pic = new SqlParameter("@Foto", foto);
-
-            var profesor = bd.Database.SqlQuery<int>("Pr_Profesor_Editar @IdProfesor,@Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@Contrasena,@CorreoElectronico" +
-                ",@IdLugar,@Foto", idP, nombre, apellido1, apellido2, user, pass, correo, lugar, pic);
+            var pic = new SqlParameter("@Foto", SqlDbType.Image);
+            if (foto != null)
+            {
+                pic.Value = foto;
+                var profesor = bd.Database.ExecuteSqlCommand("Pr_Profesor_Editar @IdProfesor,@Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@CorreoElectronico" +
+                ",@IdLugar,@Foto", idP, nombre, apellido1, apellido2, user, correo, lugar, pic);
+            }
+            else {
+                pic.Value = (object)foto ?? DBNull.Value;
+                var profesor = bd.Database.ExecuteSqlCommand("Pr_Profesor_Editar @IdProfesor,@Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@CorreoElectronico" +
+                ",@IdLugar,@Foto", idP, nombre, apellido1, apellido2, user, correo, lugar, pic);
+            }
+            
+          
 
 
         }
 
         public void eliminarProfesor(int id)
         {
-            var idP = new SqlParameter("@IdProfesor", id);
+            //var idP = new SqlParameter("@IdProfesor", id);
 
-            var profesor = bd.Database.SqlQuery<int>("Pr_Profesor_Eliminar @IdProfesor", idP);
+           // var profesor = bd.Database.SqlQuery<int>("Pr_Profesor_Eliminar @IdProfesor", idP);
 
-
+            var str = "exec Pr_Profesor_Eliminar  @IdProfesor = " + id.ToString();
+            var result = bd.Database.ExecuteSqlCommand(str);
         }
 
-        public void insertarProfesor(string name, string primerApellido, string segundoApellido, string usuario, string correoElectronico,  int idLugar)
+        public void insertarProfesor(string name, string primerApellido, string segundoApellido, string usuario, string correoElectronico,  int? idLugar, byte[] foto)
         {
+            var nombre = new SqlParameter("@Nombre", name);
+            var apellido1 = new SqlParameter("@PrimerApellido", primerApellido);
+            var apellido2 = new SqlParameter("@SegundoApellido", segundoApellido);
+            var user = new SqlParameter("@Usuario", usuario);
+
+            var correo = new SqlParameter("@CorreoElectronico", correoElectronico);
+
+            var lugar = new SqlParameter("@IdLugar", idLugar);
+            var pic = new SqlParameter("@Foto", SqlDbType.Image);
+            if (foto != null)
             {
+                pic.Value = foto;
 
-                var nombre = new SqlParameter("@Nombre", name);
-                var apellido1 = new SqlParameter("@PrimerApellido", primerApellido);
-                var apellido2 = new SqlParameter("@SegundoApellido", segundoApellido);
-                var user = new SqlParameter("@Usuario", usuario);
-                
-                var correo = new SqlParameter("@CorreoElectronico", correoElectronico);
-           
-                var lugar = new SqlParameter("@IdLugar", idLugar);
-                //var pic = new SqlParameter("@Foto", foto);
+                var profesor = bd.Database.ExecuteSqlCommand("Pr_Profesores_Insertar @Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@CorreoElectronico" +
+                    ",@IdLugar,@Foto", nombre, apellido1, apellido2, user, correo, lugar, pic);
 
-                //var profesor = bd.Database.SqlQuery<int>("Pr_Profesores_Insertar @Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@CorreoElectronico" +
-                //    ",@IdLugar", nombre, apellido1, apellido2, user, correo, lugar);
-
-                var str = "exec Pr_Profesores_Insertar @Nombre = '"+ name + "', @PrimerApellido = '"+primerApellido+"', @SegundoApellido = '"+segundoApellido+
-                    "',@Usuario='"+usuario+"',@CorreoElectronico ='" + correoElectronico + "',  @IdLugar = " + idLugar.ToString() + ",@Foto=NULL";
-                var result = bd.Database.ExecuteSqlCommand(str);
+            }
+            else {
+               
+                pic.Value = (object)foto ?? DBNull.Value;
+                var profesor = bd.Database.ExecuteSqlCommand("Pr_Profesores_Insertar @Nombre, @PrimerApellido, @SegundoApellido,@Usuario,@CorreoElectronico" +
+                    ",@IdLugar,@Foto", nombre, apellido1, apellido2, user, correo, lugar,pic);
             }
 
 

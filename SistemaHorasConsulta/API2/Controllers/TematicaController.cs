@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Models;
+using API2.Models;
 using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 
 namespace API.Controllers
@@ -19,8 +20,16 @@ namespace API.Controllers
         public IEnumerable<Pr_ProfesoresXTematica_Consultar_Result> GetHorarioProfesor(int tematicaId)
         {
             ITematica tematica = new ITematica();
-            
-            return tematica.getProfesoresPorTematica(tematicaId);
+            var profesores = tematica.getProfesoresPorTematica(tematicaId);
+            foreach (var i in profesores)
+            {
+                if (i.Foto != null)
+                {
+                    i.stringFoto = Convert.ToBase64String(i.Foto);
+                    i.Foto = null;
+                }
+            }
+            return profesores;
         }
 
         [Route("api/Profesor/{profesorId:int}/Tematica")]
@@ -39,6 +48,15 @@ namespace API.Controllers
             temp.Asociar(tematica);
 
         }
+        [Route("api/Tematica/Eliminar/")]
+
+        public HttpResponseMessage EliminarHorarioAsociar([FromBody]IAsociar asociar)
+        {
+            ITematica temp = new ITematica();
+
+            temp.EliminarAsociado(asociar.id, asociar.id2);
+            return new HttpResponseMessage();
+        }
         // GET: api/Tematica
         public IEnumerable<Pr_Tematicas_Consultar_Result> Get()
         {
@@ -54,17 +72,17 @@ namespace API.Controllers
         }
 
         // POST: api/Tematica
-        public void Post([FromBody]Pr_TematicasXProfesor_Consultar_Result value)
+        public void Post([FromBody]Pr_Tematicas_Consultar_Result value)
         {
             ITematica tematica = new ITematica();
-            //tematica.crearTematica(value.Nombre,value)
+            tematica.crearTematica(value.NombreTematica, value.Descripcion);
         }
 
         // PUT: api/Tematica/5
-        public void Put(int id, [FromBody]Pr_TematicasXProfesor_Consultar_Result value)
+        public void Put(int id, [FromBody]Pr_Tematicas_Consultar_Result value)
         {
             ITematica tematica = new ITematica();
-            //tematica.editarTematica()
+            tematica.editarTematica(id, value.NombreTematica, value.Descripcion);
         }
 
         // DELETE: api/Tematica/5

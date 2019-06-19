@@ -4,18 +4,19 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-using ITCR.DATIC.SistemaHorasConsulta.Modelo;
 using ITCR.DATIC.SistemaHorasConsulta.Negocio.Models;
 
 namespace SistemaHorasConsulta.Controllers
 {
     public class AdministradorController : Controller
     {
-        private SistemaHorasConsultaEntities db = new SistemaHorasConsultaEntities();
+       
         // GET: Administrador
         public ActionResult BaseDatos()
         {
-            return View(db.Profesores.Include("Horarios").ToList());
+            NProfesor temp = new NProfesor();
+            var profes = temp.getProfesor();
+            return View(profes);
 
         }
         public ActionResult AsociarHorario(int id) {
@@ -49,7 +50,7 @@ namespace SistemaHorasConsulta.Controllers
         public ActionResult AsociarTematica(int id)
         {
             Session["IdProfeTemp"] = id;
-            NTematica tematicaTemp = new NTematica();
+                NTematica tematicaTemp = new NTematica();
             var tematicas = tematicaTemp.getTematicas();
             var horarioProfesor = tematicaTemp.getTematicasPorProfesor(id);
             var c = tematicaTemp.getTematicas();
@@ -67,10 +68,17 @@ namespace SistemaHorasConsulta.Controllers
             return View(tematicas);
 
         }
+        public ActionResult EliminarTematicaProfesor(int id)
+        {
+            NTematica horario = new NTematica();
+            horario.EliminarHorarioProfesor(id, (int)Session["IdProfeTemp"]);
+            return RedirectToAction("Details", "Profesores", new { id = (int)Session["IdProfeTemp"] });
+        }
         public ActionResult TematicaProfesor(List<String> Datos)
         {
             NTematica tematica = new NTematica();
             tematica.crearTematicaPorProfesor(Datos[0], int.Parse(Datos[1]), (int)Session["IdProfeTemp"]);
+            Session["IdTemp"] = int.Parse(Datos[1]);
             var res = new { Success = "True" };
             return Json(res, JsonRequestBehavior.AllowGet);
         }

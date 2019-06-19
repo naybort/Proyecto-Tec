@@ -18,6 +18,8 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
         public string SegundoApellido { get; set; }
         public string NombreLugar { get; set; }
         public string Especialidades { get; set; }
+        public string stringFoto { get; set; }
+        public string Usuario { get; set; }
 
         public List<ProfesoresPorTematica> getProfesoresPorTematicas(List<PorfesorPorTematica> lista)
         {
@@ -38,6 +40,8 @@ namespace ITCR.DATIC.SistemaHorasConsulta.Negocio.Models
                     profesorTematica.SegundoApellido = elemento.SegundoApellido;
                     profesorTematica.NombreLugar = elemento.NombreLugar;
                     profesorTematica.Especialidades = elemento.Especialidades;
+                    profesorTematica.stringFoto = elemento.stringFoto;
+                    profesorTematica.Usuario = elemento.Usuario;
                     foreach (var value in concurrencias)
                     {
                         

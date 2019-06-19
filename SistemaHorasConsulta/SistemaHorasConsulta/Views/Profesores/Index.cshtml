@@ -10,44 +10,55 @@
 <p>
     @Html.ActionLink("Agregar Profesor", "Create")
 </p>
-<table class="table">
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-4">
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Nombre" title="Type in a name" style="max-width:100%;">
+    </div>
+    <div class="col-xs-4">
+        <input type="text" class="form-control" id="myInput2" onkeyup="myFunction2()" placeholder="Correo" title="Type in a name" style="max-width:100%;">
+    </div>
+    <div class="col-xs-4">
+        <input type="text" class="form-control" id="myInput1" onkeyup="myFunction1()" placeholder="Lugar" title="Type in a name" style="max-width:100%;">
+    </div>
+</div>
+<table class="table" id="myTable">
     <tr>
+
         <th>
-            Nombre
-        </th>
-        <th>
-            Primer Apellido 
+            Primer Apellido
         </th>
         <th>
             Segundo Apellido
         </th>
-     
+        <th>
+            Nombre
+        </th>
         <th>
             Correo Electrónico
         </th>
-     
+
         <th>
-           Lugar de atención
+            Lugar de atención
         </th>
         <th>Opciones</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.PrimerApellido)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SegundoApellido)
         </td>
-  
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.CorreoElectronico)
         </td>
-    
+
         <td>
             @Html.DisplayFor(modelItem => item.NombreLugar)
         </td>
@@ -60,3 +71,61 @@
 }
 
 </table>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction1() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction2() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[3];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

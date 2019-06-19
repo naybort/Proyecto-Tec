@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ITCR.DATIC.SistemaHorasConsulta.Negocio.Models.Citas>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PrincipalAdmin.cshtml";
+}
+
+<h2>Citas Realizadas</h2>
+<div class="row" style="margin-bottom: 10px;">
+    <div class="col-xs-6">
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Fecha" title="Type in a name" style="max-width:100%;">
+    </div>
+    <div class="col-xs-6">
+        <input type="text" class="form-control" id="myInput1" onkeyup="myFunction1()" placeholder="Carnet de Estudiante" title="Type in a name" style="max-width:100%;">
+    </div>
+
+</div>
+
+<table class="table" id="myTable">
+    <tr>
+        <th>
+            ID
+        </th>
+   
+        <th>
+            Carnet de Estudiante
+        </th>
+   
+        <th>
+            Fecha
+        </th>
+        <th>
+            Hora de Inicio
+        </th>
+     
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCita)
+        </td>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.IdEstudiante)
+        </td>
+
+        <td>
+            @item.Fecha.ToShortDateString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoraInicio)
+        </td>
+
+  
+    </tr>
+    }
+
+</table>
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction1() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+
+</script>

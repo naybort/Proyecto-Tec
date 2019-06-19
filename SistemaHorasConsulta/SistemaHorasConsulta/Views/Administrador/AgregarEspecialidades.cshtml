@@ -54,7 +54,7 @@
                 success: function (msg) {
                     resultado = msg.Success;
                     if (resultado == "True") {
-                        window.location.href = '@Url.Action("Index", "Profesores")';
+                        window.location.href = '@Url.Action("AsociarTematica", "Administrador", new { id = Session["IdProfeTemp"] }, null)';
                     } else {
                         alert('Algo salió mal')
                     }

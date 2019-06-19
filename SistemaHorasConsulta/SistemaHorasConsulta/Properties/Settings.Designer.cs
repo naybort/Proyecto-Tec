@@ -52,5 +52,15 @@ namespace SistemaHorasConsulta.Properties {
                 return ((string)(this["SistemaHorasConsulta_wsFotosEstudiantes_wsUtilitarios"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://tec-apps/wsEmail/Email.asmx")]
+        public string SistemaHorasConsulta_wsEviar_Email {
+            get {
+                return ((string)(this["SistemaHorasConsulta_wsEviar_Email"]));
+            }
+        }
     }
 }

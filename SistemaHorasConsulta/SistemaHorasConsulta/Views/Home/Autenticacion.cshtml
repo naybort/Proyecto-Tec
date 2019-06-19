@@ -168,20 +168,24 @@
                     success: function (msg) {
                         resultado = msg.Success;
                         if (resultado == "True") {
-                            successFunc();
+                            successFunc(tipoUsuario);
                         } else {
                             errorFunc();
                         }
                     },
                     error: errorFunc
                 });
-                function successFunc() {
+                function successFunc(tipoUsuario) {
                     $('#ingresar').val("Iniciando Sesion ...");
                     $('#cargando').hide();
                     $('#idusererror').hide();
                     $('#idpasserror').hide();
-                    window.location.href = '@Url.Action("SeleccionarTematicas", "Estudiante")';
-                }
+                    if (tipoUsuario ==2) {
+                        window.location.href = '@Url.Action("SeleccionarTematica", "Estudiante")';
+                    } else {
+                         window.location.href = '@Url.Action("Index", "Profesores")';
+                    }
+                    }
                 function errorFunc() {
                     $('#cargando').hide();
                     $('#idusererror').show(700);
@@ -215,19 +219,23 @@
                     //debugger;
                     resultado = msg.Success;
                     if (resultado == "True") {
-                        successFunc();
+                        successFunc(tipoUsuario);
                     } else {
                         errorFunc();
                     }
                 },
                 error: errorFunc
             });
-            function successFunc() {
+            function successFunc(tipoUsuario) {
                 $('#ingresar').val("Iniciando Sesion ...");
                 $('#cargando').hide();
                 $('#idusererror').hide();
                 $('#idpasserror').hide();
-                window.location.href = '@Url.Action("SeleccionarTematica", "Estudiante")';
+                  if (tipoUsuario==2) {
+                        window.location.href = '@Url.Action("SeleccionarTematica", "Estudiante")';
+                    } else {
+                         window.location.href = '@Url.Action("Index", "Profesores")';
+                    }
             }
             function errorFunc() {
                 $('#cargando').hide();
